@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\tori.ARCCORE\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\tori.ARCCORE\\.nuget\\packages"
+    ]
+  }
+}
