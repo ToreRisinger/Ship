@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Ship.Server.Utilities
+namespace Ship.Shared.Utilities
 {
-    class ThreadManager
+
+    public class ThreadManager
     {
         private static readonly List<Action> executeOnMainThread = new List<Action>();
         private static readonly List<Action> executeCopiedOnMainThread = new List<Action>();
@@ -15,7 +16,7 @@ namespace Ship.Server.Utilities
         {
             if (_action == null)
             {
-                Logger.debug("No action to execute on main thread!");
+                //Debug.Log("No action to execute on main thread!");
                 return;
             }
 

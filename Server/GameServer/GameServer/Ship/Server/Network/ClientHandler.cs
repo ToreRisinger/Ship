@@ -1,6 +1,5 @@
 ﻿
-using Ship.Server.Utilities;
-using System;
+using Ship.Shared.Utilities;
 using System.Collections.Generic;
 using System.Net.Sockets;
 
@@ -18,7 +17,7 @@ namespace Ship.Server.Network
 
         public bool incommingConnection(TcpClient tcpClient)
         {
-            Logger.info($"Incomming connection from {tcpClient.Client.RemoteEndPoint}...");
+            Log.info($"Incomming connection from {tcpClient.Client.RemoteEndPoint}...");
 
             for (int i = 1; i <= maxPlayers; i++)
             {
@@ -29,7 +28,7 @@ namespace Ship.Server.Network
                 }
             }
 
-            Logger.info($"{tcpClient.Client.RemoteEndPoint} failed to connect: Server full!");
+            Log.info($"{tcpClient.Client.RemoteEndPoint} failed to connect: Server full!");
             return false;
         }
 

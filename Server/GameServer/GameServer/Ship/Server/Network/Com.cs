@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using Ship.Network;
-using Ship.Server.Utilities;
+using Ship.Shared.Utilities;
 
 namespace Ship.Server.Network
 {
@@ -18,7 +18,7 @@ namespace Ship.Server.Network
             port = _port;
             clientHandler = new ClientHandler(_maxConnections);
 
-            Logger.info($"Setting up connection listener.");
+            Log.info($"Setting up connection listener.");
 
             tcpListener = new TcpListener(IPAddress.Any, port);
             tcpListener.Start();
@@ -27,7 +27,7 @@ namespace Ship.Server.Network
             udpListener = new UdpClient(port);
             udpListener.BeginReceive(UDPReceiveCallback, null);
 
-            Logger.info($"Now listening on port {port}.");
+            Log.info($"Now listening on port {port}.");
         }
 
         private static void TCPConnectCallback(IAsyncResult _result)
@@ -75,7 +75,7 @@ namespace Ship.Server.Network
                 }
             } catch (Exception _ex)
             {
-                Logger.error($"Error receiving UDP data: {_ex}");
+                Log.error($"Error receiving UDP data: {_ex}");
             }
         }
 
@@ -89,7 +89,7 @@ namespace Ship.Server.Network
                 }
             } catch(Exception _ex)
             {
-                Logger.error($"Error sending data to {_clientEndPoint} via UDP: {_ex}");
+                Log.error($"Error sending data to {_clientEndPoint} via UDP: {_ex}");
             }
         }
     }

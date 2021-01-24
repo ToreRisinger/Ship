@@ -1,5 +1,5 @@
 ﻿using Ship.Network;
-using Ship.Server.Utilities;
+using Ship.Shared.Utilities;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -114,7 +114,7 @@ namespace Ship.Server.Network
                         using (Packet _packet = new Packet(_packetBytes))
                         {
                             int _packetId = _packet.ReadInt();
-                            ComIf.onPacketReceived(_packetId, id, _packet);
+                            PacketHandler.onPacketReceived(_packetId, id, _packet);
                         }
                     });
 
@@ -172,7 +172,7 @@ namespace Ship.Server.Network
                     using(Packet _packet = new Packet(_packetBytes))
                     {
                         int _packetId = _packet.ReadInt();
-                        ComIf.onPacketReceived(_packetId, id, _packet);
+                        PacketHandler.onPacketReceived(_packetId, id, _packet);
                     }
                 });
             }
@@ -185,7 +185,7 @@ namespace Ship.Server.Network
 
         private void Disconnect()
         {
-            Logger.info($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+            Log.info($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
             //GameLogic.onPlayerLeft(id);
             tcp.Disconnect();
             udp.Disconnect();
@@ -193,7 +193,7 @@ namespace Ship.Server.Network
 
         private void Connect()
         {
-            Logger.info($"{tcp.socket.Client.RemoteEndPoint} has connected.");
+            Log.info($"{tcp.socket.Client.RemoteEndPoint} has connected.");
             //ServerSend.Welcome(id, "Welcome to the server!");
         }
     }

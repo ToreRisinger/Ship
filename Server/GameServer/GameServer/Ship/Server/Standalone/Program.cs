@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Ship.Server.Network;
-using Ship.Server.Utilities;
+using Ship.Shared.Utilities;
 
 namespace Ship.Server.Standalone
 {
@@ -17,9 +17,9 @@ namespace Ship.Server.Standalone
 
         static void Main(string[] args)
         {
-            Logger.setLogLevel(logLevel);
-            Logger.info("Server started");
-            Logger.debug("Log level: " + Logger.getLogLevelString());
+            Log.setupLogger(logLevel);
+            Log.info("Server started");
+            Log.debug("Log level: " + Log.getLogLevelString());
 
             try
             {
@@ -39,7 +39,7 @@ namespace Ship.Server.Standalone
 
         private static void MainThread()
         {
-            Logger.info($"Main thread started. Running at {TICKS_PER_SEC} ticks per second.");
+            Log.info($"Main thread started. Running at {TICKS_PER_SEC} ticks per second.");
             DateTime _nextLoop = DateTime.Now;
 
 
@@ -47,6 +47,9 @@ namespace Ship.Server.Standalone
             {
                 while (_nextLoop < DateTime.Now)
                 {
+
+                    ThreadManager.UpdateMain();
+
                     //GameLogic.Update();
 
                     _nextLoop = _nextLoop.AddMilliseconds(MS_PER_TICK);
