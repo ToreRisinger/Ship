@@ -14,9 +14,12 @@ namespace Ship.Server.Network
         public TCP tcp;
         public UDP udp;
 
+        private ConnectionInterface connectionInterface;
+
         public Client(int _clientId)
         {
             id = _clientId;
+            connectionInterface = ConnectionInterface.GetInstance();
             tcp = new TCP(this, id);
             udp = new UDP(id);
         }
@@ -194,7 +197,7 @@ namespace Ship.Server.Network
         private void Connect()
         {
             Log.info($"{tcp.socket.Client.RemoteEndPoint} has connected.");
-            //ServerSend.Welcome(id, "Welcome to the server!");
+            connectionInterface.OnClientConnected(id);
         }
     }
 }

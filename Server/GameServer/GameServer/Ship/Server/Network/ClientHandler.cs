@@ -7,10 +7,20 @@ namespace Ship.Server.Network
 {
     class ClientHandler
     {
-        private int maxPlayers = 100;
         private Dictionary<int, Client> clients = new Dictionary<int, Client>();
+        private static ClientHandler instance;
 
-        public ClientHandler(int maxPlayers)
+        public static ClientHandler GetInstance()
+        {
+            if(instance == null)
+            {
+                instance = new ClientHandler();
+            }
+
+            return instance;
+        }
+
+        private ClientHandler()
         {
             initilizeClients();
         }
@@ -19,7 +29,7 @@ namespace Ship.Server.Network
         {
             Log.info($"Incomming connection from {tcpClient.Client.RemoteEndPoint}...");
 
-            for (int i = 1; i <= maxPlayers; i++)
+            for (int i = 1; i <= Com.GetMaxConnections(); i++)
             {
                 if (clients[i].tcp.socket == null)
                 {
@@ -32,10 +42,14 @@ namespace Ship.Server.Network
             return false;
         }
 
+        public Dictionary<int, Client> GetClients() {
+            return clients;
+        }
+
 
         private void initilizeClients()
         {
-            for (int i = 1; i <= maxPlayers; i++)
+            for (int i = 1; i <= Com.GetMaxConnections(); i++)
             {
                 clients.Add(i, new Client(i));
             }

@@ -16,11 +16,13 @@ namespace Ship.Server.Network
         {
 
         }
+
         public static void onPacketReceived(int packetId, int clientId, Packet packet)
         {
             //TODO add check
             packetHandlers[packetId](clientId, packet);
         }
+
         //Handle functions
 
 

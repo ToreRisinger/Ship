@@ -11,12 +11,14 @@ namespace Ship.Server.Network
         private static TcpListener tcpListener;
         private static UdpClient udpListener;
         private static int port;
+        private static int maxConnections;
         private static ClientHandler clientHandler;
 
         public static void Start(int _port, int _maxConnections)
         {
             port = _port;
-            clientHandler = new ClientHandler(_maxConnections);
+            maxConnections = _maxConnections;
+            clientHandler = ClientHandler.GetInstance();
 
             Log.info($"Setting up connection listener.");
 
@@ -28,6 +30,11 @@ namespace Ship.Server.Network
             udpListener.BeginReceive(UDPReceiveCallback, null);
 
             Log.info($"Now listening on port {port}.");
+        }
+
+        public static int GetMaxConnections()
+        {
+            return maxConnections;
         }
 
         private static void TCPConnectCallback(IAsyncResult _result)
@@ -53,7 +60,7 @@ namespace Ship.Server.Network
 
                 using (Packet _packet = new Packet(_data))
                 {
-                    /*
+                    
                     int _clientId = _packet.ReadInt();
 
                     if(_clientId == 0)
@@ -61,17 +68,17 @@ namespace Ship.Server.Network
                         return;
                     }
 
-                    if(clients[_clientId].udp.endPoint == null)
+                    if(clientHandler.GetClients()[_clientId].udp.endPoint == null)
                     {
-                        clients[_clientId].udp.Connect(_clientEndPoint);
+                        clientHandler.GetClients()[_clientId].udp.Connect(_clientEndPoint);
                         return;
                     }
 
-                    if(clients[_clientId].udp.endPoint.ToString() == _clientEndPoint.ToString())
+                    if(clientHandler.GetClients()[_clientId].udp.endPoint.ToString() == _clientEndPoint.ToString())
                     {
-                        clients[_clientId].udp.HandleData(_packet);
+                        clientHandler.GetClients()[_clientId].udp.HandleData(_packet);
                     }
-                    */
+                    
                 }
             } catch (Exception _ex)
             {
