@@ -2,7 +2,7 @@
 
 namespace Ship.Network.Transport
 {
-    class ClientId
+    public class ClientId
     {
         public int clientId;
 

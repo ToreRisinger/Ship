@@ -12,13 +12,18 @@ namespace Ship.Server.Network
         private static UdpClient udpListener;
         private static int port;
         private static int maxConnections;
-        private static ClientHandler clientHandler;
+        private static ClientManager clientManager;
+        private static ConnectionManager connectionManager;
 
         public static void Start(int _port, int _maxConnections)
         {
             port = _port;
             maxConnections = _maxConnections;
-            clientHandler = ClientHandler.GetInstance();
+            connectionManager = new ConnectionManager();
+            clientManager = new ClientManager();
+
+            connectionManager.init(clientManager);
+            clientManager.init(connectionManager);
 
             Log.info($"Setting up connection listener.");
 
@@ -32,6 +37,16 @@ namespace Ship.Server.Network
             Log.info($"Now listening on port {port}.");
         }
 
+        public static ClientManager GetClientHandler()
+        {
+            return clientManager;
+        }
+
+        public static ConnectionManager GetConnectionManager()
+        {
+            return connectionManager;
+        }
+
         public static int GetMaxConnections()
         {
             return maxConnections;
@@ -42,7 +57,7 @@ namespace Ship.Server.Network
             TcpClient _client = tcpListener.EndAcceptTcpClient(_result);
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-            clientHandler.incommingConnection(_client);
+            clientManager.incommingConnection(_client);
         }
 
         private static void UDPReceiveCallback(IAsyncResult _result)
@@ -68,15 +83,15 @@ namespace Ship.Server.Network
                         return;
                     }
 
-                    if(clientHandler.GetClients()[_clientId].udp.endPoint == null)
+                    if(clientManager.GetClients()[_clientId].udp.endPoint == null)
                     {
-                        clientHandler.GetClients()[_clientId].udp.Connect(_clientEndPoint);
+                        clientManager.GetClients()[_clientId].udp.Connect(_clientEndPoint);
                         return;
                     }
 
-                    if(clientHandler.GetClients()[_clientId].udp.endPoint.ToString() == _clientEndPoint.ToString())
+                    if(clientManager.GetClients()[_clientId].udp.endPoint.ToString() == _clientEndPoint.ToString())
                     {
-                        clientHandler.GetClients()[_clientId].udp.HandleData(_packet);
+                        clientManager.GetClients()[_clientId].udp.HandleData(_packet);
                     }
                     
                 }

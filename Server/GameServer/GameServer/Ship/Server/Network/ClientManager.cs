@@ -5,24 +5,19 @@ using System.Net.Sockets;
 
 namespace Ship.Server.Network
 {
-    class ClientHandler
+    public class ClientManager
     {
         private Dictionary<int, Client> clients = new Dictionary<int, Client>();
-        private static ClientHandler instance;
 
-        public static ClientHandler GetInstance()
+        public ClientManager()
         {
-            if(instance == null)
-            {
-                instance = new ClientHandler();
-            }
-
-            return instance;
+            
         }
 
-        private ClientHandler()
+
+        public void init(ConnectionManager connectionManager)
         {
-            initilizeClients();
+            initilizeClients(connectionManager);
         }
 
         public bool incommingConnection(TcpClient tcpClient)
@@ -47,11 +42,11 @@ namespace Ship.Server.Network
         }
 
 
-        private void initilizeClients()
+        private void initilizeClients(ConnectionManager connectionManager)
         {
             for (int i = 1; i <= Com.GetMaxConnections(); i++)
             {
-                clients.Add(i, new Client(i));
+                clients.Add(i, new Client(i, connectionManager));
             }
         }
     }

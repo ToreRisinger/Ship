@@ -9,7 +9,7 @@ namespace Ship.Server.Network
         public static Dictionary<int, PacketHandlerFunction> packetHandlers = new Dictionary<int, PacketHandlerFunction>()
         {
            //{ (int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },
-            //{ (int)ClientPackets.playerCommand, ServerHandle.PlayerCommand },
+           //{ (int)ClientPackets.playerCommand, ServerHandle.PlayerCommand },
         };
 
         private PacketHandler()

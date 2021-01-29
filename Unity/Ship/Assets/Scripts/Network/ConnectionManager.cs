@@ -1,4 +1,6 @@
-﻿using Ship.Shared.Utilities;
+﻿using Ship.Network;
+using Ship.Network.Transport;
+using Ship.Shared.Utilities;
 using UnityEngine;
 
 public class ConnectionManager : MonoBehaviour
@@ -24,6 +26,23 @@ public class ConnectionManager : MonoBehaviour
         client = new Client();
     }
 
+    #region send
+
+    private void SendTCPData(Packet _packet)
+    {
+        _packet.WriteLength();
+        client.tcp.SendData(_packet);
+
+    }
+
+    private void SendUDPData(Packet _packet)
+    {
+        _packet.WriteLength();
+        client.udp.SendData(_packet);
+    }
+
+    #endregion
+
     private void OnApplicationQuit()
     {
         client.Disconnect();
@@ -32,6 +51,11 @@ public class ConnectionManager : MonoBehaviour
     public void ConnectToGameServer()
     {
         client.ConnectToGameServer();
+    }
+
+    public void onReceiveClientId(ClientId clientIdObj)
+    {
+        //TODO
     }
 
 

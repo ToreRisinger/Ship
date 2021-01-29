@@ -6,7 +6,7 @@ using System.Net.Sockets;
 
 namespace Ship.Server.Network
 {
-    class Client
+    public class Client
     {
         public static int dataBufferSize = 4096;
 
@@ -14,12 +14,12 @@ namespace Ship.Server.Network
         public TCP tcp;
         public UDP udp;
 
-        private ConnectionInterface connectionInterface;
+        private ConnectionManager connectionManager;
 
-        public Client(int _clientId)
+        public Client(int _clientId, ConnectionManager connectionManager)
         {
             id = _clientId;
-            connectionInterface = ConnectionInterface.GetInstance();
+            this.connectionManager = connectionManager;
             tcp = new TCP(this, id);
             udp = new UDP(id);
         }
@@ -59,14 +59,14 @@ namespace Ship.Server.Network
             {
                 try
                 {
-                    if(socket != null)
+                    if (socket != null)
                     {
                         stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
                     }
 
                 } catch(Exception _ex)
                 {
-                    Console.WriteLine($"Error sending data to player {id} via TCP: {_ex}");
+                    Log.error($"Error sending data to player {id} via TCP: {_ex}");
                 }
             }
 
@@ -89,7 +89,7 @@ namespace Ship.Server.Network
 
                 } catch (Exception _ex)
                 {
-                    Console.WriteLine($"Error receiving TCP data: {_ex}.");
+                    Log.error($"Error receiving TCP data: {_ex}.");
                     client.Disconnect();
                 }
             }
@@ -197,7 +197,8 @@ namespace Ship.Server.Network
         private void Connect()
         {
             Log.info($"{tcp.socket.Client.RemoteEndPoint} has connected.");
-            connectionInterface.OnClientConnected(id);
+            connectionManager.OnClientConnected(id);
+            
         }
     }
 }

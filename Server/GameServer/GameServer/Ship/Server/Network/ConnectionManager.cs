@@ -1,37 +1,29 @@
 ﻿using Ship.Network;
 using Ship.Network.Transport;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Ship.Shared.Utilities;
 
 namespace Ship.Server.Network
 {
-    class ConnectionInterface
+    public class ConnectionManager
     {
-        private static ConnectionInterface instance;
-        private static ClientHandler clientHandler;
+        private ClientManager clientManager;
 
-        public static ConnectionInterface GetInstance()
+        public ConnectionManager() 
         {
-            if(instance == null)
-            {
-                instance = new ConnectionInterface();
-            }
-
-            return instance;
+            
         }
 
-        private ConnectionInterface()
+        public void init(ClientManager clientHandler)
         {
-            clientHandler = ClientHandler.GetInstance();
+            this.clientManager = clientHandler;
         }
 
         #region send
 
-        private static void SendTCPDataToAll(Packet _packet)
+        private void SendTCPDataToAll(Packet _packet)
         {
             _packet.WriteLength();
-            foreach (var client in clientHandler.GetClients().Values) {
+            foreach (var client in clientManager.GetClients().Values) {
                 client.tcp.SendData(_packet);
             }
 
@@ -43,10 +35,10 @@ namespace Ship.Server.Network
             */
         }
 
-        private static void SendTCPDataToAll(int _exceptClient, Packet _packet)
+        private void SendTCPDataToAll(int _exceptClient, Packet _packet)
         {
             _packet.WriteLength();
-            foreach (var client in clientHandler.GetClients().Values)
+            foreach (var client in clientManager.GetClients().Values)
             {
                 if(client.id != _exceptClient)
                 {
@@ -66,15 +58,15 @@ namespace Ship.Server.Network
             */
         }
 
-        private static void SendTCPData(int _toClient, Packet _packet)
+        private void SendTCPData(int _toClient, Packet _packet)
         {
             _packet.WriteLength();
-            clientHandler.GetClients()[_toClient].tcp.SendData(_packet);
+            clientManager.GetClients()[_toClient].tcp.SendData(_packet);
         }
 
-        private static void SendUDPDataToAll(Packet _packet)
+        private void SendUDPDataToAll(Packet _packet)
         {
-            foreach (var client in clientHandler.GetClients().Values)
+            foreach (var client in clientManager.GetClients().Values)
             {
                 client.udp.SendData(_packet);
             }
@@ -88,10 +80,10 @@ namespace Ship.Server.Network
             */
         }
 
-        private static void SendUDPDataToAll(int _exceptClient, Packet _packet)
+        private void SendUDPDataToAll(int _exceptClient, Packet _packet)
         {
             _packet.WriteLength();
-            foreach (var client in clientHandler.GetClients().Values)
+            foreach (var client in clientManager.GetClients().Values)
             {
                 if (client.id != _exceptClient)
                 {
@@ -111,10 +103,10 @@ namespace Ship.Server.Network
             */
         }
 
-        private static void SendUDPData(int _toClient, Packet _packet)
+        private void SendUDPData(int _toClient, Packet _packet)
         {
             _packet.WriteLength();
-            clientHandler.GetClients()[_toClient].udp.SendData(_packet);
+            clientManager.GetClients()[_toClient].udp.SendData(_packet);
         }
 
         #endregion
