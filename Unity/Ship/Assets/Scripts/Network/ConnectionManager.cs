@@ -1,5 +1,7 @@
 ﻿using Ship.Network;
 using Ship.Network.Transport;
+using Ship.Shared.Utilities;
+using System;
 
 public class ConnectionManager
 {
@@ -49,10 +51,19 @@ private void SendTCPData(Packet _packet)
         client.ConnectToGameServer();
     }
 
-    public void onReceiveClientId(ClientId clientIdObj)
+    public void onServerError(ServerError serverError)
     {
-        //TODO
+        Log.error("Server error: " + serverError.errorCode);
     }
 
-
+    public void onReceiveClientId(ClientId clientIdObj)
+    {
+        using (Packet _packet = new Packet((int)PacketTypes.ClientPackets.CLIENT_ID_RECEIVED))
+        {
+            //clientIdObj.ToPacket(_packet);
+            ClientId aa = new ClientId(34);
+            aa.ToPacket(_packet);
+            SendTCPData(_packet);
+        }
+    }
 }

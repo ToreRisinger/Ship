@@ -1,6 +1,5 @@
 ﻿using Ship.Network;
 using Ship.Network.Transport;
-using Ship.Shared.Utilities;
 
 namespace Ship.Server.Network
 {
@@ -26,13 +25,6 @@ namespace Ship.Server.Network
             foreach (var client in clientManager.GetClients().Values) {
                 client.tcp.SendData(_packet);
             }
-
-            /*
-            for (int i = 1; i <= GameServer.MaxPlayers; i++)
-            {
-                GameServer.clients[i].tcp.SendData(_packet);
-            }
-            */
         }
 
         private void SendTCPDataToAll(int _exceptClient, Packet _packet)
@@ -45,17 +37,6 @@ namespace Ship.Server.Network
                     client.tcp.SendData(_packet);
                 }
             }
-
-            /*
-            _packet.WriteLength();
-            for (int i = 1; i < GameServer.MaxPlayers; i++)
-            {
-                if (i != _exceptClient)
-                {
-                    GameServer.clients[i].tcp.SendData(_packet);
-                }
-            }
-            */
         }
 
         private void SendTCPData(int _toClient, Packet _packet)
@@ -70,14 +51,6 @@ namespace Ship.Server.Network
             {
                 client.udp.SendData(_packet);
             }
-
-            /*
-            _packet.WriteLength();
-            for (int i = 1; i <= GameServer.MaxPlayers; i++)
-            {
-                GameServer.clients[i].udp.SendData(_packet);
-            }
-            */
         }
 
         private void SendUDPDataToAll(int _exceptClient, Packet _packet)
@@ -90,17 +63,6 @@ namespace Ship.Server.Network
                     client.udp.SendData(_packet);
                 }
             }
-
-            /*
-            _packet.WriteLength();
-            for (int i = 1; i < GameServer.MaxPlayers; i++)
-            {
-                if (i != _exceptClient)
-                {
-                    GameServer.clients[i].udp.SendData(_packet);
-                }
-            }
-            */
         }
 
         private void SendUDPData(int _toClient, Packet _packet)
@@ -112,6 +74,7 @@ namespace Ship.Server.Network
         #endregion
 
 
+        #region RX
         public void OnClientConnected(int clientId)
         {
             using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.ASSIGN_CLIENT_ID))
@@ -122,6 +85,43 @@ namespace Ship.Server.Network
                 SendTCPData(clientId, _packet);
             }
         }
+
+        public void OnClientIdReceived(int fromClient, ClientId clientId)
+        {
+            if(fromClient != clientId.clientId)
+            {
+                OnServerErrorResponse(fromClient, EServerErrorCode.WRONG_CLIENT_ID);
+                if(clientManager.GetClients().ContainsKey(fromClient))
+                {
+                    clientManager.GetClients()[fromClient].tcp.Disconnect();
+                }
+            } else
+            {
+                //Assume player is connected, create game object
+            }
+        }
+
+        #endregion
+
+
+
+        #region TX
+
+        private void OnServerErrorResponse(int toClient, EServerErrorCode errorCode)
+        {
+            using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.SERVER_ERROR))
+            {
+                ServerError serverErrorObj = new ServerError(errorCode);
+                serverErrorObj.ToPacket(_packet);
+
+                SendTCPData(toClient, _packet);
+            }
+        }
+
+
+
+
+        #endregion
 
     }
 }

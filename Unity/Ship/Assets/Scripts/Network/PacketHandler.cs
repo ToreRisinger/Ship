@@ -24,8 +24,6 @@ public class PacketHandler
 
     private PacketHandler()
     {
-        
-
         connectionManager = ConnectionManager.GetInstance();
         initializePacketHandlers();
     }
@@ -41,6 +39,11 @@ public class PacketHandler
         }
         
     }
+    public void onServerError(Packet packet)
+    {
+        ServerError serverError = ServerError.FromPacket(packet);
+        connectionManager.onServerError(serverError);
+    }
 
     public void onReceiveClientId(Packet packet)
     {
@@ -52,6 +55,7 @@ public class PacketHandler
     {
         packetHandlers = new Dictionary<int, PacketHandlerFunction>()
         {
+            { (int)ServerPackets.SERVER_ERROR, onServerError },
             { (int)ServerPackets.ASSIGN_CLIENT_ID, onReceiveClientId }
         };
 

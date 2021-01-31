@@ -12,18 +12,23 @@ namespace Ship.Server.Network
         private static UdpClient udpListener;
         private static int port;
         private static int maxConnections;
+
         private static ClientManager clientManager;
         private static ConnectionManager connectionManager;
+        private static PacketHandler packetHandler;
 
         public static void Start(int _port, int _maxConnections)
         {
             port = _port;
             maxConnections = _maxConnections;
+            ThreadManager.init();
             connectionManager = new ConnectionManager();
             clientManager = new ClientManager();
+            packetHandler = new PacketHandler();
 
             connectionManager.init(clientManager);
-            clientManager.init(connectionManager);
+            clientManager.init(connectionManager, packetHandler);
+            packetHandler.init(connectionManager);
 
             Log.info($"Setting up connection listener.");
 

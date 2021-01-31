@@ -15,13 +15,15 @@ namespace Ship.Server.Network
         public UDP udp;
 
         private ConnectionManager connectionManager;
+        private PacketHandler packetHandler;
 
-        public Client(int _clientId, ConnectionManager connectionManager)
+        public Client(int _clientId, ConnectionManager connectionManager, PacketHandler packetHandler)
         {
             id = _clientId;
             this.connectionManager = connectionManager;
+            this.packetHandler = packetHandler;
             tcp = new TCP(this, id);
-            udp = new UDP(id);
+            udp = new UDP(this, id);
         }
 
         public class TCP
@@ -117,7 +119,7 @@ namespace Ship.Server.Network
                         using (Packet _packet = new Packet(_packetBytes))
                         {
                             int _packetId = _packet.ReadInt();
-                            PacketHandler.onPacketReceived(_packetId, id, _packet);
+                            client.packetHandler.onPacketReceived(_packetId, id, _packet);
                         }
                     });
 
@@ -137,7 +139,10 @@ namespace Ship.Server.Network
 
             public void Disconnect()
             {
-                socket.Close();
+                if (socket != null)
+                {
+                    socket.Close();
+                }
                 stream = null;
                 receivedData = null;
                 receiveBuffer = null;
@@ -149,9 +154,11 @@ namespace Ship.Server.Network
         {
             public IPEndPoint endPoint;
             private int id;
+            private Client client;
 
-            public UDP(int _id)
+            public UDP(Client client, int _id)
             {
+                this.client = client;
                 id = _id;
             }
 
@@ -175,7 +182,7 @@ namespace Ship.Server.Network
                     using(Packet _packet = new Packet(_packetBytes))
                     {
                         int _packetId = _packet.ReadInt();
-                        PacketHandler.onPacketReceived(_packetId, id, _packet);
+                        client.packetHandler.onPacketReceived(_packetId, id, _packet);
                     }
                 });
             }
@@ -188,7 +195,15 @@ namespace Ship.Server.Network
 
         private void Disconnect()
         {
-            Log.info($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+            if(tcp.socket != null)
+            {
+                Log.info($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+            } 
+            else
+            {
+                Log.info($"Client has disconnected.");
+            }
+            
             //GameLogic.onPlayerLeft(id);
             tcp.Disconnect();
             udp.Disconnect();

@@ -8,7 +8,8 @@ namespace Ship.Network
         /// </summary>
         public enum ServerPackets
         {
-            ASSIGN_CLIENT_ID = 1,
+            SERVER_ERROR = 1,
+            ASSIGN_CLIENT_ID,
         }
 
         /// <summary>
@@ -16,7 +17,7 @@ namespace Ship.Network
         /// </summary>
         public enum ClientPackets
         {
-            
+            CLIENT_ID_RECEIVED = 1,
         }
 
     }

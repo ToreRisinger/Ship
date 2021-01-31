@@ -8,6 +8,9 @@ namespace Ship.Server.Network
     public class ClientManager
     {
         private Dictionary<int, Client> clients = new Dictionary<int, Client>();
+        private PacketHandler packetHandler;
+        private ConnectionManager connectionManager;
+
 
         public ClientManager()
         {
@@ -15,8 +18,10 @@ namespace Ship.Server.Network
         }
 
 
-        public void init(ConnectionManager connectionManager)
+        public void init(ConnectionManager connectionManager, PacketHandler packetHandler)
         {
+            this.connectionManager = connectionManager;
+            this.packetHandler = packetHandler;
             initilizeClients(connectionManager);
         }
 
@@ -46,7 +51,7 @@ namespace Ship.Server.Network
         {
             for (int i = 1; i <= Com.GetMaxConnections(); i++)
             {
-                clients.Add(i, new Client(i, connectionManager));
+                clients.Add(i, new Client(i, connectionManager, packetHandler));
             }
         }
     }

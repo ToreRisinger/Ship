@@ -1,6 +1,4 @@
-﻿using Ship.Network;
-
-namespace Ship.Network.Transport
+﻿namespace Ship.Network.Transport
 {
     public class ClientId
     {
