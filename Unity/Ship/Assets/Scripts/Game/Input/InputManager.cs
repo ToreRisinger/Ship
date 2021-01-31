@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Ship.Shared.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -70,6 +71,7 @@ namespace Ship.Input
 
         private void Awake()
         {
+            Log.debug("InputManager.Awake");
             holdKeys = new HashSet<KeyCode>();
             pressedKeys = new HashSet<KeyCode>();
 

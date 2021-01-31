@@ -1,34 +1,30 @@
 ﻿using Ship.Network;
 using Ship.Network.Transport;
-using Ship.Shared.Utilities;
-using UnityEngine;
 
-public class ConnectionManager : MonoBehaviour
+public class ConnectionManager
 {
-    public static ConnectionManager instance;
+    private static ConnectionManager instance;
     private Client client;
 
-    private void Awake()
+    public static ConnectionManager GetInstance()
     {
         if (instance == null)
         {
-            instance = this;
+            instance = new ConnectionManager();
         }
-        else if (instance != this)
-        {
-            Log.error("Instance already exists, destroying object!");
-            Destroy(this);
-        }
+
+        return instance;
     }
 
-    private void Start()
+    private ConnectionManager()
     {
-        client = new Client();
+        client = Client.GetInstance();
     }
 
-    #region send
 
-    private void SendTCPData(Packet _packet)
+#region send
+
+private void SendTCPData(Packet _packet)
     {
         _packet.WriteLength();
         client.tcp.SendData(_packet);

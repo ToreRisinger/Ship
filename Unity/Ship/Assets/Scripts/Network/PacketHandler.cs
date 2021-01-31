@@ -2,33 +2,31 @@
 using Ship.Network.Transport;
 using Ship.Shared.Utilities;
 using System.Collections.Generic;
-using UnityEngine;
 using static Ship.Network.PacketTypes;
 
-public class PacketHandler : MonoBehaviour
+public class PacketHandler
 {
-    public static PacketHandler instance;
-    public static ConnectionManager connectionManager;
-    public delegate void PacketHandlerFunction(Packet _packet);
-    public Dictionary<int, PacketHandlerFunction> packetHandlers;
+    private static PacketHandler instance;
+    private static ConnectionManager connectionManager;
+    private delegate void PacketHandlerFunction(Packet _packet);
+    private Dictionary<int, PacketHandlerFunction> packetHandlers;
 
-    private void Awake()
+    public static PacketHandler GetInstance()
     {
         if (instance == null)
         {
-            instance = this;
-            
+            instance = new PacketHandler();
+
         }
-        else if (instance != this)
-        {
-            Log.error("Instance already exists, destroying object!");
-            Destroy(this);
-        }
+
+        return instance;
     }
 
-    private void Start()
+    private PacketHandler()
     {
-        connectionManager = ConnectionManager.instance;
+        
+
+        connectionManager = ConnectionManager.GetInstance();
         initializePacketHandlers();
     }
 

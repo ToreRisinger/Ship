@@ -1,5 +1,7 @@
-﻿using Ship.Shared.Utilities;
+﻿using Ship.Game.Event;
+using Ship.Shared.Utilities;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -20,12 +22,20 @@ public class UIManager : MonoBehaviour
             Log.error("Instance already exists, destroying object!");
             Destroy(this);
         }
+
+        Log.setupLogger(ELogLevel.DEBUG, false, print);
     }
 
     public void ConnectToServer()
     {
         startMenu.SetActive(false);
         usernameField.interactable = false;
-        ConnectionManager.instance.ConnectToGameServer();
+        SceneManager.LoadScene("Game");
     }
+
+    private void print(string msg)
+    {
+        Debug.Log(msg);
+    }
+
 }

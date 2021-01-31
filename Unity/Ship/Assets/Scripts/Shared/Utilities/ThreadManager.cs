@@ -6,9 +6,17 @@ namespace Ship.Shared.Utilities
 
     public class ThreadManager
     {
-        private static readonly List<Action> executeOnMainThread = new List<Action>();
-        private static readonly List<Action> executeCopiedOnMainThread = new List<Action>();
-        private static bool actionToExecuteOnMainThread = false;
+        private static List<Action> executeOnMainThread;
+        private static List<Action> executeCopiedOnMainThread;
+        private static bool actionToExecuteOnMainThread;
+
+        public static void init()
+        {
+            executeOnMainThread = new List<Action>();
+            executeCopiedOnMainThread = new List<Action>();
+            actionToExecuteOnMainThread = false;
+        }
+
 
         /// <summary>Sets an action to be executed on the main thread.</summary>
         /// <param name="_action">The action to be executed on the main thread.</param>

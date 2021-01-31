@@ -10,6 +10,7 @@ namespace Ship.Input
         private static HashSet<EPlayerAction> actionActivations;
         private void Awake()
         {
+            Log.debug("ActionManager.Awake");
             actionActivations = new HashSet<EPlayerAction>();
         }
 

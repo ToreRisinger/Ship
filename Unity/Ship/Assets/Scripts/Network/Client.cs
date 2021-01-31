@@ -8,7 +8,7 @@ using Ship.Shared.Utilities;
 public class Client
 {
 
-    public static Client clientInstance;
+    private static Client instance;
     public static int dataBufferSize = 4096;
 
     public string ip = "127.0.0.1";
@@ -19,15 +19,19 @@ public class Client
 
     private bool isConnected = false;
 
-    public Client()
+    public static Client GetInstance()
     {
-        if(clientInstance == null)
+        if (instance == null)
         {
-            clientInstance = this;
+            instance = new Client();
         }
 
-        tcp = new TCP();
-        udp = new UDP();
+        return instance;
+    }
+    private Client()
+    {
+        tcp = new TCP(this);
+        udp = new UDP(this);
     }
 
     public void ConnectToGameServer()
@@ -54,6 +58,13 @@ public class Client
         private NetworkStream stream;
         private Packet receivedData;
         private byte[] receiveBuffer;
+        private Client client;
+        
+
+        public TCP(Client client)
+        {
+            this.client = client;
+        }
 
         public void Connect()
         {
@@ -65,7 +76,7 @@ public class Client
             };
 
             receiveBuffer = new byte[dataBufferSize];
-            socket.BeginConnect(clientInstance.ip, clientInstance.port, ConnectCallback, socket);
+            socket.BeginConnect(client.ip, client.port, ConnectCallback, socket);
         }
 
         private void ConnectCallback(IAsyncResult _result)
@@ -107,7 +118,7 @@ public class Client
                 int _byteLength = stream.EndRead(_result);
                 if (_byteLength <= 0)
                 {
-                    clientInstance.Disconnect();
+                    client.Disconnect();
                     return;
                 }
 
@@ -147,7 +158,7 @@ public class Client
                     using (Packet _packet = new Packet(_packetBytes))
                     {
                         int _packetId = _packet.ReadInt();
-                        PacketHandler.instance.onPacketReceived(_packetId, _packet);
+                        PacketHandler.GetInstance().onPacketReceived(_packetId, _packet);
                     }
                 });
 
@@ -167,7 +178,7 @@ public class Client
 
         private void Disconnect()
         {
-            clientInstance.Disconnect();
+            client.Disconnect();
 
             stream = null;
             receivedData = null;
@@ -180,10 +191,12 @@ public class Client
     {
         public UdpClient socket;
         public IPEndPoint endPoint;
+        private Client client;
 
-        public UDP()
+        public UDP(Client client)
         {
-            endPoint = new IPEndPoint(IPAddress.Parse(clientInstance.ip), clientInstance.port);
+            this.client = client;
+            endPoint = new IPEndPoint(IPAddress.Parse(client.ip), client.port);
 
         }
 
@@ -204,7 +217,7 @@ public class Client
         {
             try
             {
-                _packet.InsertInt(clientInstance.myId);
+                _packet.InsertInt(client.myId);
                 if(socket != null)
                 {
                     socket.BeginSend(_packet.ToArray(), _packet.Length(), null, null);
@@ -224,7 +237,7 @@ public class Client
 
                 if(_data.Length < 4)
                 {
-                    clientInstance.Disconnect();
+                    client.Disconnect();
                     return;
                 }
 
@@ -249,14 +262,14 @@ public class Client
                 using (Packet _packet = new Packet(_data))
                 {
                     int _packetId = _packet.ReadInt();
-                    PacketHandler.instance.onPacketReceived(_packetId, _packet);
+                    PacketHandler.GetInstance().onPacketReceived(_packetId, _packet);
                 }
             });
         }
 
         private void Disconnect()
         {
-            clientInstance.Disconnect();
+            client.Disconnect();
 
             endPoint = null;
             socket = null;
