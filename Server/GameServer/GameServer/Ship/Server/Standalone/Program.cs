@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Server.Game;
 using Ship.Server.Network;
 using Ship.Shared.Utilities;
 
@@ -18,6 +19,7 @@ namespace Ship.Server.Standalone
         private static ClientManager clientManager;
         private static ConnectionManager connectionManager;
         private static PacketHandler packetHandler;
+        private static GameManager gameManager;
 
         static void Main(string[] args)
         {
@@ -44,13 +46,16 @@ namespace Ship.Server.Standalone
         private static void init()
         {
             ThreadManager.init();
+
+            gameManager = new GameManager();
             connectionManager = new ConnectionManager();
             clientManager = new ClientManager();
             packetHandler = new PacketHandler();
 
-            connectionManager.init(clientManager);
+            connectionManager.init(clientManager, gameManager);
             clientManager.init(connectionManager, packetHandler, MAX_NUMBER_OF_CONNECTIONS);
             packetHandler.init(connectionManager);
+            gameManager.init();
 
             Com.Start(clientManager, PORT);
         }
@@ -67,7 +72,9 @@ namespace Ship.Server.Standalone
 
                     ThreadManager.UpdateMain();
 
-                    //GameLogic.Update();
+                    gameManager.update();
+                    connectionManager.update();
+
 
                     _nextLoop = _nextLoop.AddMilliseconds(MS_PER_TICK);
 

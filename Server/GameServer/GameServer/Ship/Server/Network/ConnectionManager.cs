@@ -1,4 +1,5 @@
-﻿using Ship.Network;
+﻿using Server.Game;
+using Ship.Network;
 using Ship.Network.Transport;
 
 namespace Ship.Server.Network
@@ -6,15 +7,22 @@ namespace Ship.Server.Network
     public class ConnectionManager
     {
         private ClientManager clientManager;
+        private GameManager gameManager;
 
         public ConnectionManager() 
         {
             
         }
 
-        public void init(ClientManager clientHandler)
+        public void init(ClientManager clientHandler, GameManager gameManager)
         {
             this.clientManager = clientHandler;
+            this.gameManager = gameManager;
+        }
+
+        public void update()
+        {
+            //TODO each tick, get gamestate for each client and events from GameManager and send to all clients
         }
 
         #region send
@@ -86,6 +94,11 @@ namespace Ship.Server.Network
             }
         }
 
+        public void OnClientDisconnected(int clientId)
+        {
+            gameManager.OnClientLeave(clientId);
+        }
+
         public void OnClientIdReceived(int fromClient, ClientId clientId)
         {
             if(fromClient != clientId.clientId)
@@ -93,16 +106,15 @@ namespace Ship.Server.Network
                 OnServerErrorResponse(fromClient, EServerErrorCode.WRONG_CLIENT_ID);
                 if(clientManager.GetClients().ContainsKey(fromClient))
                 {
-                    clientManager.GetClients()[fromClient].tcp.Disconnect();
+                    clientManager.GetClients()[fromClient].Disconnect();
                 }
             } else
             {
-                //Assume player is connected, create game object
+                gameManager.OnClientJoin(fromClient, "username");
             }
         }
 
         #endregion
-
 
 
         #region TX

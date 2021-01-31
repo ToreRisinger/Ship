@@ -193,18 +193,12 @@ namespace Ship.Server.Network
             }
         }
 
-        private void Disconnect()
+        public void Disconnect()
         {
-            if(tcp.socket != null)
-            {
-                Log.info($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
-            } 
-            else
-            {
-                Log.info($"Client has disconnected.");
-            }
-            
-            //GameLogic.onPlayerLeft(id);
+            Log.info($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+
+            connectionManager.OnClientDisconnected(id);
+
             tcp.Disconnect();
             udp.Disconnect();
         }
