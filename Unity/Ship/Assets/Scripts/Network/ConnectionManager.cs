@@ -60,9 +60,7 @@ private void SendTCPData(Packet _packet)
     {
         using (Packet _packet = new Packet((int)PacketTypes.ClientPackets.CLIENT_ID_RECEIVED))
         {
-            //clientIdObj.ToPacket(_packet);
-            ClientId aa = new ClientId(34);
-            aa.ToPacket(_packet);
+            clientIdObj.ToPacket(_packet);
             SendTCPData(_packet);
         }
     }

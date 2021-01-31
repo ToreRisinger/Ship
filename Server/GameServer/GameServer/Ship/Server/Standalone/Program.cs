@@ -15,6 +15,10 @@ namespace Ship.Server.Standalone
 
         private static bool isRunning = false;
 
+        private static ClientManager clientManager;
+        private static ConnectionManager connectionManager;
+        private static PacketHandler packetHandler;
+
         static void Main(string[] args)
         {
             Log.setupLogger(logLevel);
@@ -29,7 +33,7 @@ namespace Ship.Server.Standalone
                 Thread mainThread = new Thread(new ThreadStart(MainThread));
                 mainThread.Start();
 
-                Com.Start(PORT, MAX_NUMBER_OF_CONNECTIONS);
+                init();
             }
             catch (Exception e)
             {
@@ -37,11 +41,24 @@ namespace Ship.Server.Standalone
             }
         }
 
+        private static void init()
+        {
+            ThreadManager.init();
+            connectionManager = new ConnectionManager();
+            clientManager = new ClientManager();
+            packetHandler = new PacketHandler();
+
+            connectionManager.init(clientManager);
+            clientManager.init(connectionManager, packetHandler, MAX_NUMBER_OF_CONNECTIONS);
+            packetHandler.init(connectionManager);
+
+            Com.Start(clientManager, PORT);
+        }
+
         private static void MainThread()
         {
             Log.info($"Main thread started. Running at {TICKS_PER_SEC} ticks per second.");
             DateTime _nextLoop = DateTime.Now;
-
 
             while (isRunning)
             {

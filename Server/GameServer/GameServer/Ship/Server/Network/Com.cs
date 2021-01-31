@@ -14,21 +14,12 @@ namespace Ship.Server.Network
         private static int maxConnections;
 
         private static ClientManager clientManager;
-        private static ConnectionManager connectionManager;
-        private static PacketHandler packetHandler;
 
-        public static void Start(int _port, int _maxConnections)
+        public static void Start(ClientManager _clientManager, int _port)
         {
+            clientManager = _clientManager;
             port = _port;
-            maxConnections = _maxConnections;
-            ThreadManager.init();
-            connectionManager = new ConnectionManager();
-            clientManager = new ClientManager();
-            packetHandler = new PacketHandler();
-
-            connectionManager.init(clientManager);
-            clientManager.init(connectionManager, packetHandler);
-            packetHandler.init(connectionManager);
+            
 
             Log.info($"Setting up connection listener.");
 
@@ -40,21 +31,6 @@ namespace Ship.Server.Network
             udpListener.BeginReceive(UDPReceiveCallback, null);
 
             Log.info($"Now listening on port {port}.");
-        }
-
-        public static ClientManager GetClientHandler()
-        {
-            return clientManager;
-        }
-
-        public static ConnectionManager GetConnectionManager()
-        {
-            return connectionManager;
-        }
-
-        public static int GetMaxConnections()
-        {
-            return maxConnections;
         }
 
         private static void TCPConnectCallback(IAsyncResult _result)

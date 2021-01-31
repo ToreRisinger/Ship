@@ -11,6 +11,8 @@ namespace Ship.Server.Network
         private PacketHandler packetHandler;
         private ConnectionManager connectionManager;
 
+        private int maxNrOfClients;
+
 
         public ClientManager()
         {
@@ -18,10 +20,11 @@ namespace Ship.Server.Network
         }
 
 
-        public void init(ConnectionManager connectionManager, PacketHandler packetHandler)
+        public void init(ConnectionManager connectionManager, PacketHandler packetHandler, int maxNrOfClients)
         {
             this.connectionManager = connectionManager;
             this.packetHandler = packetHandler;
+            this.maxNrOfClients = maxNrOfClients;
             initilizeClients(connectionManager);
         }
 
@@ -29,7 +32,7 @@ namespace Ship.Server.Network
         {
             Log.info($"Incomming connection from {tcpClient.Client.RemoteEndPoint}...");
 
-            for (int i = 1; i <= Com.GetMaxConnections(); i++)
+            for (int i = 1; i <= maxNrOfClients; i++)
             {
                 if (clients[i].tcp.socket == null)
                 {
@@ -49,7 +52,7 @@ namespace Ship.Server.Network
 
         private void initilizeClients(ConnectionManager connectionManager)
         {
-            for (int i = 1; i <= Com.GetMaxConnections(); i++)
+            for (int i = 1; i <= maxNrOfClients; i++)
             {
                 clients.Add(i, new Client(i, connectionManager, packetHandler));
             }
