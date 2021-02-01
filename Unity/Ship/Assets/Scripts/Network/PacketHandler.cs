@@ -41,13 +41,13 @@ public class PacketHandler
     }
     public void onServerError(Packet packet)
     {
-        ServerError serverError = ServerError.FromPacket(packet);
+        ServerError serverError = new ServerError(packet);
         connectionManager.onServerError(serverError);
     }
 
     public void onReceiveClientId(Packet packet)
     {
-        ClientId clientId = ClientId.FromPacket(packet);
+        ClientId clientId = new ClientId(packet);
         connectionManager.onReceiveClientId(clientId);
     }
 

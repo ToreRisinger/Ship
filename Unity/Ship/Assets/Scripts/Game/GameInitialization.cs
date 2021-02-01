@@ -1,5 +1,4 @@
-﻿using Ship.Game.Event;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameInitialization : MonoBehaviour
 {

@@ -32,10 +32,10 @@ namespace Ship.Server.Standalone
                 Console.Title = "Game Server";
                 isRunning = true;
 
+                init();
+
                 Thread mainThread = new Thread(new ThreadStart(MainThread));
                 mainThread.Start();
-
-                init();
             }
             catch (Exception e)
             {
@@ -55,7 +55,7 @@ namespace Ship.Server.Standalone
             connectionManager.init(clientManager, gameManager);
             clientManager.init(connectionManager, packetHandler, MAX_NUMBER_OF_CONNECTIONS);
             packetHandler.init(connectionManager);
-            gameManager.init();
+            gameManager.init(connectionManager);
 
             Com.Start(clientManager, PORT);
         }
@@ -73,9 +73,7 @@ namespace Ship.Server.Standalone
                     ThreadManager.UpdateMain();
 
                     gameManager.update();
-                    connectionManager.update();
-
-
+                    
                     _nextLoop = _nextLoop.AddMilliseconds(MS_PER_TICK);
 
                     if (_nextLoop > DateTime.Now)

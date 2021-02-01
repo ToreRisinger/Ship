@@ -1,4 +1,5 @@
 ﻿using Server.Game;
+using Ship.Game.Model;
 using Ship.Network;
 using Ship.Network.Transport;
 
@@ -127,6 +128,15 @@ namespace Ship.Server.Network
                 serverErrorObj.ToPacket(_packet);
 
                 SendTCPData(toClient, _packet);
+            }
+        }
+
+        public void OnSendGameState(GameState gameState)
+        {
+            using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.GAME_STATE))
+            {
+                gameState.ToPacket(_packet);
+                SendTCPDataToAll(_packet);
             }
         }
 

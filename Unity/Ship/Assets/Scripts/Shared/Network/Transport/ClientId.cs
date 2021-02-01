@@ -1,6 +1,6 @@
 ﻿namespace Ship.Network.Transport
 {
-    public class ClientId
+    public class ClientId : Transportable
     {
         public int clientId;
 
@@ -9,13 +9,12 @@
             clientId = _clientId;
         }
 
-        public static ClientId FromPacket(Packet _packet)
+        public ClientId(Packet _packet) : base(_packet)
         {
-            int readClientId = _packet.ReadInt();
-            return new ClientId(readClientId);
+            clientId = _packet.ReadInt();
         }
 
-        public void ToPacket(Packet _packet)
+        public override void ToPacket(Packet _packet)
         {
             _packet.Write(clientId);
         }

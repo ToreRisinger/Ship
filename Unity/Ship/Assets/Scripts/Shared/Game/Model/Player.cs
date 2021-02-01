@@ -1,10 +1,13 @@
 ﻿
+using Ship.Network;
+using Ship.Network.Transport;
+
 namespace Ship.Game.Model
 {
-    public class Player
+    public class Player : Transportable
     {
-        private int playerId;
-        private string username;
+        public int playerId;
+        public string username;
 
         public Player(int playerId, string username)
         {
@@ -12,14 +15,16 @@ namespace Ship.Game.Model
             this.username = username;
         }
 
-        public int GetPlayerId()
+        public Player(Packet _packet) : base(_packet)
         {
-            return playerId;
+            playerId = _packet.ReadInt();
+            username = _packet.ReadString();
         }
 
-        public string GetUsername()
+        public override void ToPacket(Packet _packet)
         {
-            return username;
+            _packet.Write(playerId);
+            _packet.Write(username);
         }
     }
 }

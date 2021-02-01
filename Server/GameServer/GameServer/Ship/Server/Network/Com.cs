@@ -11,7 +11,6 @@ namespace Ship.Server.Network
         private static TcpListener tcpListener;
         private static UdpClient udpListener;
         private static int port;
-        private static int maxConnections;
 
         private static ClientManager clientManager;
 

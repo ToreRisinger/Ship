@@ -1,7 +1,7 @@
 ﻿
 namespace Ship.Network.Transport
 {
-    public class ServerError
+    public class ServerError : Transportable
     {
         public EServerErrorCode errorCode;
 
@@ -10,13 +10,12 @@ namespace Ship.Network.Transport
             this.errorCode = errorCode;
         }
 
-        public static ServerError FromPacket(Packet _packet)
+        public ServerError(Packet _packet) : base(_packet)
         {
-            EServerErrorCode readErrorCode = (EServerErrorCode)_packet.ReadInt();
-            return new ServerError(readErrorCode);
+            errorCode = (EServerErrorCode)_packet.ReadInt();
         }
 
-        public void ToPacket(Packet _packet)
+        public override void ToPacket(Packet _packet)
         {
             _packet.Write((int)errorCode);
         }
