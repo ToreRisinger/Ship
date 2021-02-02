@@ -19,6 +19,7 @@ namespace Ship.Game.Model
 
         public GameState(Packet packet) : base(packet)
         {
+            events = new Queue<EventObject>();
             turnNumber = packet.ReadInt();
             int eventCount = packet.ReadInt();
             for (int i = 0; i < eventCount; i++)
@@ -35,7 +36,9 @@ namespace Ship.Game.Model
             Queue<EventObject> tmpEvents = new Queue<EventObject>(events);
             for (int i = 0; i < events.Count; i++)
             {
-                tmpEvents.Dequeue().ToPacket(packet);
+                EventObject evnt = tmpEvents.Dequeue();
+                packet.Write((int)evnt.GetEventType());
+                evnt.ToPacket(packet);
             }
         }
 

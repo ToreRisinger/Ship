@@ -1,5 +1,5 @@
 ﻿
-namespace Ship.Input
+namespace Ship.Game.Input
 {
     public enum EPlayerAction
     {

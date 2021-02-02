@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Ship.Input
+namespace Ship.Game.Input
 {
     public class InputManager : MonoBehaviour
     {

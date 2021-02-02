@@ -1,4 +1,5 @@
-﻿using Ship.Network;
+﻿using Ship.Game.Model;
+using Ship.Network;
 using Ship.Network.Transport;
 using Ship.Shared.Utilities;
 using System.Collections.Generic;
@@ -51,12 +52,19 @@ public class PacketHandler
         connectionManager.onReceiveClientId(clientId);
     }
 
+    public void onReceiveGameState(Packet packet)
+    {
+        GameState gameState = new GameState(packet);
+        connectionManager.onReceiveGameState(gameState);
+    }
+
     private void initializePacketHandlers()
     {
         packetHandlers = new Dictionary<int, PacketHandlerFunction>()
         {
             { (int)ServerPackets.SERVER_ERROR, onServerError },
-            { (int)ServerPackets.ASSIGN_CLIENT_ID, onReceiveClientId }
+            { (int)ServerPackets.ASSIGN_CLIENT_ID, onReceiveClientId },
+            { (int)ServerPackets.GAME_STATE, onReceiveGameState }
         };
 
     }

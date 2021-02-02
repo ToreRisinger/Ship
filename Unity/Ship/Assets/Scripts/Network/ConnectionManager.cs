@@ -1,7 +1,10 @@
-﻿using Ship.Network;
+﻿using Ship.Game;
+using Ship.Game.Event;
+using Ship.Game.Model;
+using Ship.Network;
 using Ship.Network.Transport;
 using Ship.Shared.Utilities;
-using System;
+using UnityEngine.SceneManagement;
 
 public class ConnectionManager
 {
@@ -22,7 +25,6 @@ public class ConnectionManager
     {
         client = Client.GetInstance();
     }
-
 
 #region send
 
@@ -51,17 +53,34 @@ private void SendTCPData(Packet _packet)
         client.ConnectToGameServer();
     }
 
+    public void OnDisconnect()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void onServerError(ServerError serverError)
     {
         Log.error("Server error: " + serverError.errorCode);
+        client.Disconnect();
     }
 
     public void onReceiveClientId(ClientId clientIdObj)
     {
+        GameModelManager.instance.OnPlayerIdAssigned(clientIdObj.clientId);
+
         using (Packet _packet = new Packet((int)PacketTypes.ClientPackets.CLIENT_ID_RECEIVED))
         {
             clientIdObj.ToPacket(_packet);
             SendTCPData(_packet);
+        }
+    }
+
+    public void onReceiveGameState(GameState gameState)
+    {
+        while(gameState.events.Count > 0)
+        {
+            EventObject evnt = gameState.events.Dequeue();
+            EventManager.instance.PushEvent(evnt);
         }
     }
 }

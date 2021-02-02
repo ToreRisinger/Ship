@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Ship.Game.Event
 {
-
     public class EventManager : MonoBehaviour
     {
 
@@ -47,29 +46,32 @@ namespace Ship.Game.Event
             }
         }
 
-        public void AddListener(int obj, EEventType eventType, EventHandlerFunction eventHandlerFunction)
+        public void AddListener(Object obj, EEventType eventType, EventHandlerFunction eventHandlerFunction)
         {
-            if(!listeners.ContainsKey(obj))
+            int hashCode = obj.GetHashCode();
+            if (!listeners.ContainsKey(hashCode))
             {
-                listeners.Add(obj, new Dictionary<EEventType, EventHandlerFunction>());
+                listeners.Add(hashCode, new Dictionary<EEventType, EventHandlerFunction>());
             }
 
-            listeners[obj].Add(eventType, eventHandlerFunction);
+            listeners[hashCode].Add(eventType, eventHandlerFunction);
         }
 
-        public void RemoveListener(int obj, EEventType eventType, EventHandlerFunction eventHandlerFunction)
+        public void RemoveListener(Object obj, EEventType eventType, EventHandlerFunction eventHandlerFunction)
         {
-            if (listeners.ContainsKey(obj) && listeners[obj].ContainsKey(eventType))
+            int hashCode = obj.GetHashCode();
+            if (listeners.ContainsKey(hashCode) && listeners[hashCode].ContainsKey(eventType))
             {
-                listeners[obj].Remove(eventType);
+                listeners[hashCode].Remove(eventType);
             }
         }
 
-        public void RemoveAllListeners(int obj)
+        public void RemoveAllListeners(Object obj)
         {
-            if (listeners.ContainsKey(obj))
+            int hashCode = obj.GetHashCode();
+            if (listeners.ContainsKey(hashCode))
             {
-                listeners.Remove(obj);
+                listeners.Remove(hashCode);
             }
         }
 

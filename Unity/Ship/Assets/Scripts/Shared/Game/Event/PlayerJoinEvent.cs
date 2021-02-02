@@ -12,7 +12,7 @@ namespace Ship.Game.Event
             this.player = player;
         }
 
-        public PlayerJoinEvent(Packet _packet) : base(_packet)
+        public PlayerJoinEvent(Packet _packet) : base(EEventType.PLAYER_JOINED_EVENT)
         {
             player = new Player(_packet);
         }

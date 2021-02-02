@@ -47,7 +47,7 @@ public class Client
             isConnected = false;
             tcp.socket.Close();
             udp.socket.Close();
-
+            ConnectionManager.GetInstance().OnDisconnect();
             Log.info("Disconnected from server.");
         }
     }
