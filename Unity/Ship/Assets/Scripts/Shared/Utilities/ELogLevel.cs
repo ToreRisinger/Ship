@@ -1,5 +1,5 @@
 ﻿
-namespace Ship.Shared.Utilities
+namespace Ship.Utilities
 {
     enum ELogLevel
     {

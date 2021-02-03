@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ship.Shared.Utilities
+namespace Ship.Utilities
 {
     class Log
     {

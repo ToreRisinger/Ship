@@ -1,5 +1,5 @@
 ﻿using Ship.Network;
-using Ship.Shared.Utilities;
+using Ship.Utilities;
 using System;
 using System.Net;
 using System.Net.Sockets;

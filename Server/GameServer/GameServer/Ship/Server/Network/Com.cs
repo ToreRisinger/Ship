@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using Ship.Network;
-using Ship.Shared.Utilities;
+using Ship.Utilities;
 
 namespace Ship.Server.Network
 {

@@ -1,4 +1,4 @@
-﻿using Ship.Shared.Utilities;
+﻿using Ship.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 

@@ -46,6 +46,7 @@ namespace Ship.Game.Model
         {
             {(int)EEventType.PLAYER_JOINED_EVENT, (packet) => { return new PlayerJoinEvent(packet); } },
             {(int)EEventType.PLAYER_LEFT_EVENT, (packet) => { return new PlayerLeftEvent(packet); } },
+            {(int)EEventType.CHARACTER_SPAWNED, (packet) => { return new CharacterSpawnEvent(packet); } },
         };
 
         private EventObject ReadEventFromPacket(Packet _packet)

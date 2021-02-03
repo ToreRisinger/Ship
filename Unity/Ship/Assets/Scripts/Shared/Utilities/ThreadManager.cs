@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Ship.Shared.Utilities
+namespace Ship.Utilities
 {
 
     public class ThreadManager

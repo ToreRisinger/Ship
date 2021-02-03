@@ -1,5 +1,4 @@
-﻿using Ship.Game.Event;
-using Ship.Shared.Utilities;
+﻿using Ship.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

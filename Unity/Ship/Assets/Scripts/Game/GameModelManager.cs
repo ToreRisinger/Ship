@@ -1,6 +1,6 @@
 ﻿using Ship.Game.Event;
 using Ship.Game.Model;
-using Ship.Shared.Utilities;
+using Ship.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +12,9 @@ namespace Ship.Game
         public static GameModelManager instance;
 
         private int thisPlayerId;
+
         private Dictionary<int, Player> players;
+        private Dictionary<int, Character> characters;
 
         private void Awake()
         {
@@ -28,8 +30,15 @@ namespace Ship.Game
             }
 
             players = new Dictionary<int, Player>();
+            characters = new Dictionary<int, Character>();
             thisPlayerId = -1;
             registerToEvents();
+        }
+
+        private void registerToEvents()
+        {
+            EventManager.instance.AddListener(this, EEventType.PLAYER_JOINED_EVENT, OnPlayerJoined);
+            EventManager.instance.AddListener(this, EEventType.CHARACTER_SPAWNED, OnCharacterSpawn);
         }
 
         void Start()
@@ -41,6 +50,8 @@ namespace Ship.Game
         {
 
         }
+
+        #region events
 
         public void OnPlayerIdAssigned(int thisPlayerId)
         {
@@ -54,13 +65,23 @@ namespace Ship.Game
             Player player = playerJoinedEvent.player;
             players.Add(player.playerId, player);
 
-            Log.debug("[GameModelManager] Player joined: id: " + playerJoinedEvent.player.playerId);
+            Log.debug("[GameModelManager] Player joined: id: " + player.playerId);
         }
 
-        private void registerToEvents()
+        private void OnCharacterSpawn(EventObject evnt)
         {
-            EventManager.instance.AddListener(this, EEventType.PLAYER_JOINED_EVENT, OnPlayerJoined);
+            CharacterSpawnEvent characterSpawnEvent = (CharacterSpawnEvent)evnt;
+            Character character = characterSpawnEvent.character;
+            characters.Add(character.id, character);
+
+            Log.debug("[GameModelManager] Character spawned: id: " + character.id + ", parent player id: " + character.owningPlayerId);
         }
+
+        #endregion
+
+
+
+
     }
 }
 

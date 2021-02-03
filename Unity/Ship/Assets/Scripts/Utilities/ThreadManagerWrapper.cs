@@ -1,4 +1,4 @@
-﻿using Ship.Shared.Utilities;
+﻿using Ship.Utilities;
 using UnityEngine;
 
 public class ThreadManagerWrapper : MonoBehaviour

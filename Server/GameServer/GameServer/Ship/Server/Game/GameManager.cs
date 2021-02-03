@@ -1,7 +1,9 @@
 ﻿using Ship.Game.Event;
 using Ship.Game.Model;
 using Ship.Server.Network;
+using Ship.Utilities;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Server.Game
 {
@@ -9,7 +11,10 @@ namespace Server.Game
     {
 
         private ConnectionManager connectionManager;
+
         private Dictionary<int, Player> players;
+        private Dictionary<int, Character> characters;
+
         private Queue<EventObject> events;
         public Dictionary<int, GameState> gameStates;
         private int turnNumber;
@@ -32,6 +37,7 @@ namespace Server.Game
         {
             this.connectionManager = connectionManager;
             players = new Dictionary<int, Player>();
+            characters = new Dictionary<int, Character>();
             events = new Queue<EventObject>();
             gameStates = new Dictionary<int, GameState>();
             turnNumber = 0;
@@ -58,9 +64,15 @@ namespace Server.Game
         public void OnClientJoin(int clientId, string username)
         {
             Player player = new Player(clientId, username);
-            PlayerJoinEvent evnt = new PlayerJoinEvent(player);
-            pushEvent(evnt);
+            PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(player);
+            pushEvent(playerJoinEvent);
+
+            Character character = new Character(player.playerId, IdGenerator.getServerId(), new Vector2(0, 0));
+            CharacterSpawnEvent characterSpawnEvent = new CharacterSpawnEvent(character);
+            pushEvent(characterSpawnEvent);
+
             players.Add(player.playerId, player);
+            characters.Add(character.id, character);
         }
 
         public void OnClientLeave(int clientId)

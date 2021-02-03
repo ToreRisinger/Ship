@@ -1,14 +1,28 @@
 ﻿
 
+using Ship.Network;
+using System.Numerics;
+
 namespace Ship.Game.Model
 {
-    public class Character
+    public class Character : GameObject
     {
-        private int playerId;
+        public int owningPlayerId;
 
-        public Character(int playerId)
+        public Character(int owningPlayerId, int gameObjectId, Vector2 position) : base(gameObjectId, position)
         {
-            this.playerId = playerId;
+            this.owningPlayerId = owningPlayerId;
+        }
+
+        public Character(Packet _packet) : base(_packet)
+        {
+            owningPlayerId = _packet.ReadInt();
+        }
+
+        public override void ToPacket(Packet _packet)
+        {
+            base.ToPacket(_packet);
+            _packet.Write(owningPlayerId);
         }
     }
 }

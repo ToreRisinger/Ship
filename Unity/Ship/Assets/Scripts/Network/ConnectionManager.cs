@@ -3,7 +3,7 @@ using Ship.Game.Event;
 using Ship.Game.Model;
 using Ship.Network;
 using Ship.Network.Transport;
-using Ship.Shared.Utilities;
+using Ship.Utilities;
 using UnityEngine.SceneManagement;
 
 public class ConnectionManager
@@ -77,8 +77,10 @@ private void SendTCPData(Packet _packet)
 
     public void onReceiveGameState(GameState gameState)
     {
-        while(gameState.events.Count > 0)
+        Log.debug("gamestate1");
+        while (gameState.events.Count > 0)
         {
+            Log.debug("gamestate2");
             EventObject evnt = gameState.events.Dequeue();
             EventManager.instance.PushEvent(evnt);
         }

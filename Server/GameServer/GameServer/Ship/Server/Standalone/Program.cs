@@ -2,7 +2,7 @@
 using System.Threading;
 using Server.Game;
 using Ship.Server.Network;
-using Ship.Shared.Utilities;
+using Ship.Utilities;
 
 namespace Ship.Server.Standalone
 {

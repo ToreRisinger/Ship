@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System;
 using System.Net;
 using Ship.Network;
-using Ship.Shared.Utilities;
+using Ship.Utilities;
 
 public class Client
 {

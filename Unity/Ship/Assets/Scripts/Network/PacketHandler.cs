@@ -1,7 +1,7 @@
 ﻿using Ship.Game.Model;
 using Ship.Network;
 using Ship.Network.Transport;
-using Ship.Shared.Utilities;
+using Ship.Utilities;
 using System.Collections.Generic;
 using static Ship.Network.PacketTypes;
 
@@ -64,7 +64,7 @@ public class PacketHandler
         {
             { (int)ServerPackets.SERVER_ERROR, onServerError },
             { (int)ServerPackets.ASSIGN_CLIENT_ID, onReceiveClientId },
-            { (int)ServerPackets.GAME_STATE, onReceiveGameState }
+            { (int)ServerPackets.GAME_STATE, onReceiveGameState },
         };
 
     }
