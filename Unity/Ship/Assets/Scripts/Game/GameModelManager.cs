@@ -11,6 +11,8 @@ namespace Ship.Game
 
         public static GameModelManager instance;
 
+        public GameGraphicsManager gameGraphicsManager;
+
         private int thisPlayerId;
 
         private Dictionary<int, Player> players;
@@ -73,6 +75,8 @@ namespace Ship.Game
             CharacterSpawnEvent characterSpawnEvent = (CharacterSpawnEvent)evnt;
             Character character = characterSpawnEvent.character;
             characters.Add(character.id, character);
+
+            gameGraphicsManager.SpawnCharacter(character);
 
             Log.debug("[GameModelManager] Character spawned: id: " + character.id + ", parent player id: " + character.owningPlayerId);
         }

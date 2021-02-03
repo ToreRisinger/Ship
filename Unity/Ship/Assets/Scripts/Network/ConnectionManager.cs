@@ -77,10 +77,8 @@ private void SendTCPData(Packet _packet)
 
     public void onReceiveGameState(GameState gameState)
     {
-        Log.debug("gamestate1");
         while (gameState.events.Count > 0)
         {
-            Log.debug("gamestate2");
             EventObject evnt = gameState.events.Dequeue();
             EventManager.instance.PushEvent(evnt);
         }
