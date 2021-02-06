@@ -1,5 +1,6 @@
 ﻿using Ship.Utilities;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Ship.Game.Input
@@ -8,6 +9,7 @@ namespace Ship.Game.Input
     {
 
         private static HashSet<EPlayerAction> actionActivations;
+
         private void Awake()
         {
             Log.debug("ActionManager.Awake");
@@ -22,10 +24,14 @@ namespace Ship.Game.Input
             {
                 if ((actionConfiguration.isActivation && InputManager.isKeyPressed(actionConfiguration.key)) || (!actionConfiguration.isActivation && InputManager.isKeyHold(actionConfiguration.key)))
                 {
-                    Log.info(actionConfiguration.action.ToString());
                     actionActivations.Add(actionConfiguration.action);
                 }
             }
+        }
+
+        public HashSet<EPlayerAction> getActions()
+        {
+            return actionActivations;
         }
     }
 }

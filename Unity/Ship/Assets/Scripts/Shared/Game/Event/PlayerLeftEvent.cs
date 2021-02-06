@@ -5,16 +5,16 @@ namespace Ship.Game.Event
 {
     public class PlayerLeftEvent : EventObject
     {
-        public Player player; 
+        public PlayerTp player; 
 
-        public PlayerLeftEvent(Player player) : base(EEventType.PLAYER_LEFT_EVENT)
+        public PlayerLeftEvent(PlayerTp player) : base(EEventType.PLAYER_LEFT_EVENT)
         {
             this.player = player;
         }
 
         public PlayerLeftEvent(Packet _packet) : base(_packet)
         {
-            player = new Player(_packet);
+            player = new PlayerTp(_packet);
         }
 
         public override void ToPacket(Packet _packet)

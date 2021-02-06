@@ -12,11 +12,11 @@ namespace Server.Game
 
         private ConnectionManager connectionManager;
 
-        private Dictionary<int, Player> players;
-        private Dictionary<int, Character> characters;
+        private Dictionary<int, PlayerTp> players;
+        private Dictionary<int, CharacterTp> characters;
 
         private Queue<EventObject> events;
-        public Dictionary<int, GameState> gameStates;
+        public Dictionary<int, GameStateTp> gameStates;
         private int turnNumber;
 
 
@@ -36,10 +36,10 @@ namespace Server.Game
         public void init(ConnectionManager connectionManager)
         {
             this.connectionManager = connectionManager;
-            players = new Dictionary<int, Player>();
-            characters = new Dictionary<int, Character>();
+            players = new Dictionary<int, PlayerTp>();
+            characters = new Dictionary<int, CharacterTp>();
             events = new Queue<EventObject>();
-            gameStates = new Dictionary<int, GameState>();
+            gameStates = new Dictionary<int, GameStateTp>();
             turnNumber = 0;
         }
 
@@ -48,7 +48,7 @@ namespace Server.Game
 
 
             //Create new game state
-            GameState gameState = new GameState(turnNumber, events);
+            GameStateTp gameState = new GameStateTp(turnNumber, events);
             gameStates.Add(turnNumber, gameState);
 
             removeOldGameStates();
@@ -63,11 +63,11 @@ namespace Server.Game
 
         public void OnClientJoin(int clientId, string username)
         {
-            Player player = new Player(clientId, username);
+            PlayerTp player = new PlayerTp(clientId, username);
             PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(player);
             pushEvent(playerJoinEvent);
 
-            Character character = new Character(player.playerId, IdGenerator.getServerId(), new Vector2(0, 0));
+            CharacterTp character = new CharacterTp(player.playerId, IdGenerator.getServerId(), new Vector2(0, 0));
             CharacterSpawnEvent characterSpawnEvent = new CharacterSpawnEvent(character);
             pushEvent(characterSpawnEvent);
 
@@ -79,7 +79,7 @@ namespace Server.Game
         {
             if(players.ContainsKey(clientId))
             {
-                Player player = players[clientId];
+                PlayerTp player = players[clientId];
                 PlayerLeftEvent evnt = new PlayerLeftEvent(player);
                 pushEvent(evnt);
                 players.Remove(clientId);
@@ -113,7 +113,7 @@ namespace Server.Game
             }
         }
 
-        private void sendGameState(GameState gameState)
+        private void sendGameState(GameStateTp gameState)
         {
             connectionManager.OnSendGameState(gameState);
         }

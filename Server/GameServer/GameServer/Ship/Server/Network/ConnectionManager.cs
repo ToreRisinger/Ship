@@ -88,7 +88,7 @@ namespace Ship.Server.Network
         {
             using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.ASSIGN_CLIENT_ID))
             {
-                ClientId clientIdObj = new ClientId(clientId);
+                ClientIdTp clientIdObj = new ClientIdTp(clientId);
                 clientIdObj.ToPacket(_packet);
                      
                 SendTCPData(clientId, _packet);
@@ -100,7 +100,7 @@ namespace Ship.Server.Network
             gameManager.OnClientLeave(clientId);
         }
 
-        public void OnClientIdReceived(int fromClient, ClientId clientId)
+        public void OnClientIdReceived(int fromClient, ClientIdTp clientId)
         {
             if(fromClient != clientId.clientId)
             {
@@ -124,14 +124,14 @@ namespace Ship.Server.Network
         {
             using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.SERVER_ERROR))
             {
-                ServerError serverErrorObj = new ServerError(errorCode);
+                ServerErrorTp serverErrorObj = new ServerErrorTp(errorCode);
                 serverErrorObj.ToPacket(_packet);
 
                 SendTCPData(toClient, _packet);
             }
         }
 
-        public void OnSendGameState(GameState gameState)
+        public void OnSendGameState(GameStateTp gameState)
         {
             using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.GAME_STATE))
             {

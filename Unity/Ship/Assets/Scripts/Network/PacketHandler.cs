@@ -42,19 +42,19 @@ public class PacketHandler
     }
     public void onServerError(Packet packet)
     {
-        ServerError serverError = new ServerError(packet);
+        ServerErrorTp serverError = new ServerErrorTp(packet);
         connectionManager.onServerError(serverError);
     }
 
     public void onReceiveClientId(Packet packet)
     {
-        ClientId clientId = new ClientId(packet);
+        ClientIdTp clientId = new ClientIdTp(packet);
         connectionManager.onReceiveClientId(clientId);
     }
 
     public void onReceiveGameState(Packet packet)
     {
-        GameState gameState = new GameState(packet);
+        GameStateTp gameState = new GameStateTp(packet);
         connectionManager.onReceiveGameState(gameState);
     }
 

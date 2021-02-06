@@ -34,7 +34,7 @@ namespace Ship.Server.Network
          */
         private void OnClientIdReceived(int _fromClient, Packet _packet)
         {
-            ClientId clientId = new ClientId(_packet);
+            ClientIdTp clientId = new ClientIdTp(_packet);
             connectionManager.OnClientIdReceived(_fromClient, clientId);
         }
 

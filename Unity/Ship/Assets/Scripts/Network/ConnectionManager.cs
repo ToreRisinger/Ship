@@ -45,6 +45,7 @@ private void SendTCPData(Packet _packet)
 
     private void OnApplicationQuit()
     {
+        //TODO this is not called
         client.Disconnect();
     }
 
@@ -58,15 +59,15 @@ private void SendTCPData(Packet _packet)
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void onServerError(ServerError serverError)
+    public void onServerError(ServerErrorTp serverError)
     {
         Log.error("Server error: " + serverError.errorCode);
         client.Disconnect();
     }
 
-    public void onReceiveClientId(ClientId clientIdObj)
+    public void onReceiveClientId(ClientIdTp clientIdObj)
     {
-        GameModelManager.instance.OnPlayerIdAssigned(clientIdObj.clientId);
+        GameManager.instance.OnPlayerIdAssigned(clientIdObj.clientId);
 
         using (Packet _packet = new Packet((int)PacketTypes.ClientPackets.CLIENT_ID_RECEIVED))
         {
@@ -75,7 +76,7 @@ private void SendTCPData(Packet _packet)
         }
     }
 
-    public void onReceiveGameState(GameState gameState)
+    public void onReceiveGameState(GameStateTp gameState)
     {
         while (gameState.events.Count > 0)
         {

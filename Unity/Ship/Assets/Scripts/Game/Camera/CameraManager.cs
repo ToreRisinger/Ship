@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Ship.Game;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public GameManager gameManager;
+
+    void LateUpdate()
     {
-        
+        Player player = gameManager.GetLocalPlayer();
+        if (player != null && player.character != null)
+        {
+            Vector3 playerPosition = player.character.transform.position;
+            transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
+        }
     }
 }
