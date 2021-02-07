@@ -32,10 +32,16 @@ namespace Ship.Server.Network
          * Handle functions
          * 
          */
-        private void OnClientIdReceived(int _fromClient, Packet _packet)
+        private void OnClientIdReceived(int fromClient, Packet packet)
         {
-            ClientIdTp clientId = new ClientIdTp(_packet);
-            connectionManager.OnClientIdReceived(_fromClient, clientId);
+            ClientId clientId = new ClientId(packet);
+            connectionManager.OnClientIdReceived(fromClient, clientId);
+        }
+
+        private void OnPlayerCommandReceived(int fromClient, Packet packet)
+        {
+            PlayerCommand playerCommand = new PlayerCommand(packet);
+            connectionManager.OnPlayerCommandReceived(playerCommand);
         }
 
 
@@ -44,6 +50,7 @@ namespace Ship.Server.Network
             packetHandlers = new Dictionary<int, PacketHandlerFunction>()
             {
                 { (int)ClientPackets.CLIENT_ID_RECEIVED, OnClientIdReceived},
+                { (int)ClientPackets.PLAYER_COMMAND, OnPlayerCommandReceived}
             };
         }
 

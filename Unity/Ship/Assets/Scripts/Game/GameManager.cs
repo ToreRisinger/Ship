@@ -1,10 +1,12 @@
 ﻿using Ship.Game.Event;
-using Ship.Game.Model;
 using Ship.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 using Ship.Game.GameObject;
 using Ship.Game.Input;
+using Game.Model;
+using Ship.Network.Transport;
+using System.Linq;
 
 namespace Ship.Game
 {
@@ -20,8 +22,11 @@ namespace Ship.Game
 
         private Dictionary<int, Player> players;
         private Dictionary<int, Character> characters;
+        private Queue<GameState> gameStateQueue;
 
         private Player localPlayer;
+
+        private int turnNumber;
 
         #region prefabs
 
@@ -44,6 +49,10 @@ namespace Ship.Game
 
             players = new Dictionary<int, Player>();
             characters = new Dictionary<int, Character>();
+            gameStateQueue = new Queue<GameState>();
+
+            turnNumber = 0;
+
             thisPlayerId = NO_ID;
             registerToEvents();
         }
@@ -61,9 +70,17 @@ namespace Ship.Game
 
         void Update()
         {
+            while (gameStateQueue.Count > 0)
+            {
+                GameState gameState = gameStateQueue.Dequeue();
 
+                turnNumber = gameState.turnNumber;
+
+                //TODO apply game state updates to game objects
+            }
         }
 
+        
         void FixedUpdate()
         {
             //Handle local player input
@@ -73,21 +90,13 @@ namespace Ship.Game
                 Character character = localPlayer.character;
 
                 float delta = Time.deltaTime;
-                HashSet<EPlayerAction> actions = actionManager.getActions();
-
-                //players[thisPlayerId].character.Move(actions, delta);
-
-                //MoveLocalPlayer(character, actions, delta);
-
-                /*
-                character.SetDirection(actions);
-                EObjectDirection direction = character.direction;
+                List<EPlayerAction> actions = actionManager.getActions().ToList();
+                EDirection direction = character.direction;
                 System.Numerics.Vector2 characterPosition = new System.Numerics.Vector2(character.transform.position.x, character.transform.position.y);
 
                 //Send player command to server
-                PlayerCommandData cmdData = new PlayerCommandData(turnNumber, delta, characterPosition, direction, actions, abilityActivations);
-                ClientSend.PlayerCommand(cmdData);
-                */
+                PlayerCommand cmdData = new PlayerCommand(turnNumber, delta, characterPosition, direction, actions);
+                ConnectionManager.GetInstance().sendPlayerCommand(cmdData);
             }
         }
 
@@ -112,27 +121,30 @@ namespace Ship.Game
         private void OnPlayerJoined(EventObject evnt)
         {
             PlayerJoinEvent playerJoinedEvent = (PlayerJoinEvent)evnt;
-            PlayerTp playerTp = playerJoinedEvent.player;
-            Player player = new Player(playerTp.playerId, playerTp.username);
-            players.Add(playerTp.playerId, player);
+            Player player = new Player(playerJoinedEvent.playerId, playerJoinedEvent.username);
+            players.Add(player.playerId, player);
 
             localPlayer = player;
 
-            Log.debug("[GameModelManager] Player joined: id: " + playerTp.playerId);
+            Log.debug("[GameModelManager] Player joined: id: " + player.playerId);
         }
 
         private void OnCharacterSpawn(EventObject evnt)
         {
             CharacterSpawnEvent characterSpawnEvent = (CharacterSpawnEvent)evnt;
-            CharacterTp characterTp = characterSpawnEvent.character;
-            UnityEngine.GameObject gameObject = Instantiate(characterPrefab, new Vector2(characterTp.position.X, characterTp.position.Y), Quaternion.Euler(Vector3.forward));
+            UnityEngine.GameObject gameObject = Instantiate(characterPrefab, new Vector2(characterSpawnEvent.position.X, characterSpawnEvent.position.Y), Quaternion.Euler(Vector3.forward));
             Character character = gameObject.GetComponent<Character>();
-            character.init(characterTp, characterTp.owningPlayerId == thisPlayerId);
-            characters.Add(characterTp.id, character);
+            character.init(characterSpawnEvent.owningPlayerId == thisPlayerId);
+            characters.Add(characterSpawnEvent.gameObjectId, character);
 
-            players[characterTp.owningPlayerId].setCharacter(character);
+            players[characterSpawnEvent.owningPlayerId].setCharacter(character);
 
-            Log.debug("[GameModelManager] Character spawned: id: " + characterTp.id + ", parent player id: " + characterTp.owningPlayerId);
+            Log.debug("[GameModelManager] Character spawned: id: " + characterSpawnEvent.gameObjectId + ", parent player id: " + characterSpawnEvent.owningPlayerId);
+        }
+
+        public void OnNewGameState(GameState gameState)
+        {
+            gameStateQueue.Enqueue(gameState);
         }
 
         #endregion

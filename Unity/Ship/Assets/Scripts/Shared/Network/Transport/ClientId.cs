@@ -1,15 +1,15 @@
 ﻿namespace Ship.Network.Transport
 {
-    public class ClientIdTp : Transportable
+    public class ClientId : Transportable
     {
         public int clientId;
 
-        public ClientIdTp(int _clientId)
+        public ClientId(int _clientId)
         {
             clientId = _clientId;
         }
 
-        public ClientIdTp(Packet _packet) : base(_packet)
+        public ClientId(Packet _packet) : base(_packet)
         {
             clientId = _packet.ReadInt();
         }

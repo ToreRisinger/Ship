@@ -15,12 +15,12 @@ namespace Ship.Game.Event
 
         public EventObject(Packet _packet)
         {
-            //eventType = (EEventType)_packet.ReadInt();
+            
         }
 
         public override void ToPacket(Packet _packet)
         {
-            //_packet.Write((int)eventType);
+           
         }
 
         public EEventType GetEventType()

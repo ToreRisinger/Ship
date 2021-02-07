@@ -1,6 +1,6 @@
-﻿using Ship.Utilities;
+﻿using Game.Model;
+using Ship.Utilities;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Ship.Game.Input

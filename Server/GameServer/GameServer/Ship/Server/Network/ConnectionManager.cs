@@ -1,5 +1,4 @@
 ﻿using Server.Game;
-using Ship.Game.Model;
 using Ship.Network;
 using Ship.Network.Transport;
 
@@ -88,7 +87,7 @@ namespace Ship.Server.Network
         {
             using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.ASSIGN_CLIENT_ID))
             {
-                ClientIdTp clientIdObj = new ClientIdTp(clientId);
+                ClientId clientIdObj = new ClientId(clientId);
                 clientIdObj.ToPacket(_packet);
                      
                 SendTCPData(clientId, _packet);
@@ -100,7 +99,7 @@ namespace Ship.Server.Network
             gameManager.OnClientLeave(clientId);
         }
 
-        public void OnClientIdReceived(int fromClient, ClientIdTp clientId)
+        public void OnClientIdReceived(int fromClient, ClientId clientId)
         {
             if(fromClient != clientId.clientId)
             {
@@ -115,6 +114,11 @@ namespace Ship.Server.Network
             }
         }
 
+        public void OnPlayerCommandReceived(PlayerCommand playerCommand)
+        {
+            gameManager.onPlayerCommandReceived(playerCommand);
+        }
+
         #endregion
 
 
@@ -124,14 +128,14 @@ namespace Ship.Server.Network
         {
             using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.SERVER_ERROR))
             {
-                ServerErrorTp serverErrorObj = new ServerErrorTp(errorCode);
+                ServerError serverErrorObj = new ServerError(errorCode);
                 serverErrorObj.ToPacket(_packet);
 
                 SendTCPData(toClient, _packet);
             }
         }
 
-        public void OnSendGameState(GameStateTp gameState)
+        public void OnSendGameState(GameState gameState)
         {
             using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.GAME_STATE))
             {

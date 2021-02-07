@@ -1,7 +1,6 @@
 ﻿using Game.Model;
 using Ship.Constants;
 using Ship.Game.Input;
-using Ship.Game.Model;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,23 +9,21 @@ namespace Ship.Game.GameObject
     public class Character : MonoBehaviour
     {
 
-        private bool isThisPlayer = false;
+        public bool isThisPlayer = false;
 
         private Rigidbody2D rb;
         private Animator animator;
         private ActionManager actionManager;
 
-        private EDirection direction;
-        private Vector2 velocityVector;
-        private bool isRunning;
+        public EDirection direction;
+        public Vector2 velocityVector;
+        public bool isRunning;
 
-
-        public void init(CharacterTp character, bool isThisPlayer)
+        public void init(bool isThisPlayer)
         {
             actionManager = GameManager.instance.getActionManager();
 
             this.isThisPlayer = isThisPlayer;
-            transform.position = new Vector2(character.position.X, character.position.Y);
 
             direction = EDirection.DOWN;
             velocityVector = Vector2.zero;

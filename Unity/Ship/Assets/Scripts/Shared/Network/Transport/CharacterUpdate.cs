@@ -1,32 +1,33 @@
-﻿using Ship.Network;
-using Ship.Network.Transport;
+﻿using Game.Model;
 using System.Numerics;
 
-namespace Ship.Game.Model
+namespace Ship.Network.Transport
 {
-    public class GameObjectTp : Transportable
+    public class CharacterUpdate : Transportable
     {
         public int id;
         public Vector2 position;
+        public EDirection direction;
 
-        public GameObjectTp(int id, Vector2 position) : base()
+        public CharacterUpdate(int id, Vector2 position, EDirection direction) : base()
         {
             this.id = id;
             this.position = position;
+            this.direction = direction;
         }
 
-        public GameObjectTp(Packet _packet) : base(_packet)
+        public CharacterUpdate(Packet _packet)
         {
             id = _packet.ReadInt();
             position = _packet.ReadVector2();
+            direction = (EDirection)_packet.ReadInt();
         }
 
         public override void ToPacket(Packet _packet)
         {
             _packet.Write(id);
             _packet.Write(position);
+            _packet.Write((int)direction);
         }
-
-
     }
 }

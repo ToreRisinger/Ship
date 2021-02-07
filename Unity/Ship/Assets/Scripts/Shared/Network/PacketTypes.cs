@@ -19,6 +19,7 @@ namespace Ship.Network
         public enum ClientPackets
         {
             CLIENT_ID_RECEIVED = 1,
+            PLAYER_COMMAND,
         }
 
     }

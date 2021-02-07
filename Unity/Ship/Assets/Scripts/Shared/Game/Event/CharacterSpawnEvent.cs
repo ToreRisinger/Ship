@@ -1,26 +1,35 @@
-﻿using Ship.Game.Model;
-using Ship.Network;
+﻿using Ship.Network;
+using Ship.Network.Transport;
+using System.Numerics;
 
 namespace Ship.Game.Event
 {
     public class CharacterSpawnEvent : EventObject
     {
-        public CharacterTp character;
+        public int owningPlayerId;
+        public int gameObjectId;
+        public Vector2 position;
 
-        public CharacterSpawnEvent(CharacterTp character) : base(EEventType.CHARACTER_SPAWNED)
+        public CharacterSpawnEvent(int owningPlayerId, int gameObjectId, Vector2 position) : base(EEventType.CHARACTER_SPAWNED)
         {
-            this.character = character;
+            this.owningPlayerId = owningPlayerId;
+            this.gameObjectId = gameObjectId;
+            this.position = position;
         }
 
-        public CharacterSpawnEvent(Packet _packet) : base(EEventType.CHARACTER_SPAWNED)
+        public CharacterSpawnEvent(Packet packet) : base(EEventType.CHARACTER_SPAWNED)
         {
-            character = new CharacterTp(_packet);
+            owningPlayerId = packet.ReadInt();
+            gameObjectId = packet.ReadInt();
+            position = packet.ReadVector2();
         }
 
-        public override void ToPacket(Packet _packet)
+        public override void ToPacket(Packet packet)
         {
-            base.ToPacket(_packet);
-            character.ToPacket(_packet);
+            base.ToPacket(packet);
+            packet.Write(owningPlayerId);
+            packet.Write(gameObjectId);
+            packet.Write(position);
         }
     }
 }

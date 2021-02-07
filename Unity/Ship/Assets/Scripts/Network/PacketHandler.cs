@@ -1,5 +1,4 @@
-﻿using Ship.Game.Model;
-using Ship.Network;
+﻿using Ship.Network;
 using Ship.Network.Transport;
 using Ship.Utilities;
 using System.Collections.Generic;
@@ -42,19 +41,19 @@ public class PacketHandler
     }
     public void onServerError(Packet packet)
     {
-        ServerErrorTp serverError = new ServerErrorTp(packet);
+        ServerError serverError = new ServerError(packet);
         connectionManager.onServerError(serverError);
     }
 
     public void onReceiveClientId(Packet packet)
     {
-        ClientIdTp clientId = new ClientIdTp(packet);
+        ClientId clientId = new ClientId(packet);
         connectionManager.onReceiveClientId(clientId);
     }
 
     public void onReceiveGameState(Packet packet)
     {
-        GameStateTp gameState = new GameStateTp(packet);
+        GameState gameState = new GameState(packet);
         connectionManager.onReceiveGameState(gameState);
     }
 

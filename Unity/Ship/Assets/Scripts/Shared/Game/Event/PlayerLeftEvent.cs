@@ -1,26 +1,25 @@
-﻿using Ship.Game.Model;
-using Ship.Network;
+﻿using Ship.Network;
 
 namespace Ship.Game.Event
 {
     public class PlayerLeftEvent : EventObject
     {
-        public PlayerTp player; 
+        public int playerId;
 
-        public PlayerLeftEvent(PlayerTp player) : base(EEventType.PLAYER_LEFT_EVENT)
+        public PlayerLeftEvent(int playerId) : base(EEventType.PLAYER_LEFT_EVENT)
         {
-            this.player = player;
+            this.playerId = playerId;
         }
 
         public PlayerLeftEvent(Packet _packet) : base(_packet)
         {
-            player = new PlayerTp(_packet);
+            playerId = _packet.ReadInt();
         }
 
         public override void ToPacket(Packet _packet)
         {
             base.ToPacket(_packet);
-            player.ToPacket(_packet);
+            _packet.Write(playerId);
         }
     }
 }

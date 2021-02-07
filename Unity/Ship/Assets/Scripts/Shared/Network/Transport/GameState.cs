@@ -1,23 +1,23 @@
 ﻿using Ship.Game.Event;
-using Ship.Network;
-using Ship.Network.Transport;
 using System;
 using System.Collections.Generic;
 
-namespace Ship.Game.Model
+namespace Ship.Network.Transport
 {
-    public class GameStateTp : Transportable
+    public class GameState : Transportable
     {
         public int turnNumber;
         public Queue<EventObject> events;
+        public List<CharacterUpdate> characterUpdates;
 
-        public GameStateTp(int turnNumber, Queue<EventObject> events)
+        public GameState(int turnNumber, Queue<EventObject> events, List<CharacterUpdate> characterUpdates)
         {
             this.turnNumber = turnNumber;
             this.events = events;
+            this.characterUpdates = characterUpdates;
         }
 
-        public GameStateTp(Packet packet) : base(packet)
+        public GameState(Packet packet) : base(packet)
         {
             events = new Queue<EventObject>();
             turnNumber = packet.ReadInt();
@@ -25,6 +25,13 @@ namespace Ship.Game.Model
             for (int i = 0; i < eventCount; i++)
             {
                 events.Enqueue(ReadEventFromPacket(packet));
+            }
+
+            characterUpdates = new List<CharacterUpdate>();
+            int characterUpdateCount = packet.ReadInt();
+            for (int i = 0; i < characterUpdateCount; i++)
+            {
+                characterUpdates.Add(new CharacterUpdate(packet));
             }
         }
 
@@ -39,6 +46,12 @@ namespace Ship.Game.Model
                 EventObject evnt = tmpEvents.Dequeue();
                 packet.Write((int)evnt.GetEventType());
                 evnt.ToPacket(packet);
+            }
+
+            packet.Write(characterUpdates.Count);
+            for (int i = 0; i < characterUpdates.Count; i++)
+            {
+                characterUpdates[i].ToPacket(packet);
             }
         }
 

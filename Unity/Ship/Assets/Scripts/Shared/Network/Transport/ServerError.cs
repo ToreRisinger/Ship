@@ -1,16 +1,16 @@
 ﻿
 namespace Ship.Network.Transport
 {
-    public class ServerErrorTp : Transportable
+    public class ServerError : Transportable
     {
         public EServerErrorCode errorCode;
 
-        public ServerErrorTp(EServerErrorCode errorCode)
+        public ServerError(EServerErrorCode errorCode)
         {
             this.errorCode = errorCode;
         }
 
-        public ServerErrorTp(Packet _packet) : base(_packet)
+        public ServerError(Packet _packet) : base(_packet)
         {
             errorCode = (EServerErrorCode)_packet.ReadInt();
         }

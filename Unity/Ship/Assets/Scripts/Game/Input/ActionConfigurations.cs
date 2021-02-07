@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Game.Model;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Ship.Game.Input
