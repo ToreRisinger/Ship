@@ -13,8 +13,8 @@ namespace Server.Game
 
         private ConnectionManager connectionManager;
 
-        private Dictionary<int, Player> players;
-        private Dictionary<int, Character> characters;
+        public Dictionary<int, Player> players;
+        public Dictionary<int, Character> characters;
 
         private Queue<EventObject> events;
         private Dictionary<int, GameState> gameStates;

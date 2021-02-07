@@ -10,6 +10,7 @@ namespace Ship.Network
         {
             SERVER_ERROR = 1,
             ASSIGN_CLIENT_ID,
+            INITIAL_LOAD,
             GAME_STATE,
         }
 

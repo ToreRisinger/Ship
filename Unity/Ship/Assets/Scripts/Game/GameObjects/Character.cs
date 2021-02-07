@@ -1,6 +1,8 @@
 ﻿using Game.Model;
 using Ship.Constants;
 using Ship.Game.Input;
+using Ship.Network.Transport;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -72,10 +74,8 @@ namespace Ship.Game.GameObject
             }
             else
             {
-                transform.position = newPosition;
+                //transform.position = newPosition;
             }
-
-            
         }
 
         private void calculateDirection(HashSet<EPlayerAction> actions)
@@ -88,6 +88,16 @@ namespace Ship.Game.GameObject
             if (up || down || left || right)
             {
                 direction = getDirection(up, down, left, right);
+            }
+        }
+
+        public void updateState(CharacterUpdate characterUpdate)
+        {
+            if(!isThisPlayer)
+            {
+                //TODO should put new data in queue and handle it in update or fixed
+                direction = characterUpdate.direction;
+                transform.position = new Vector2(characterUpdate.position.X, characterUpdate.position.Y);
             }
         }
 

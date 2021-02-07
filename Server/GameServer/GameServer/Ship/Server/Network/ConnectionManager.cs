@@ -1,6 +1,9 @@
 ﻿using Server.Game;
+using Server.Game.Model;
+using Ship.Game.Event;
 using Ship.Network;
 using Ship.Network.Transport;
+using System.Collections.Generic;
 
 namespace Ship.Server.Network
 {
@@ -110,6 +113,7 @@ namespace Ship.Server.Network
                 }
             } else
             {
+                sendInitialLoad(fromClient);
                 gameManager.OnClientJoin(fromClient, "username");
             }
         }
@@ -144,10 +148,33 @@ namespace Ship.Server.Network
             }
         }
 
-
-
-
         #endregion
+
+        private void sendInitialLoad(int toClient)
+        {
+            Dictionary<int, Player> players = gameManager.players;
+            Dictionary<int, Character> characters = gameManager.characters;
+
+            List<PlayerJoinEvent> playerJoinEvents = new List<PlayerJoinEvent>();
+            foreach (Player player in players.Values)
+            {
+                playerJoinEvents.Add(new PlayerJoinEvent(player.playerId, player.username));
+            }
+
+            List<CharacterSpawnEvent> spawnCharacterEvents = new List<CharacterSpawnEvent>();
+            foreach (Character character in characters.Values)
+            {
+                spawnCharacterEvents.Add(new CharacterSpawnEvent(character.owningPlayerId, character.id, character.position));
+            }
+
+            InitialLoad initialLoad = new InitialLoad(playerJoinEvents, spawnCharacterEvents);
+
+            using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.INITIAL_LOAD))
+            {
+                initialLoad.ToPacket(_packet);
+                SendTCPData(toClient, _packet);
+            }
+        }
 
     }
 }

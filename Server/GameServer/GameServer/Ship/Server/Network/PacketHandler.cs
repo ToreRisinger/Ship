@@ -53,8 +53,5 @@ namespace Ship.Server.Network
                 { (int)ClientPackets.PLAYER_COMMAND, OnPlayerCommandReceived}
             };
         }
-
-
-
     }
 }

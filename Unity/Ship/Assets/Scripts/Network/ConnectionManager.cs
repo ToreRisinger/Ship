@@ -3,6 +3,7 @@ using Ship.Game.Event;
 using Ship.Network;
 using Ship.Network.Transport;
 using Ship.Utilities;
+using System;
 using UnityEngine.SceneManagement;
 
 public class ConnectionManager
@@ -58,6 +59,8 @@ public class ConnectionManager
         SceneManager.LoadScene("MainMenu");
     }
 
+    #region RX
+
     public void onServerError(ServerError serverError)
     {
         Log.error("Server error: " + serverError.errorCode);
@@ -75,6 +78,11 @@ public class ConnectionManager
         }
     }
 
+    public void onReceiveInitialLoad(InitialLoad initialLoad)
+    {
+        GameManager.instance.OnInitialLoad(initialLoad);
+    }
+
     public void onReceiveGameState(GameState gameState)
     {
         while (gameState.events.Count > 0)
@@ -82,7 +90,13 @@ public class ConnectionManager
             EventObject evnt = gameState.events.Dequeue();
             EventManager.instance.PushEvent(evnt);
         }
+
+        GameManager.instance.OnNewGameState(gameState);
     }
+
+    #endregion
+
+    #region TX
 
     public void sendPlayerCommand(PlayerCommand playerCommand)
     {
@@ -92,4 +106,6 @@ public class ConnectionManager
             SendTCPData(_packet);
         }
     }
+
+    #endregion
 }

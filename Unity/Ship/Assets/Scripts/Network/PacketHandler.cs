@@ -51,6 +51,12 @@ public class PacketHandler
         connectionManager.onReceiveClientId(clientId);
     }
 
+    public void onReceiveInitialLoad(Packet packet)
+    {
+        InitialLoad initialLoad = new InitialLoad(packet);
+        connectionManager.onReceiveInitialLoad(initialLoad);
+    }
+
     public void onReceiveGameState(Packet packet)
     {
         GameState gameState = new GameState(packet);
@@ -63,7 +69,9 @@ public class PacketHandler
         {
             { (int)ServerPackets.SERVER_ERROR, onServerError },
             { (int)ServerPackets.ASSIGN_CLIENT_ID, onReceiveClientId },
+            { (int)ServerPackets.INITIAL_LOAD, onReceiveInitialLoad },
             { (int)ServerPackets.GAME_STATE, onReceiveGameState },
+
         };
 
     }

@@ -7,6 +7,7 @@ using Ship.Game.Input;
 using Game.Model;
 using Ship.Network.Transport;
 using System.Linq;
+using System;
 
 namespace Ship.Game
 {
@@ -76,14 +77,23 @@ namespace Ship.Game
 
                 turnNumber = gameState.turnNumber;
 
-                //TODO apply game state updates to game objects
+                foreach (CharacterUpdate character in gameState.characterUpdates)
+                {
+                    if(characters.ContainsKey(character.id))
+                    {
+                        characters[character.id].updateState(character);
+                    }
+                }
             }
         }
 
-        
         void FixedUpdate()
         {
-            //Handle local player input
+            sendPlayerCommand();        
+        }
+
+        private void sendPlayerCommand()
+        {
             if (thisPlayerId != NO_ID && players.ContainsKey(thisPlayerId))
             {
                 Player localPlayer = players[thisPlayerId];
@@ -94,7 +104,6 @@ namespace Ship.Game
                 EDirection direction = character.direction;
                 System.Numerics.Vector2 characterPosition = new System.Numerics.Vector2(character.transform.position.x, character.transform.position.y);
 
-                //Send player command to server
                 PlayerCommand cmdData = new PlayerCommand(turnNumber, delta, characterPosition, direction, actions);
                 ConnectionManager.GetInstance().sendPlayerCommand(cmdData);
             }
@@ -118,13 +127,29 @@ namespace Ship.Game
             Log.debug("[GameModelManager] player id assigned: " + thisPlayerId);
         }
 
+        public void OnInitialLoad(InitialLoad initialLoad)
+        {
+            foreach (PlayerJoinEvent evnt in initialLoad.players)
+            {
+                OnPlayerJoined(evnt);
+            }
+
+            foreach (CharacterSpawnEvent evnt in initialLoad.characters)
+            {
+                OnCharacterSpawn(evnt);
+            }
+        }
+
         private void OnPlayerJoined(EventObject evnt)
         {
             PlayerJoinEvent playerJoinedEvent = (PlayerJoinEvent)evnt;
             Player player = new Player(playerJoinedEvent.playerId, playerJoinedEvent.username);
             players.Add(player.playerId, player);
 
-            localPlayer = player;
+            if(player.playerId == thisPlayerId)
+            {
+                localPlayer = player;
+            }
 
             Log.debug("[GameModelManager] Player joined: id: " + player.playerId);
         }
