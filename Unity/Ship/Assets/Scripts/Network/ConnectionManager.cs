@@ -87,7 +87,9 @@ public class ConnectionManager
     {
         while (gameState.events.Count > 0)
         {
+            
             EventObject evnt = gameState.events.Dequeue();
+            Log.debug("EVENT: " + evnt);
             EventManager.instance.PushEvent(evnt);
         }
 

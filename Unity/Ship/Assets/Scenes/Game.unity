@@ -484,7 +484,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionManager: {fileID: 1498933975}
-  characterPrefab: {fileID: 4040747692547889507, guid: 6a1fe0d6f0da172429573ee7c2e4dab9,
+  localCharacterPrefab: {fileID: 7890412328647469696, guid: eea07985affe18044b02f54671113a28,
+    type: 3}
+  characterPrefab: {fileID: 8169003448523007079, guid: 6a1fe0d6f0da172429573ee7c2e4dab9,
     type: 3}
 --- !u!4 &2109455866
 Transform:

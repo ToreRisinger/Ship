@@ -50,7 +50,6 @@ namespace Server.Game
 
         public void update()
         {
-
             handlePlayerCommands();
 
             handleGameStates();
@@ -149,6 +148,7 @@ namespace Server.Game
             {
                 PlayerLeftEvent evnt = new PlayerLeftEvent(clientId);
                 pushEvent(evnt);
+                characters.Remove(players[clientId].character.id);
                 players.Remove(clientId);
             }
         }

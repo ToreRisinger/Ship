@@ -6,7 +6,7 @@ namespace Ship.Game
     {
         public int playerId;
         public string username;
-        public Character character;
+        public CharacterBase character;
 
         public Player(int playerId, string username)
         {
@@ -14,7 +14,7 @@ namespace Ship.Game
             this.username = username;
         }
 
-        public void setCharacter(Character character)
+        public void setCharacter(CharacterBase character)
         {
             this.character = character;
         }

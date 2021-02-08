@@ -7,7 +7,6 @@ using Ship.Game.Input;
 using Game.Model;
 using Ship.Network.Transport;
 using System.Linq;
-using System;
 
 namespace Ship.Game
 {
@@ -22,7 +21,7 @@ namespace Ship.Game
         private int thisPlayerId;
 
         private Dictionary<int, Player> players;
-        private Dictionary<int, Character> characters;
+        private Dictionary<int, CharacterBase> characters;
         private Queue<GameState> gameStateQueue;
 
         private Player localPlayer;
@@ -31,6 +30,7 @@ namespace Ship.Game
 
         #region prefabs
 
+        public UnityEngine.GameObject localCharacterPrefab;
         public UnityEngine.GameObject characterPrefab;
 
         #endregion
@@ -49,7 +49,7 @@ namespace Ship.Game
             }
 
             players = new Dictionary<int, Player>();
-            characters = new Dictionary<int, Character>();
+            characters = new Dictionary<int, CharacterBase>();
             gameStateQueue = new Queue<GameState>();
 
             turnNumber = 0;
@@ -97,14 +97,14 @@ namespace Ship.Game
             if (thisPlayerId != NO_ID && players.ContainsKey(thisPlayerId))
             {
                 Player localPlayer = players[thisPlayerId];
-                Character character = localPlayer.character;
+                LocalCharacter character = (LocalCharacter)localPlayer.character;
 
                 float delta = Time.deltaTime;
                 List<EPlayerAction> actions = actionManager.getActions().ToList();
                 EDirection direction = character.direction;
                 System.Numerics.Vector2 characterPosition = new System.Numerics.Vector2(character.transform.position.x, character.transform.position.y);
 
-                PlayerCommand cmdData = new PlayerCommand(turnNumber, delta, characterPosition, direction, actions);
+                PlayerCommand cmdData = new PlayerCommand(thisPlayerId, turnNumber, delta, characterPosition, direction, actions);
                 ConnectionManager.GetInstance().sendPlayerCommand(cmdData);
             }
         }
@@ -157,9 +157,20 @@ namespace Ship.Game
         private void OnCharacterSpawn(EventObject evnt)
         {
             CharacterSpawnEvent characterSpawnEvent = (CharacterSpawnEvent)evnt;
-            UnityEngine.GameObject gameObject = Instantiate(characterPrefab, new Vector2(characterSpawnEvent.position.X, characterSpawnEvent.position.Y), Quaternion.Euler(Vector3.forward));
-            Character character = gameObject.GetComponent<Character>();
-            character.init(characterSpawnEvent.owningPlayerId == thisPlayerId);
+            UnityEngine.GameObject gameObject;
+            CharacterBase character;
+
+            if(characterSpawnEvent.owningPlayerId == thisPlayerId)
+            {
+                gameObject = Instantiate(localCharacterPrefab, new Vector2(characterSpawnEvent.position.X, characterSpawnEvent.position.Y), Quaternion.Euler(Vector3.forward));
+                character = gameObject.GetComponent<LocalCharacter>();
+            } 
+            else
+            {
+                gameObject = Instantiate(characterPrefab, new Vector2(characterSpawnEvent.position.X, characterSpawnEvent.position.Y), Quaternion.Euler(Vector3.forward));
+                character = gameObject.GetComponent<Character>();
+            }
+
             characters.Add(characterSpawnEvent.gameObjectId, character);
 
             players[characterSpawnEvent.owningPlayerId].setCharacter(character);

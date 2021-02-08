@@ -13,17 +13,19 @@ namespace Ship.Network.Transport
         public List<EPlayerAction> actions;
         public int playerId;
 
-        public PlayerCommand(int _turnNumber, float _deltaTime, Vector2 _position, EDirection _direction, List<EPlayerAction> _actions) : base()
+        public PlayerCommand(int playerId, int turnNumber, float deltaTime, Vector2 position, EDirection direction, List<EPlayerAction> actions) : base()
         {
-            turnNumber = _turnNumber;
-            deltaTime = _deltaTime;
-            position = _position;
-            actions = _actions;
-            direction = _direction;
+            this.playerId = playerId;
+            this.turnNumber = turnNumber;
+            this.deltaTime = deltaTime;
+            this.position = position;
+            this.actions = actions;
+            this.direction = direction;
         }
 
         public PlayerCommand(Packet packet)
         {
+            playerId = packet.ReadInt();
             turnNumber = packet.ReadInt();
             deltaTime = packet.ReadFloat();
             position = packet.ReadVector2();
@@ -38,9 +40,10 @@ namespace Ship.Network.Transport
 
         public override void ToPacket(Packet packet)
         {
+            packet.Write(playerId);
             packet.Write(turnNumber);
             packet.Write(deltaTime);
-            packet.Write(new System.Numerics.Vector2(position.X, position.Y));
+            packet.Write(new Vector2(position.X, position.Y));
             packet.Write((int)direction);
             packet.Write(actions.Count);
             foreach (EPlayerAction action in actions)
