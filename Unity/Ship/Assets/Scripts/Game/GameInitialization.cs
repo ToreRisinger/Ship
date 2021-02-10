@@ -5,12 +5,17 @@ public class GameInitialization : MonoBehaviour
     
     void Awake()
     {
-        
+        ConnectionManager.GetInstance().ConnectToGameServer();
     }
 
-    void Start()
+    void OnApplicationQuit()
     {
-        ConnectionManager.GetInstance().ConnectToGameServer();
+        ConnectionManager.GetInstance().DisconnectFromGameServer();
+    }
+
+    void OnDestroy()
+    {
+        ConnectionManager.GetInstance().DisconnectFromGameServer();
     }
 
 }

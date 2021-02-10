@@ -134,7 +134,15 @@ namespace Ship.Game.GameObject
                 return EDirection.UP_LEFT;
             }
 
-            return EDirection.UP;
+            if(right && left)
+            {
+                return EDirection.LEFT;
+            } else
+            {
+                return EDirection.DOWN;
+            }
+
+            
         }
 
         public override void updateState(CharacterPositionUpdate characterUpdate)

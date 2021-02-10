@@ -13,7 +13,7 @@ namespace Server.Game.Model
         public Character(int id, Vector2 position, int owningPlayerId) : base(id, position)
         {
             this.owningPlayerId = owningPlayerId;
-            this.direction = EDirection.DOWN;
+            direction = EDirection.DOWN;
             isRunning = false;
         }
     }

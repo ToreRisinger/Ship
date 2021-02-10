@@ -10,7 +10,7 @@ namespace Ship.Game.GameObject
     {
 
         private Queue<CharacterPositionUpdate> positions;
-        private static int INTERPOLATION_MIDDLE_NUMBER = 5;
+        private static int INTERPOLATION_MIDDLE_NUMBER = 2;
 
         private CharacterPositionUpdate nextPosition;
 
@@ -41,11 +41,13 @@ namespace Ship.Game.GameObject
 
         private void calcInterpolatedPosition(float delta)
         {
+
+            Debug.Log(positions.Count);
             if (positions.Count > 0 && nextPosition == null)
             {
                 nextPosition = positions.Dequeue();
-                direction = nextPosition.direction;
                 isRunning = nextPosition.isRunning;
+                direction = nextPosition.direction;
             }
 
 

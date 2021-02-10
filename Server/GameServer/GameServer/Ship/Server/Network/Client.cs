@@ -26,6 +26,11 @@ namespace Ship.Server.Network
             udp = new UDP(this, id);
         }
 
+        public bool isConnected()
+        {
+            return tcp.socket != null;
+        }
+
         public class TCP
         {
             public TcpClient socket;

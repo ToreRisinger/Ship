@@ -7,7 +7,11 @@ namespace Ship.Server.Network
 {
     public class ClientManager
     {
+        private int TIMEOUT_TIME = 10000; //10 sec
+
         private Dictionary<int, Client> clients = new Dictionary<int, Client>();
+        private Dictionary<int, int> timeouts = new Dictionary<int, int>();
+
         private PacketHandler packetHandler;
         private ConnectionManager connectionManager;
 
@@ -17,6 +21,21 @@ namespace Ship.Server.Network
         public ClientManager()
         {
             
+        }
+
+        public void update(int ms)
+        {
+            foreach(var client in clients)
+            {
+                if(client.Value.isConnected())
+                {
+                    timeouts[client.Value.id] += ms;
+                    if(timeouts[client.Value.id] > TIMEOUT_TIME)
+                    {
+                        //client.Value.Disconnect();
+                    }
+                }
+            }
         }
 
 
@@ -55,6 +74,7 @@ namespace Ship.Server.Network
             for (int i = 1; i <= maxNrOfClients; i++)
             {
                 clients.Add(i, new Client(i, connectionManager, packetHandler));
+                timeouts.Add(i, 0);
             }
         }
     }

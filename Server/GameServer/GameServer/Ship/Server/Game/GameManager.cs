@@ -142,6 +142,8 @@ namespace Server.Game
 
             players.Add(player.playerId, player);
             characters.Add(character.id, character);
+
+            Log.debug("Players on server: " + players.Count);
         }
 
         public void OnClientLeave(int clientId)
@@ -152,6 +154,8 @@ namespace Server.Game
                 pushEvent(evnt);
                 characters.Remove(players[clientId].character.id);
                 players.Remove(clientId);
+
+                Log.debug("Players on server: " + players.Count);
             }
         }
 

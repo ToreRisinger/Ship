@@ -72,6 +72,8 @@ namespace Ship.Server.Standalone
 
                     ThreadManager.UpdateMain();
 
+                    clientManager.update(MS_PER_TICK);
+
                     gameManager.update();
                     
                     _nextLoop = _nextLoop.AddMilliseconds(MS_PER_TICK);

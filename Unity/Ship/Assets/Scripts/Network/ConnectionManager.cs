@@ -43,9 +43,8 @@ public class ConnectionManager
 
     #endregion
 
-    private void OnApplicationQuit()
+    public void DisconnectFromGameServer()
     {
-        //TODO this is not called
         client.Disconnect();
     }
 

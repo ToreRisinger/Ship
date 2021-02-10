@@ -47,21 +47,18 @@ public class PacketHandler
 
     public void onReceiveClientId(Packet packet)
     {
-        Log.debug("ON RECEIVE CLIENT ID");
         ClientId clientId = new ClientId(packet);
         connectionManager.onReceiveClientId(clientId);
     }
 
     public void onReceiveInitialLoad(Packet packet)
     {
-        Log.debug("ON RECEIVE INITIAL LOAD");
         InitialLoad initialLoad = new InitialLoad(packet);
         connectionManager.onReceiveInitialLoad(initialLoad);
     }
 
     public void onReceiveGameState(Packet packet)
     {
-        Log.debug("ON RECEIVE GAME STATE");
         GameState gameState = new GameState(packet);
         connectionManager.onReceiveGameState(gameState);
     }
