@@ -1,4 +1,5 @@
-﻿using Server.Game.Model;
+﻿using Game.Model;
+using Server.Game.Model;
 using Ship.Game.Event;
 using Ship.Network.Transport;
 using Ship.Server.Network;
@@ -71,16 +72,17 @@ namespace Server.Game
                     Character character = player.character;
                     character.position = playerCommand.position;
                     character.direction = playerCommand.direction;
+                    character.isRunning = playerCommand.actions.Contains(EPlayerAction.DOWN) || playerCommand.actions.Contains(EPlayerAction.RIGHT) || playerCommand.actions.Contains(EPlayerAction.LEFT) || playerCommand.actions.Contains(EPlayerAction.UP);
                 }
             }
         }
 
         private void handleGameStates()
         {
-            List<CharacterUpdate> characterUpdates = new List<CharacterUpdate>();
+            List<CharacterPositionUpdate> characterUpdates = new List<CharacterPositionUpdate>();
             foreach (Character character in characters.Values)
             {
-                characterUpdates.Add(new CharacterUpdate(character.id, character.position, character.direction));
+                characterUpdates.Add(new CharacterPositionUpdate(character.id, character.position, character.direction, character.isRunning));
             }
 
             GameState gameState = new GameState(turnNumber, events, characterUpdates);

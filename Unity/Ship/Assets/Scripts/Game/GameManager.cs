@@ -77,7 +77,7 @@ namespace Ship.Game
 
                 turnNumber = gameState.turnNumber;
 
-                foreach (CharacterUpdate character in gameState.characterUpdates)
+                foreach (CharacterPositionUpdate character in gameState.characterUpdates)
                 {
                     if(characters.ContainsKey(character.id))
                     {

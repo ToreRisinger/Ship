@@ -397,7 +397,7 @@ MonoBehaviour:
   m_PixelSnapping: 0
   m_CropFrameX: 0
   m_CropFrameY: 0
-  m_StretchFill: 1
+  m_StretchFill: 0
 --- !u!114 &1678872130
 MonoBehaviour:
   m_ObjectHideFlags: 0

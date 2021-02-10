@@ -8,9 +8,9 @@ namespace Ship.Network.Transport
     {
         public int turnNumber;
         public Queue<EventObject> events;
-        public List<CharacterUpdate> characterUpdates;
+        public List<CharacterPositionUpdate> characterUpdates;
 
-        public GameState(int turnNumber, Queue<EventObject> events, List<CharacterUpdate> characterUpdates)
+        public GameState(int turnNumber, Queue<EventObject> events, List<CharacterPositionUpdate> characterUpdates)
         {
             this.turnNumber = turnNumber;
             this.events = events;
@@ -27,11 +27,11 @@ namespace Ship.Network.Transport
                 events.Enqueue(ReadEventFromPacket(packet));
             }
 
-            characterUpdates = new List<CharacterUpdate>();
+            characterUpdates = new List<CharacterPositionUpdate>();
             int characterUpdateCount = packet.ReadInt();
             for (int i = 0; i < characterUpdateCount; i++)
             {
-                characterUpdates.Add(new CharacterUpdate(packet));
+                characterUpdates.Add(new CharacterPositionUpdate(packet));
             }
         }
 

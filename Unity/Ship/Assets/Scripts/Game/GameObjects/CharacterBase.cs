@@ -1,10 +1,7 @@
 ﻿using Game.Model;
+using Ship.Game.Input;
 using Ship.Network.Transport;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Ship.Game.GameObject
@@ -14,16 +11,48 @@ namespace Ship.Game.GameObject
         public Animator animator;
 
         public EDirection direction;
-        public Vector2 velocityVector;
         public bool isRunning;
+
+        protected ActionManager actionManager;
 
         public void Awake()
         {
+            animator = GetComponent<Animator>();
+            actionManager = GameManager.instance.getActionManager();
+
             direction = EDirection.DOWN;
-            velocityVector = Vector2.zero;
             isRunning = false;
+
+            AwakeInternal();
         }
-        protected void updateAnimator()
+
+        public void Update()
+        {
+
+            UpdateInternal();
+        }
+
+        public void FixedUpdate()
+        {
+
+            FixedUpdateInternal();
+        }
+
+        protected abstract void AwakeInternal();
+
+        protected abstract void UpdateInternal();
+
+        protected abstract void FixedUpdateInternal();
+
+        //protected abstract void calculateVelocityVectorAndDirection(float delta);
+
+        public abstract void updateState(CharacterPositionUpdate characterUpdate);
+
+        protected HashSet<EPlayerAction> getActions() {
+            return actionManager.getActions();
+        }
+
+        protected void updateAnimator(bool isRunning, EDirection direction)
         {
             animator.SetBool("isRunning", isRunning);
             animator.SetBool("leftDirection", direction == EDirection.DOWN_LEFT || direction == EDirection.LEFT || direction == EDirection.UP_LEFT);
@@ -32,6 +61,6 @@ namespace Ship.Game.GameObject
             animator.SetBool("downDirection", direction == EDirection.DOWN_LEFT || direction == EDirection.DOWN || direction == EDirection.DOWN_RIGHT);
         }
 
-        public abstract void updateState(CharacterUpdate characterUpdate);
+        
     }
 }

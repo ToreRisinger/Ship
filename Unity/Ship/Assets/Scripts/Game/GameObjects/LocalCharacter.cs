@@ -1,6 +1,5 @@
 ﻿using Game.Model;
 using Ship.Constants;
-using Ship.Game.Input;
 using Ship.Network.Transport;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,40 +9,38 @@ namespace Ship.Game.GameObject
     public class LocalCharacter : CharacterBase
     {
         private Rigidbody2D rb;
-        private ActionManager actionManager;
+        private Vector2 velocityVector;
 
-        void Awake()
+        protected override void AwakeInternal()
         {
-            base.Awake();
-
-            actionManager = GameManager.instance.getActionManager();
-
             rb = gameObject.AddComponent<Rigidbody2D>();
             rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             rb.freezeRotation = true;
             rb.gravityScale = 0;
+            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
             CapsuleCollider2D collider = gameObject.AddComponent<CapsuleCollider2D>();
             collider.offset = new Vector2(0, (float)0.3);
             collider.size = new Vector2(2, 1);
 
             animator = GetComponent<Animator>();
+
+            velocityVector = Vector2.zero;
         }
 
-        void Update()
+        protected override void UpdateInternal()
         {
-            float delta = Time.deltaTime;
+            HashSet<EPlayerAction> actions = getActions();
 
-            HashSet<EPlayerAction> actions = actionManager.getActions();
-            calculateDirection(actions);
-            calculateVelocityVector(actions, delta);
+            direction = calculateDirection(actions);
+            velocityVector = calculateVelocityVector(Time.deltaTime, actions);
 
             isRunning = velocityVector.magnitude > 0;
 
-            updateAnimator();
+            updateAnimator(isRunning, direction);
         }
 
-        void FixedUpdate()
+        protected override void FixedUpdateInternal()
         {
             Vector2 currentPosition = transform.position;
             Vector2 newPosition = currentPosition + velocityVector;
@@ -51,13 +48,7 @@ namespace Ship.Game.GameObject
             rb.MovePosition(newPosition);
         }
 
-        public override void updateState(CharacterUpdate characterUpdate)
-        {
-            //Do nothing
-        }
-
-
-        private void calculateDirection(HashSet<EPlayerAction> actions)
+        private EDirection calculateDirection(HashSet<EPlayerAction> actions)
         {
             bool up = actions.Contains(EPlayerAction.UP);
             bool left = actions.Contains(EPlayerAction.LEFT);
@@ -66,11 +57,14 @@ namespace Ship.Game.GameObject
 
             if (up || down || left || right)
             {
-                direction = getDirection(up, down, left, right);
+                return getDirection(up, down, left, right);
+            } else
+            {
+                return direction;
             }
         }
 
-        private void calculateVelocityVector(HashSet<EPlayerAction> actions, float delta)
+        protected Vector2 calculateVelocityVector(float delta, HashSet<EPlayerAction> actions)
         {
             Vector2 inputDirection = Vector2.zero;
             if (actions.Contains(EPlayerAction.UP))
@@ -90,18 +84,18 @@ namespace Ship.Game.GameObject
                 inputDirection.x += 1;
             }
 
-            Vector2 direction = new Vector2(inputDirection.x, inputDirection.y);
+            Vector2 directionVector = new Vector2(inputDirection.x, inputDirection.y);
 
             float moveSpeed = Stats.CHARACTER_SPEED;
 
-            if (direction.magnitude > 0)
+            if (directionVector.magnitude > 0)
             {
-                Vector2 directionNormalized = direction.normalized;
-                velocityVector = directionNormalized * moveSpeed * delta;
+                Vector2 directionNormalized = directionVector.normalized;
+                return directionNormalized * moveSpeed * delta;
             } 
             else
             {
-                velocityVector = Vector2.zero;
+                return Vector2.zero;
             }
         }
 
@@ -141,6 +135,11 @@ namespace Ship.Game.GameObject
             }
 
             return EDirection.UP;
+        }
+
+        public override void updateState(CharacterPositionUpdate characterUpdate)
+        {
+            // Do nothing
         }
     }
 }

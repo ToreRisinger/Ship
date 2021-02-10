@@ -13,14 +13,14 @@ namespace Ship.Network.Transport
         public List<EPlayerAction> actions;
         public int playerId;
 
-        public PlayerCommand(int playerId, int turnNumber, float deltaTime, Vector2 position, EDirection direction, List<EPlayerAction> actions) : base()
+        public PlayerCommand(int playerId, int _turnNumber, float _deltaTime, Vector2 _position, EDirection _direction, List<EPlayerAction> _actions) : base()
         {
             this.playerId = playerId;
-            this.turnNumber = turnNumber;
-            this.deltaTime = deltaTime;
-            this.position = position;
-            this.actions = actions;
-            this.direction = direction;
+            turnNumber = _turnNumber;
+            deltaTime = _deltaTime;
+            position = _position;
+            actions = _actions;
+            direction = _direction;
         }
 
         public PlayerCommand(Packet packet)
