@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using Ship.Utilities;
+using System.Numerics;
 
 namespace Server.Game.Model
 {
@@ -7,9 +8,9 @@ namespace Server.Game.Model
         public int id;
         public Vector2 position;
 
-        public GameObject(int id, Vector2 position)
+        public GameObject(Vector2 position)
         {
-            this.id = id;
+            this.id = IdGenerator.getServerId();
             this.position = position;
         }
     }

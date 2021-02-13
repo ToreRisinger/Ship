@@ -12,9 +12,11 @@ namespace Ship.Server.Network
         private ClientManager clientManager;
         private GameManager gameManager;
 
+        private Dictionary<int, int> playerMapLoading;
+
         public ConnectionManager() 
         {
-            
+            playerMapLoading = new Dictionary<int, int>();
         }
 
         public void init(ClientManager clientHandler, GameManager gameManager)
@@ -25,7 +27,10 @@ namespace Ship.Server.Network
 
         public void update()
         {
-            //TODO each tick, get gamestate for each client and events from GameManager and send to all clients
+            foreach(var client in playerMapLoading)
+            {
+                //TODO
+            }
         }
 
         #region send
@@ -100,6 +105,10 @@ namespace Ship.Server.Network
         public void OnClientDisconnected(int clientId)
         {
             gameManager.OnClientLeave(clientId);
+            if(playerMapLoading.ContainsKey(clientId))
+            {
+                playerMapLoading.Remove(clientId);
+            }
         }
 
         public void OnClientIdReceived(int fromClient, ClientId clientId)
@@ -114,7 +123,9 @@ namespace Ship.Server.Network
             } else
             {
                 sendInitialLoad(fromClient);
-                gameManager.OnClientJoin(fromClient, "username");
+                gameManager.OnPlayerJoin(fromClient, "username");
+                gameManager.OnPlayerFinishLoading(fromClient);
+                //playerMapLoading.Add(fromClient, gameManager.MAP_SIZE);
             }
         }
 
@@ -167,7 +178,7 @@ namespace Ship.Server.Network
                 spawnCharacterEvents.Add(new CharacterSpawnEvent(character.owningPlayerId, character.id, character.position));
             }
 
-            InitialLoad initialLoad = new InitialLoad(playerJoinEvents, spawnCharacterEvents);
+            InitialLoad initialLoad = new InitialLoad(playerJoinEvents, spawnCharacterEvents, gameManager.MAP_SIZE);
 
             using (Packet _packet = new Packet((int)PacketTypes.ServerPackets.INITIAL_LOAD))
             {

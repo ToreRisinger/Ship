@@ -24,7 +24,7 @@ namespace Ship.Network.Transport
             int eventCount = packet.ReadInt();
             for (int i = 0; i < eventCount; i++)
             {
-                events.Enqueue(ReadEventFromPacket(packet));
+                events.Enqueue(PacketUtils.ReadEventFromPacket(packet));
             }
 
             characterUpdates = new List<CharacterPositionUpdate>();
@@ -53,19 +53,6 @@ namespace Ship.Network.Transport
             {
                 characterUpdates[i].ToPacket(packet);
             }
-        }
-
-        private static Dictionary<int, Func<Packet, EventObject>> eventMap = new Dictionary<int, Func<Packet, EventObject>>
-        {
-            {(int)EEventType.PLAYER_JOINED_EVENT, (packet) => { return new PlayerJoinEvent(packet); } },
-            {(int)EEventType.PLAYER_LEFT_EVENT, (packet) => { return new PlayerLeftEvent(packet); } },
-            {(int)EEventType.CHARACTER_SPAWNED, (packet) => { return new CharacterSpawnEvent(packet); } },
-        };
-
-        private EventObject ReadEventFromPacket(Packet _packet)
-        {
-            int eventId = _packet.ReadInt();
-            return eventMap[eventId](_packet);
         }
     }
 }

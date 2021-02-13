@@ -16,21 +16,14 @@ namespace Server.Game
 
         public Dictionary<int, Player> players;
         public Dictionary<int, Character> characters;
+        //public Map map;
+        public int MAP_SIZE;
 
         private Queue<EventObject> events;
         private Dictionary<int, GameState> gameStates;
         private Queue<PlayerCommand> playerCommands;
 
         private int turnNumber;
-
-
-        //todo map
-
-        /* 
-         * Each map section has its own GameState and events
-         * Clients are sent the relevant map section gamestates as a combined map state
-         * 
-         */
 
         public GameManager()
         {
@@ -40,8 +33,11 @@ namespace Server.Game
         public void init(ConnectionManager connectionManager)
         {
             this.connectionManager = connectionManager;
+
             players = new Dictionary<int, Player>();
             characters = new Dictionary<int, Character>();
+            //map = new Map(MAP_SIZE);
+
             events = new Queue<EventObject>();
             gameStates = new Dictionary<int, GameState>();
             playerCommands = new Queue<PlayerCommand>();
@@ -129,21 +125,27 @@ namespace Server.Game
 
         #region events
 
-        public void OnClientJoin(int clientId, string username)
+        public void OnPlayerJoin(int clientId, string username)
         {
-            Character character = new Character(IdGenerator.getServerId(), new Vector2(0, 0), clientId);
-            Player player = new Player(clientId, username, character);
+            Player player = new Player(clientId, username, null);
 
             PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(clientId, username);
             pushEvent(playerJoinEvent);
 
-            CharacterSpawnEvent characterSpawnEvent = new CharacterSpawnEvent(clientId, character.id, new Vector2(0, 0));
-            pushEvent(characterSpawnEvent);
-
             players.Add(player.playerId, player);
+
+            Log.debug("Player joined. Players on server: " + players.Count);
+        }
+
+        public void OnPlayerFinishLoading(int clientId)
+        {
+            Character character = new Character(new Vector2(0, 0), clientId);
+            CharacterSpawnEvent characterSpawnEvent = new CharacterSpawnEvent(clientId, character.id, new Vector2(0, 0));
+            players[clientId].character = character;
+            pushEvent(characterSpawnEvent);
             characters.Add(character.id, character);
 
-            Log.debug("Players on server: " + players.Count);
+            Log.debug("Player finished loading. Spawning character.");
         }
 
         public void OnClientLeave(int clientId)
@@ -155,7 +157,7 @@ namespace Server.Game
                 characters.Remove(players[clientId].character.id);
                 players.Remove(clientId);
 
-                Log.debug("Players on server: " + players.Count);
+                Log.debug("Client left. Players on server: " + players.Count);
             }
         }
 

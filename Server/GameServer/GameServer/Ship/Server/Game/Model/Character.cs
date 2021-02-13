@@ -10,7 +10,7 @@ namespace Server.Game.Model
         public EDirection direction;
         public bool isRunning;
 
-        public Character(int id, Vector2 position, int owningPlayerId) : base(id, position)
+        public Character(Vector2 position, int owningPlayerId) : base(position)
         {
             this.owningPlayerId = owningPlayerId;
             direction = EDirection.DOWN;

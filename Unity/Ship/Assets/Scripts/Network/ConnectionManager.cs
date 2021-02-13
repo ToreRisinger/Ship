@@ -3,7 +3,6 @@ using Ship.Game.Event;
 using Ship.Network;
 using Ship.Network.Transport;
 using Ship.Utilities;
-using System;
 using UnityEngine.SceneManagement;
 
 public class ConnectionManager

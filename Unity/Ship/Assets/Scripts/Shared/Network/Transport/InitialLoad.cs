@@ -7,11 +7,13 @@ namespace Ship.Network.Transport
     {
         public List<PlayerJoinEvent> players;
         public List<CharacterSpawnEvent> characters;
+        public int numberOfSectors;
 
-        public InitialLoad(List<PlayerJoinEvent> players, List<CharacterSpawnEvent> characters)
+        public InitialLoad(List<PlayerJoinEvent> players, List<CharacterSpawnEvent> characters, int numberOfSectors)
         {
             this.players = players;
             this.characters = characters;
+            this.numberOfSectors = numberOfSectors;
         }
 
         public InitialLoad(Packet packet) : base()
@@ -29,6 +31,8 @@ namespace Ship.Network.Transport
             {
                 characters.Add(new CharacterSpawnEvent(packet));
             }
+
+            numberOfSectors = packet.ReadInt();
         }
 
         public override void ToPacket(Packet packet)
@@ -44,6 +48,8 @@ namespace Ship.Network.Transport
             {
                 characters[i].ToPacket(packet);
             }
+
+            packet.Write(numberOfSectors);
         }
     }
 }
