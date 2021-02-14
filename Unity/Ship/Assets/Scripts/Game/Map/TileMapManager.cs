@@ -6,15 +6,33 @@ using UnityEngine.Tilemaps;
 
 public class TileMapManager : MonoBehaviour
 {
-    enum ETerrainType
-    {
-        WATER = 0,
-        GRASS
-    }
 
+    public Tilemap beachMap;
     public Tilemap grassMap;
     public Tilemap waterMap;
 
+    //BEACH
+    public Tile beach_bottom;
+    public Tile beach_bottom_left;
+    public Tile beach_bottom_left_right;
+    public Tile beach_bottom_right;
+    public Tile beach_left;
+    public Tile beach_left_right;
+    public Tile beach_right;
+    public Tile beach_top;
+    public Tile beach_top_bottom;
+    public Tile beach_top_bottom_left;
+    public Tile beach_top_bottom_right;
+    public Tile beach_top_left;
+    public Tile beach_top_left_right;
+    public Tile beach_top_right;
+
+    public Tile beach_top_right_corner;
+    public Tile beach_top_left_corner;
+    public Tile beach_bottom_right_corner;
+    public Tile beach_bottom_left_corner;
+
+    //GRASS
     public Tile grass;
     public Tile grass_bottom;
     public Tile grass_bottom_left;
@@ -32,12 +50,11 @@ public class TileMapManager : MonoBehaviour
     public Tile grass_top_left_right;
     public Tile grass_top_right;
 
+    //WATER
     public Tile water;
-    public Tile water_top;
 
     private Dictionary<string, Tile> grassTileMap;
-    private Dictionary<string, Tile> waterTileMap;
-
+    private Dictionary<string, Tile> beachTileMap;
     void Awake()
     {
         //(ETerrainType top, ETerrainType right, ETerrainType bottom, ETerrainType left
@@ -59,6 +76,25 @@ public class TileMapManager : MonoBehaviour
         grassTileMap.Add("0010", grass_top_left_right);
         grassTileMap.Add("0011", grass_top_right);
 
+        beachTileMap = new Dictionary<string, Tile>();
+        //beachTileMap.Add("1111", grass);
+        beachTileMap.Add("1101", beach_bottom);
+        beachTileMap.Add("1100", beach_bottom_left);
+        beachTileMap.Add("1000", beach_bottom_left_right);
+        beachTileMap.Add("1001", beach_bottom_right);
+        beachTileMap.Add("1110", beach_left);
+        beachTileMap.Add("1010", beach_left_right);
+        beachTileMap.Add("1011", beach_right);
+        beachTileMap.Add("0111", beach_top);
+        beachTileMap.Add("0101", beach_top_bottom);
+        beachTileMap.Add("0100", beach_top_bottom_left);
+        //beachTileMap.Add("0000", grass_top_bottom_left_right);
+        beachTileMap.Add("0001", beach_top_bottom_right);
+        beachTileMap.Add("0110", beach_top_left);
+        beachTileMap.Add("0010", beach_top_left_right);
+        beachTileMap.Add("0011", beach_top_right);
+
+        /*
         waterTileMap = new Dictionary<string, Tile>();
         waterTileMap.Add("1111", water_top);
         waterTileMap.Add("1101", water_top);
@@ -76,6 +112,7 @@ public class TileMapManager : MonoBehaviour
         waterTileMap.Add("0110", water);
         waterTileMap.Add("0010", water);
         waterTileMap.Add("0011", water);
+        */
 
         int width = 100;
         int height = 100;
@@ -91,41 +128,88 @@ public class TileMapManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
+                //grass tile
                 if (terrainMap[x, y] == 1)
                 {
+                    //grass tile
                     if(x > borderSize && x < width - borderSize && y > borderSize && y < height - borderSize)
                     {
-                        Tile tile = getGrassTile(terrainMap[x, y - 1], terrainMap[x - 1, y], terrainMap[x, y + 1], terrainMap[x + 1, y]);
-                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), tile);
+                        string key = getTileKey(terrainMap[x, y - 1], terrainMap[x - 1, y], terrainMap[x, y + 1], terrainMap[x + 1, y]);
+                        Tile grassTile = grassTileMap[key];
+                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grassTile);
+
+                        //beach tile
+                        if(beachTileMap.ContainsKey(key))
+                        {
+                            Tile beachTile = beachTileMap[key];
+                            beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), beachTile);
+                        }
+
+                        if(terrainMap[x - 1, y] == 1 && terrainMap[x, y + 1] == 1 && terrainMap[x - 1, y + 1] == 0)
+                        {
+                            Tile beachTile = beach_bottom_right_corner;
+                            beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), beachTile);
+                        }
+
+                        if (terrainMap[x + 1, y] == 1 && terrainMap[x, y + 1] == 1 && terrainMap[x + 1, y + 1] == 0)
+                        {
+                            Tile beachTile = beach_bottom_left_corner;
+                            beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), beachTile);
+                        }
+
+                        if (terrainMap[x + 1, y] == 1 && terrainMap[x, y - 1] == 1 && terrainMap[x + 1, y - 1] == 0)
+                        {
+                            Tile beachTile = beach_top_left_corner;
+                            beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2), beachTile);
+                        }
+
+                        if (terrainMap[x, y - 1] == 1 && terrainMap[x - 1, y] == 1 && terrainMap[x - 1, y - 1] == 0)
+                        {
+                            Tile beachTile = beach_top_right_corner;
+                            beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 3), beachTile);
+                        }
                     }
-                }
-                else
-                {
-                    if (x > borderSize && x < width - borderSize && y > borderSize && y < height - borderSize)
-                    {
-                        Tile tile = getWaterTile(terrainMap[x, y - 1], terrainMap[x - 1, y], terrainMap[x, y + 1], terrainMap[x + 1, y]);
-                        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), tile);
-                    } 
-                    else
+
+                    //water background
+                    bool grassHasWaterNeighbour = terrainMap[x, y - 1] == 0 || terrainMap[x - 1, y] == 0 || terrainMap[x, y + 1] == 0 || terrainMap[x + 1, y] == 0;
+                    if (grassHasWaterNeighbour)
                     {
                         waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), water);
                     }
+                }
+                //water
+                else
+                {
+                    waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), water);
                 }
             }
         }
     }
 
-    private Tile getGrassTile(int top, int right, int bottom, int left)
+    private string getTileKey(int top, int right, int bottom, int left)
     {
-        string key = top + "" + right + "" + bottom + "" + left;
-        return grassTileMap[key];
+        return top + "" + right + "" + bottom + "" + left;
     }
 
+    /*
     private Tile getWaterTile(int top, int right, int bottom, int left)
     {
         string key = top + "" + right + "" + bottom + "" + left;
         return waterTileMap[key];
     }
+    */
+
+    /*
+    if (x > borderSize && x < width - borderSize - 1 && y > borderSize && y < height - borderSize - 1)
+    {
+        Tile tile = getWaterTile(terrainMap[x, y - 1], terrainMap[x - 1, y], terrainMap[x, y + 1], terrainMap[x + 1, y]);
+        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), tile);
+    } 
+    else
+    {
+        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), water);
+    }
+    */
 
     void Update()
     {
