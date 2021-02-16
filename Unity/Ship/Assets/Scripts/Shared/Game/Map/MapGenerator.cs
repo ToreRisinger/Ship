@@ -1,5 +1,4 @@
 ﻿
-using Ship.Utilities;
 using System.Collections.Generic;
 using System.Numerics;
 using Utils;
@@ -8,6 +7,9 @@ namespace Game.Map
 {
     public class MapGenerator
     {
+        public static int WATER = 0;
+        public static int BEACH = 1;
+        public static int GRASS = 2;
 
         private static List<Vector2> bounds = new List<Vector2>()
         {
@@ -38,7 +40,7 @@ namespace Game.Map
                 for (int y = 0; y < height; y++)
                 {
                     int rand = Utilities.rand(0, 100);
-                    terrainMap[x, y] = rand < initChance ? 1 : 0;
+                    terrainMap[x, y] = rand < initChance ? GRASS : WATER;
                 }
             }
         }
@@ -55,7 +57,7 @@ namespace Game.Map
                 {
                     if(x <= borderSize || x >= width - borderSize || y <= borderSize || y >= height - borderSize)
                     {
-                        newMap[x, y] = 0;
+                        newMap[x, y] = WATER;
                         continue;
                     }
 
@@ -70,27 +72,27 @@ namespace Game.Map
                             //neighb++; border?
                         }
                     }
-                    if (oldMap[x, y] == 1)
+                    if (oldMap[x, y] == GRASS)
                     {
                         if(neighb < deathLimit)
                         {
-                            newMap[x, y] = 0;
+                            newMap[x, y] = WATER;
                         } 
                         else
                         {
-                            newMap[x, y] = 1;
+                            newMap[x, y] = GRASS;
                         }
                     }
 
-                    if (oldMap[x, y] == 0)
+                    if (oldMap[x, y] == WATER)
                     {
                         if (neighb > birthLimit)
                         {
-                            newMap[x, y] = 1;
+                            newMap[x, y] = GRASS;
                         }
                         else
                         {
-                            newMap[x, y] = 0;
+                            newMap[x, y] = WATER;
                         }
                     }
                 }

@@ -167,54 +167,49 @@ MonoBehaviour:
   beachMap: {fileID: 1042992458}
   grassMap: {fileID: 1994672239}
   waterMap: {fileID: 2121587855}
-  beach_bottom: {fileID: 11400000, guid: 226dff6c79b1c1c40ad0400a1198c99d, type: 2}
-  beach_bottom_left: {fileID: 11400000, guid: 50722a308600f4c4099b49490b690861, type: 2}
-  beach_bottom_left_right: {fileID: 11400000, guid: a6b1322e6eab0e14c8643c637abaa490,
+  beach: {fileID: 11400000, guid: e43480dfe4b51aa439aa68d0df006739, type: 2}
+  grass: {fileID: 11400000, guid: 9bf6e74d7aa6c264ea1963f1917135e3, type: 2}
+  grass_bottom: {fileID: 11400000, guid: 07b09045d4f79a44b9c625a3ee2e8937, type: 2}
+  grass_bottom_left: {fileID: 11400000, guid: f7d6467449eb511499e7a360c2e0243b, type: 2}
+  grass_bottom_left_right: {fileID: 11400000, guid: 21d179089ddb9df41b85884da4d1bd86,
     type: 2}
-  beach_bottom_right: {fileID: 11400000, guid: 829bc35d2c90a024180b783c3738344b, type: 2}
-  beach_left: {fileID: 11400000, guid: 18e63a4e3d4c1e342990783e83916a3b, type: 2}
-  beach_left_right: {fileID: 11400000, guid: 42dced875bf8d0a40921a2eec4d568c5, type: 2}
-  beach_right: {fileID: 11400000, guid: bf5a4bad16d7aff4a88a2b6d1899e86e, type: 2}
-  beach_top: {fileID: 11400000, guid: 4c33051b4d7d9c1449f3f24aaae41b82, type: 2}
-  beach_top_bottom: {fileID: 11400000, guid: fd96216cc95e55b4491eb77a40e15617, type: 2}
-  beach_top_bottom_left: {fileID: 11400000, guid: 32d1d4814507e574db6faa6139f2707e,
+  grass_bottom_right: {fileID: 11400000, guid: e6325182823355049a32fd722dd7cf99, type: 2}
+  grass_left: {fileID: 11400000, guid: e8ad06c34b27a5848974eabdc13688b9, type: 2}
+  grass_left_right: {fileID: 11400000, guid: 28cfbd6d4d6298b439637c1f1fae5582, type: 2}
+  grass_right: {fileID: 11400000, guid: 20a609865b9683f47a1560cb6e2aa141, type: 2}
+  grass_top: {fileID: 11400000, guid: 274ba3a8288379f40851cecdca5b82d7, type: 2}
+  grass_top_bottom: {fileID: 11400000, guid: a70fc0c9d400da348a05256d6a297c37, type: 2}
+  grass_top_bottom_left: {fileID: 11400000, guid: 852e4feed51c6534780fceaeec8c1109,
     type: 2}
-  beach_top_bottom_right: {fileID: 11400000, guid: 9556389efebe61a4d8b017992da05c1d,
+  grass_top_bottom_left_right: {fileID: 11400000, guid: b54460aa33ad732458cf2be887ee695e,
     type: 2}
-  beach_top_left: {fileID: 11400000, guid: 3b4f92383a8ccfd4991cf2868b1f96a5, type: 2}
-  beach_top_left_right: {fileID: 11400000, guid: 50352096a4dae42479714ae02c7e5bfd,
+  grass_top_bottom_right: {fileID: 11400000, guid: b4b2c1af63c638846836ee680263d923,
     type: 2}
-  beach_top_right: {fileID: 11400000, guid: 2fa790ac6517f594e871888c6311d486, type: 2}
-  beach_top_right_corner: {fileID: 11400000, guid: 14926321d5461384da86a6465c001be3,
+  grass_top_left: {fileID: 11400000, guid: f14259988fa5d6849909e362d4558f14, type: 2}
+  grass_top_left_right: {fileID: 11400000, guid: ea6008d815dad8d43b2aa631c6cf306c,
     type: 2}
-  beach_top_left_corner: {fileID: 11400000, guid: 0d3b39c694a2fe0498b48f296f6c6e9b,
+  grass_top_right: {fileID: 11400000, guid: 80e1fa3f83365b94b8424237bb5e0bcf, type: 2}
+  water: {fileID: 11400000, guid: 44127cf73c6a3354d90949a3554f55ce, type: 2}
+  water_bottom: {fileID: 11400000, guid: b123803d362a71643ac8ce214f11cd0d, type: 2}
+  water_bottom_left: {fileID: 11400000, guid: 7627c77b8bc3b6047acbf124af82247b, type: 2}
+  water_bottom_left_right: {fileID: 11400000, guid: 1f8bbc91c9f64bf4b9578e128cdf4782,
     type: 2}
-  beach_bottom_right_corner: {fileID: 11400000, guid: 42df414aba75e5a4180d8742a99b66c4,
+  water_bottom_right: {fileID: 11400000, guid: 9538f9946156dc641ac14da8e0f811f5, type: 2}
+  water_left: {fileID: 11400000, guid: 04e00a8b3e85e75438d3c7c42eeb0887, type: 2}
+  water_left_right: {fileID: 11400000, guid: 728de37d1a8cd1745b4be797d25eb10d, type: 2}
+  water_right: {fileID: 11400000, guid: 06eab197611b4b74a84e66a0ab85bdd0, type: 2}
+  water_top: {fileID: 11400000, guid: 83cdfad840d22894fa5f0dd63dbcda7b, type: 2}
+  water_top_bottom: {fileID: 11400000, guid: 4b05b41a81a4509408261bc09094c3d5, type: 2}
+  water_top_bottom_left: {fileID: 11400000, guid: 30fb6f396c9bb5f42b4e52122b22550e,
     type: 2}
-  beach_bottom_left_corner: {fileID: 11400000, guid: a92ded513371f254eb95ef5156dd64ff,
+  water_top_bottom_left_right: {fileID: 11400000, guid: 80879420b1921114d8ad67dbe6fc3df4,
     type: 2}
-  grass: {fileID: 11400000, guid: 02ca4e2467ca6ce4190ed3f544330bdf, type: 2}
-  grass_bottom: {fileID: 11400000, guid: a02d8b2a59cde474e9bf75473f253ee1, type: 2}
-  grass_bottom_left: {fileID: 11400000, guid: 21c74f45785a472429906269540f087b, type: 2}
-  grass_bottom_left_right: {fileID: 11400000, guid: 242a3f1c060db364da4f645810521774,
+  water_top_bottom_right: {fileID: 11400000, guid: 9af2dfa3d6541f64895b362b455f9156,
     type: 2}
-  grass_bottom_right: {fileID: 11400000, guid: b470757c53b431549bdd56f5ffe0457a, type: 2}
-  grass_left: {fileID: 11400000, guid: e9407d5829d47cf4bb398862e7931415, type: 2}
-  grass_left_right: {fileID: 11400000, guid: 324eda47259be3a49a623be16122b565, type: 2}
-  grass_right: {fileID: 11400000, guid: b5e3d82d253b1174395afde3938afceb, type: 2}
-  grass_top: {fileID: 11400000, guid: 543cb0537f3e87643bcde48f81bf1d19, type: 2}
-  grass_top_bottom: {fileID: 11400000, guid: 3797ce071863c0640ae6c0526f6bf58a, type: 2}
-  grass_top_bottom_left: {fileID: 11400000, guid: c50679a24a7bedf4bb7d94c7fdcb087f,
+  water_top_left: {fileID: 11400000, guid: 46d5e52a0e2a9634cb7324be9751742c, type: 2}
+  water_top_left_right: {fileID: 11400000, guid: 8d2fa79bab6a28940b8c3cb61b5da251,
     type: 2}
-  grass_top_bottom_left_right: {fileID: 11400000, guid: 7cb7efc3e8d9d6243b447fb6f256b92b,
-    type: 2}
-  grass_top_bottom_right: {fileID: 11400000, guid: 45c69218c8243f24383331b017f1b3ca,
-    type: 2}
-  grass_top_left: {fileID: 11400000, guid: feb7c843acf46f342a48916723c445a6, type: 2}
-  grass_top_left_right: {fileID: 11400000, guid: acd43af3f94dd9741a63770332e6195c,
-    type: 2}
-  grass_top_right: {fileID: 11400000, guid: cfea0e112c7ed8645bb707e2d6d7a2a9, type: 2}
-  water: {fileID: 11400000, guid: 3111223cba8301641854f0af13616a18, type: 2}
+  water_top_right: {fileID: 11400000, guid: 8a0547ac71c72b24aacfe5b244fd478c, type: 2}
 --- !u!1 &490713845
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +369,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -781,7 +776,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -946,7 +941,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
