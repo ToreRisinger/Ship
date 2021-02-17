@@ -169,47 +169,67 @@ MonoBehaviour:
   waterMap: {fileID: 2121587855}
   beach: {fileID: 11400000, guid: e43480dfe4b51aa439aa68d0df006739, type: 2}
   grass: {fileID: 11400000, guid: 9bf6e74d7aa6c264ea1963f1917135e3, type: 2}
-  grass_bottom: {fileID: 11400000, guid: 07b09045d4f79a44b9c625a3ee2e8937, type: 2}
-  grass_bottom_left: {fileID: 11400000, guid: f7d6467449eb511499e7a360c2e0243b, type: 2}
-  grass_bottom_left_right: {fileID: 11400000, guid: 21d179089ddb9df41b85884da4d1bd86,
-    type: 2}
-  grass_bottom_right: {fileID: 11400000, guid: e6325182823355049a32fd722dd7cf99, type: 2}
-  grass_left: {fileID: 11400000, guid: e8ad06c34b27a5848974eabdc13688b9, type: 2}
-  grass_left_right: {fileID: 11400000, guid: 28cfbd6d4d6298b439637c1f1fae5582, type: 2}
-  grass_right: {fileID: 11400000, guid: 20a609865b9683f47a1560cb6e2aa141, type: 2}
-  grass_top: {fileID: 11400000, guid: 274ba3a8288379f40851cecdca5b82d7, type: 2}
-  grass_top_bottom: {fileID: 11400000, guid: a70fc0c9d400da348a05256d6a297c37, type: 2}
-  grass_top_bottom_left: {fileID: 11400000, guid: 852e4feed51c6534780fceaeec8c1109,
-    type: 2}
-  grass_top_bottom_left_right: {fileID: 11400000, guid: b54460aa33ad732458cf2be887ee695e,
-    type: 2}
-  grass_top_bottom_right: {fileID: 11400000, guid: b4b2c1af63c638846836ee680263d923,
-    type: 2}
-  grass_top_left: {fileID: 11400000, guid: f14259988fa5d6849909e362d4558f14, type: 2}
-  grass_top_left_right: {fileID: 11400000, guid: ea6008d815dad8d43b2aa631c6cf306c,
-    type: 2}
-  grass_top_right: {fileID: 11400000, guid: 80e1fa3f83365b94b8424237bb5e0bcf, type: 2}
-  water: {fileID: 11400000, guid: 44127cf73c6a3354d90949a3554f55ce, type: 2}
-  water_bottom: {fileID: 11400000, guid: b123803d362a71643ac8ce214f11cd0d, type: 2}
-  water_bottom_left: {fileID: 11400000, guid: 7627c77b8bc3b6047acbf124af82247b, type: 2}
-  water_bottom_left_right: {fileID: 11400000, guid: 1f8bbc91c9f64bf4b9578e128cdf4782,
-    type: 2}
-  water_bottom_right: {fileID: 11400000, guid: 9538f9946156dc641ac14da8e0f811f5, type: 2}
-  water_left: {fileID: 11400000, guid: 04e00a8b3e85e75438d3c7c42eeb0887, type: 2}
-  water_left_right: {fileID: 11400000, guid: 728de37d1a8cd1745b4be797d25eb10d, type: 2}
-  water_right: {fileID: 11400000, guid: 06eab197611b4b74a84e66a0ab85bdd0, type: 2}
-  water_top: {fileID: 11400000, guid: 83cdfad840d22894fa5f0dd63dbcda7b, type: 2}
-  water_top_bottom: {fileID: 11400000, guid: 4b05b41a81a4509408261bc09094c3d5, type: 2}
-  water_top_bottom_left: {fileID: 11400000, guid: 30fb6f396c9bb5f42b4e52122b22550e,
-    type: 2}
-  water_top_bottom_left_right: {fileID: 11400000, guid: 80879420b1921114d8ad67dbe6fc3df4,
-    type: 2}
-  water_top_bottom_right: {fileID: 11400000, guid: 9af2dfa3d6541f64895b362b455f9156,
-    type: 2}
-  water_top_left: {fileID: 11400000, guid: 46d5e52a0e2a9634cb7324be9751742c, type: 2}
-  water_top_left_right: {fileID: 11400000, guid: 8d2fa79bab6a28940b8c3cb61b5da251,
-    type: 2}
-  water_top_right: {fileID: 11400000, guid: 8a0547ac71c72b24aacfe5b244fd478c, type: 2}
+  grass_0001_s: {fileID: 11400000, guid: f7d6467449eb511499e7a360c2e0243b, type: 2}
+  grass_0010_s: {fileID: 11400000, guid: e6325182823355049a32fd722dd7cf99, type: 2}
+  grass_0011_s: {fileID: 11400000, guid: fcdc5baf18fe6c54290ed17120f36014, type: 2}
+  grass_0100_s: {fileID: 11400000, guid: 28cfbd6d4d6298b439637c1f1fae5582, type: 2}
+  grass_0101_s: {fileID: 11400000, guid: a70fc0c9d400da348a05256d6a297c37, type: 2}
+  grass_0110_s: {fileID: 11400000, guid: b54460aa33ad732458cf2be887ee695e, type: 2}
+  grass_0111_s: {fileID: 11400000, guid: f14259988fa5d6849909e362d4558f14, type: 2}
+  grass_1000_s: {fileID: 11400000, guid: 80e1fa3f83365b94b8424237bb5e0bcf, type: 2}
+  grass_1001_s: {fileID: 11400000, guid: 39c77ce33f094d644a598a6e4455819c, type: 2}
+  grass_1010_s: {fileID: 11400000, guid: ccf8119b5596e8342b44100a12aedab2, type: 2}
+  grass_1011_s: {fileID: 11400000, guid: 9bf64fc09bfe43d40a8212cadd25b174, type: 2}
+  grass_1100_s: {fileID: 11400000, guid: d9e9c8f32c0813241bda1e403c9a0173, type: 2}
+  grass_1101_s: {fileID: 11400000, guid: 0795e4d2c29a58649a8f5f89dc12776f, type: 2}
+  grass_1110_s: {fileID: 11400000, guid: 7da433e67a4ab5048a9cfe1503b06e04, type: 2}
+  grass_1111_s: {fileID: 11400000, guid: e76204cc846a12147a5fbd95f01ec84b, type: 2}
+  grass_0001_c: {fileID: 11400000, guid: 07b09045d4f79a44b9c625a3ee2e8937, type: 2}
+  grass_0010_c: {fileID: 11400000, guid: 21d179089ddb9df41b85884da4d1bd86, type: 2}
+  grass_0011_c: {fileID: 11400000, guid: e8ad06c34b27a5848974eabdc13688b9, type: 2}
+  grass_0100_c: {fileID: 11400000, guid: 20a609865b9683f47a1560cb6e2aa141, type: 2}
+  grass_0101_c: {fileID: 11400000, guid: 274ba3a8288379f40851cecdca5b82d7, type: 2}
+  grass_0110_c: {fileID: 11400000, guid: 852e4feed51c6534780fceaeec8c1109, type: 2}
+  grass_0111_c: {fileID: 11400000, guid: b4b2c1af63c638846836ee680263d923, type: 2}
+  grass_1000_c: {fileID: 11400000, guid: ea6008d815dad8d43b2aa631c6cf306c, type: 2}
+  grass_1001_c: {fileID: 11400000, guid: 9b5dfa4a593991948a3f9780c5d7581f, type: 2}
+  grass_1010_c: {fileID: 11400000, guid: a260e57ed54de1d48b903f0547a24514, type: 2}
+  grass_1011_c: {fileID: 11400000, guid: 846e1745c1730b94fae4e730cb8497c8, type: 2}
+  grass_1100_c: {fileID: 11400000, guid: df94babb7a3404c4d8372e4f4c8b334a, type: 2}
+  grass_1101_c: {fileID: 11400000, guid: 07514808cc8ae0f48a2a65be33b6ea29, type: 2}
+  grass_1110_c: {fileID: 11400000, guid: 101f722813defc5419593412e8c53b95, type: 2}
+  grass_1111_c: {fileID: 11400000, guid: 597b28f4f1cf9a144b5ca6c74e5fcb6b, type: 2}
+  water: {fileID: 11400000, guid: aa67370e9203fc9438ef3946d2749b1a, type: 2}
+  water_0001_s: {fileID: 11400000, guid: 10881cc710acfea4799958adc1675b2d, type: 2}
+  water_0010_s: {fileID: 11400000, guid: 4c4e8e4cb400da04cb8bf339822ecec2, type: 2}
+  water_0011_s: {fileID: 11400000, guid: 1b5df1b8d4e0f84408732133b3809717, type: 2}
+  water_0100_s: {fileID: 11400000, guid: b374818a68532b04cad930a1ca2956cd, type: 2}
+  water_0101_s: {fileID: 11400000, guid: 660b2bb86482e8c4b8f5a75a4a3f897a, type: 2}
+  water_0110_s: {fileID: 11400000, guid: ce50e3ad1bf7e124cb215af51b855af8, type: 2}
+  water_0111_s: {fileID: 11400000, guid: 323931c19a9cdf544a58efb060c823a6, type: 2}
+  water_1000_s: {fileID: 11400000, guid: ba1cc79dab77fc14c98689d1fa2f85bc, type: 2}
+  water_1001_s: {fileID: 11400000, guid: cbac9c77dca0af64188d8d6e91221ae8, type: 2}
+  water_1010_s: {fileID: 11400000, guid: 947b1111c3ff6b948be832061d85657f, type: 2}
+  water_1011_s: {fileID: 11400000, guid: 2de4a83925ebf8544b2c7ac181c051ea, type: 2}
+  water_1100_s: {fileID: 11400000, guid: 5ac87e2d074855a41b95b20ea5608dc7, type: 2}
+  water_1101_s: {fileID: 11400000, guid: 2ce2295b85525004db4e58a4ee0d696f, type: 2}
+  water_1110_s: {fileID: 11400000, guid: 877bcd9d113241b4e8eb6dca1b75b3e7, type: 2}
+  water_1111_s: {fileID: 11400000, guid: 2ab60051236074f46bde7d85b9083e57, type: 2}
+  water_0001_c: {fileID: 11400000, guid: a1700baae0dc25547ab6171cffc453ac, type: 2}
+  water_0010_c: {fileID: 11400000, guid: 02f9b1efd842c584faa8699816421aab, type: 2}
+  water_0011_c: {fileID: 11400000, guid: caaeb56afcc83ac4e9fa17ecc29ea516, type: 2}
+  water_0100_c: {fileID: 11400000, guid: 9c879a794dc47e243b1ec0cecd0a5d84, type: 2}
+  water_0101_c: {fileID: 11400000, guid: 64888df8c1612fc44a9f679c33a8c8d8, type: 2}
+  water_0110_c: {fileID: 11400000, guid: d4e3d652e1ee01e4bb9c8eaf0b5551a3, type: 2}
+  water_0111_c: {fileID: 11400000, guid: 63c64bf33a67755418a373d087187e60, type: 2}
+  water_1000_c: {fileID: 11400000, guid: 7663dcf833da39c4b81cfd2dd694344b, type: 2}
+  water_1001_c: {fileID: 11400000, guid: 8994b979c4bd74d4ca65bbf6fe2a8145, type: 2}
+  water_1010_c: {fileID: 11400000, guid: 260e6f894b4901547bd3238b7a293e79, type: 2}
+  water_1011_c: {fileID: 11400000, guid: d0633d8f7525fc440ad2df91fef30570, type: 2}
+  water_1100_c: {fileID: 11400000, guid: 8395c58a86a234a438addb1605b4f9ee, type: 2}
+  water_1101_c: {fileID: 11400000, guid: 22a56c648e7c9574b96f5ae012fa5acc, type: 2}
+  water_1110_c: {fileID: 11400000, guid: 9011a90d2ed13f84f87f3eaf4772d663, type: 2}
+  water_1111_c: {fileID: 11400000, guid: 5eed8e661214d954c8621ee767b896a6, type: 2}
 --- !u!1 &490713845
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +298,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015364772}
   m_Enabled: 1
-  m_CellSize: {x: 10, y: 10, z: 0}
+  m_CellSize: {x: 40, y: 40, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -642,7 +662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetsPPU: 8
+  m_AssetsPPU: 2
   m_RefResolutionX: 320
   m_RefResolutionY: 180
   m_UpscaleRT: 0

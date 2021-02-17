@@ -15,86 +15,150 @@ public class TileMapManager : MonoBehaviour
 
     //GRASS
     public Tile grass;
-    public Tile grass_bottom;
-    public Tile grass_bottom_left;
-    public Tile grass_bottom_left_right;
-    public Tile grass_bottom_right;
-    public Tile grass_left;
-    public Tile grass_left_right;
-    public Tile grass_right;
-    public Tile grass_top;
-    public Tile grass_top_bottom;
-    public Tile grass_top_bottom_left;
-    public Tile grass_top_bottom_left_right;
-    public Tile grass_top_bottom_right;
-    public Tile grass_top_left;
-    public Tile grass_top_left_right;
-    public Tile grass_top_right;
+    public Tile grass_0001_s;
+    public Tile grass_0010_s;
+    public Tile grass_0011_s;
+    public Tile grass_0100_s;
+    public Tile grass_0101_s;
+    public Tile grass_0110_s;
+    public Tile grass_0111_s;
+    public Tile grass_1000_s;
+    public Tile grass_1001_s;
+    public Tile grass_1010_s;
+    public Tile grass_1011_s;
+    public Tile grass_1100_s;
+    public Tile grass_1101_s;
+    public Tile grass_1110_s;
+    public Tile grass_1111_s;
+
+    public Tile grass_0001_c;
+    public Tile grass_0010_c;
+    public Tile grass_0011_c;
+    public Tile grass_0100_c;
+    public Tile grass_0101_c;
+    public Tile grass_0110_c;
+    public Tile grass_0111_c;
+    public Tile grass_1000_c;
+    public Tile grass_1001_c;
+    public Tile grass_1010_c;
+    public Tile grass_1011_c;
+    public Tile grass_1100_c;
+    public Tile grass_1101_c;
+    public Tile grass_1110_c;
+    public Tile grass_1111_c;
 
     //WATER
     public Tile water;
-    public Tile water_bottom;
-    public Tile water_bottom_left;
-    public Tile water_bottom_left_right;
-    public Tile water_bottom_right;
-    public Tile water_left;
-    public Tile water_left_right;
-    public Tile water_right;
-    public Tile water_top;
-    public Tile water_top_bottom;
-    public Tile water_top_bottom_left;
-    public Tile water_top_bottom_left_right;
-    public Tile water_top_bottom_right;
-    public Tile water_top_left;
-    public Tile water_top_left_right;
-    public Tile water_top_right;
+    public Tile water_0001_s;
+    public Tile water_0010_s;
+    public Tile water_0011_s;
+    public Tile water_0100_s;
+    public Tile water_0101_s;
+    public Tile water_0110_s;
+    public Tile water_0111_s;
+    public Tile water_1000_s;
+    public Tile water_1001_s;
+    public Tile water_1010_s;
+    public Tile water_1011_s;
+    public Tile water_1100_s;
+    public Tile water_1101_s;
+    public Tile water_1110_s;
+    public Tile water_1111_s;
 
-    private Dictionary<string, Tile> grassTileMap;
-    //private Dictionary<string, Tile> beachTileMap;
-    private Dictionary<string, Tile> waterTileMap;
+    public Tile water_0001_c;
+    public Tile water_0010_c;
+    public Tile water_0011_c;
+    public Tile water_0100_c;
+    public Tile water_0101_c;
+    public Tile water_0110_c;
+    public Tile water_0111_c;
+    public Tile water_1000_c;
+    public Tile water_1001_c;
+    public Tile water_1010_c;
+    public Tile water_1011_c;
+    public Tile water_1100_c;
+    public Tile water_1101_c;
+    public Tile water_1110_c;
+    public Tile water_1111_c;
+
+    private Dictionary<string, Tile> grassSideTileMap;
+    private Dictionary<string, Tile> grassCornerTileMap;
+
+    private Dictionary<string, Tile> waterSideTileMap;
+    private Dictionary<string, Tile> waterCornerTileMap;
 
     int[,] terrainMap;
 
     void Awake()
     {
-        //(ETerrainType top, ETerrainType right, ETerrainType bottom, ETerrainType left
-        grassTileMap = new Dictionary<string, Tile>();
-        grassTileMap.Add("0000", grass_top_bottom_left_right);
-        grassTileMap.Add("0001", grass_bottom);
-        grassTileMap.Add("0010", grass_right);
-        grassTileMap.Add("0011", grass_bottom_right);
-        grassTileMap.Add("0100", grass_top);
-        grassTileMap.Add("0101", grass_top_bottom);
-        grassTileMap.Add("0110", grass_top_right);
-        grassTileMap.Add("0111", grass_top_bottom_right);
-        grassTileMap.Add("1000", grass_left);
-        grassTileMap.Add("1001", grass_bottom_left);
-        grassTileMap.Add("1010", grass_left_right);
-        grassTileMap.Add("1011", grass_bottom_left_right);
-        grassTileMap.Add("1100", grass_top_left);
-        grassTileMap.Add("1101", grass_top_bottom_left);
-        grassTileMap.Add("1110", grass_top_left_right);
-        grassTileMap.Add("1111", grass);
+        grassSideTileMap = new Dictionary<string, Tile>();
+        grassSideTileMap.Add("0001", grass_0001_s);
+        grassSideTileMap.Add("0010", grass_0010_s);
+        grassSideTileMap.Add("0011", grass_0011_s);
+        grassSideTileMap.Add("0100", grass_0100_s);
+        grassSideTileMap.Add("0101", grass_0101_s);
+        grassSideTileMap.Add("0110", grass_0110_s);
+        grassSideTileMap.Add("0111", grass_0111_s);
+        grassSideTileMap.Add("1000", grass_1000_s);
+        grassSideTileMap.Add("1001", grass_1001_s);
+        grassSideTileMap.Add("1010", grass_1010_s);
+        grassSideTileMap.Add("1011", grass_1011_s);
+        grassSideTileMap.Add("1100", grass_1100_s);
+        grassSideTileMap.Add("1101", grass_1101_s);
+        grassSideTileMap.Add("1110", grass_1110_s);
+        grassSideTileMap.Add("1111", grass_1111_s);
 
-        //beachTileMap = new Dictionary<string, Tile>();
+        grassCornerTileMap = new Dictionary<string, Tile>();
+        grassCornerTileMap.Add("0001", grass_0001_c);
+        grassCornerTileMap.Add("0010", grass_0010_c);
+        grassCornerTileMap.Add("0011", grass_0011_c);
+        grassCornerTileMap.Add("0100", grass_0100_c);
+        grassCornerTileMap.Add("0101", grass_0101_c);
+        grassCornerTileMap.Add("0110", grass_0110_c);
+        grassCornerTileMap.Add("0111", grass_0111_c);
+        grassCornerTileMap.Add("1000", grass_1000_c);
+        grassCornerTileMap.Add("1001", grass_1001_c);
+        grassCornerTileMap.Add("1010", grass_1010_c);
+        grassCornerTileMap.Add("1011", grass_1011_c);
+        grassCornerTileMap.Add("1100", grass_1100_c);
+        grassCornerTileMap.Add("1101", grass_1101_c);
+        grassCornerTileMap.Add("1110", grass_1110_c);
+        grassCornerTileMap.Add("1111", grass_1111_c);
 
-        waterTileMap = new Dictionary<string, Tile>();
-        waterTileMap.Add("0000", water_top_bottom_left_right);
-        waterTileMap.Add("0001", water_bottom);
-        waterTileMap.Add("0010", water_right);
-        waterTileMap.Add("0011", water_bottom_right);
-        waterTileMap.Add("0100", water_top);
-        waterTileMap.Add("0101", water_top_bottom);
-        waterTileMap.Add("0110", water_top_right);
-        waterTileMap.Add("0111", water_top_bottom_right);
-        waterTileMap.Add("1000", water_left);
-        waterTileMap.Add("1001", water_bottom_left);
-        waterTileMap.Add("1010", water_left_right);
-        waterTileMap.Add("1011", water_bottom_left_right);
-        waterTileMap.Add("1100", water_top_left);
-        waterTileMap.Add("1101", water_top_bottom_left);
-        waterTileMap.Add("1110", water_top_left_right);
-        waterTileMap.Add("1111", water);
+
+        waterSideTileMap = new Dictionary<string, Tile>();
+        waterSideTileMap.Add("0001", water_0001_s);
+        waterSideTileMap.Add("0010", water_0010_s);
+        waterSideTileMap.Add("0011", water_0011_s);
+        waterSideTileMap.Add("0100", water_0100_s);
+        waterSideTileMap.Add("0101", water_0101_s);
+        waterSideTileMap.Add("0110", water_0110_s);
+        waterSideTileMap.Add("0111", water_0111_s);
+        waterSideTileMap.Add("1000", water_1000_s);
+        waterSideTileMap.Add("1001", water_1001_s);
+        waterSideTileMap.Add("1010", water_1010_s);
+        waterSideTileMap.Add("1011", water_1011_s);
+        waterSideTileMap.Add("1100", water_1100_s);
+        waterSideTileMap.Add("1101", water_1101_s);
+        waterSideTileMap.Add("1110", water_1110_s);
+        waterSideTileMap.Add("1111", water_1111_s);
+
+        waterCornerTileMap = new Dictionary<string, Tile>();
+        waterCornerTileMap.Add("0001", water_0001_c);
+        waterCornerTileMap.Add("0010", water_0010_c);
+        waterCornerTileMap.Add("0011", water_0011_c);
+        waterCornerTileMap.Add("0100", water_0100_c);
+        waterCornerTileMap.Add("0101", water_0101_c);
+        waterCornerTileMap.Add("0110", water_0110_c);
+        waterCornerTileMap.Add("0111", water_0111_c);
+        waterCornerTileMap.Add("1000", water_1000_c);
+        waterCornerTileMap.Add("1001", water_1001_c);
+        waterCornerTileMap.Add("1010", water_1010_c);
+        waterCornerTileMap.Add("1011", water_1011_c);
+        waterCornerTileMap.Add("1100", water_1100_c);
+        waterCornerTileMap.Add("1101", water_1101_c);
+        waterCornerTileMap.Add("1110", water_1110_c);
+        waterCornerTileMap.Add("1111", water_1111_c);
 
         int width = 100;
         int height = 100;
@@ -111,9 +175,9 @@ public class TileMapManager : MonoBehaviour
         {
             for (int y = 1; y < height - 1; y++)
             {
-                if(terrainMap[x, y] == MapGenerator.WATER)
+                if(terrainMap[x, y] == MapGenerator.GRASS)
                 {
-                    if(isNextToLand(x, y))
+                    if(isNextToWater(x, y))
                     {
                         terrainMap[x, y] = MapGenerator.BEACH;
                     }
@@ -130,125 +194,67 @@ public class TileMapManager : MonoBehaviour
                 {
                     waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), water);
                     continue;
-                } 
+                }
 
                 if (checkTerrain(x, y, MapGenerator.WATER))
                 {
                     waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), water);
-                    
-                    string key = getTileKey(x, y, MapGenerator.WATER);
-                    waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), waterTileMap[key]);
-                    if (isNextTo(x, y, MapGenerator.BEACH))
-                    {
-                        beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), beach);
-                    }
-                    
+
                 }
                 else if (checkTerrain(x, y, MapGenerator.GRASS))
                 {
-                    //waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grass);
-                    
-                    string key = getTileKey(x, y, MapGenerator.GRASS);
-                    grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grassTileMap[key]);
-                    if (isNextTo(x, y, MapGenerator.BEACH))
-                    {
-                        beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), beach);
-                    }
-                    
+                    grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grass);
+
                 }
                 else if (checkTerrain(x, y, MapGenerator.BEACH))
                 {
                     beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), beach);
+
+                    string key = getSideTileKey(x, y, MapGenerator.WATER);
+                    if(waterSideTileMap.ContainsKey(key))
+                    {
+                        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), waterSideTileMap[key]);
+                    }
+
+                    key = getCornerTileKey(x, y, MapGenerator.WATER);
+                    if (waterCornerTileMap.ContainsKey(key))
+                    {
+                        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), waterCornerTileMap[key]);
+                    }
+
+                    key = getSideTileKey(x, y, MapGenerator.GRASS);
+                    if (waterSideTileMap.ContainsKey(key))
+                    {
+                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), grassSideTileMap[key]);
+                    }
+
+                    key = getCornerTileKey(x, y, MapGenerator.GRASS);
+                    if (waterCornerTileMap.ContainsKey(key))
+                    {
+                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grassCornerTileMap[key]);
+                    }
+
                 }
+                
             }
         }
-
-
-
-
-                    /*
-                    //grass tile
-                    if (terrainMap[x, y] == 1)
-                    {
-                        //grass tile
-                        if(x > borderSize && x < width - borderSize && y > borderSize && y < height - borderSize)
-                        {
-                            string key = getTileKey(terrainMap[x, y - 1], terrainMap[x - 1, y], terrainMap[x, y + 1], terrainMap[x + 1, y]);
-                            Tile grassTile = grassTileMap[key];
-                            grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grassTile);
-
-                            //beach tile
-                            if(beachTileMap.ContainsKey(key))
-                            {
-                                Tile beachTile = beachTileMap[key];
-                                beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), beachTile);
-                            }
-
-                            if(terrainMap[x - 1, y] == 1 && terrainMap[x, y + 1] == 1 && terrainMap[x - 1, y + 1] == 0)
-                            {
-                                //Tile beachTile = beach_bottom_right_corner;
-                                //beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), beachTile);
-                            }
-
-                            if (terrainMap[x + 1, y] == 1 && terrainMap[x, y + 1] == 1 && terrainMap[x + 1, y + 1] == 0)
-                            {
-                                //Tile beachTile = beach_bottom_left_corner;
-                                //beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), beachTile);
-                            }
-
-                            if (terrainMap[x + 1, y] == 1 && terrainMap[x, y - 1] == 1 && terrainMap[x + 1, y - 1] == 0)
-                            {
-                                //Tile beachTile = beach_top_left_corner;
-                                //beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2), beachTile);
-                            }
-
-                            if (terrainMap[x, y - 1] == 1 && terrainMap[x - 1, y] == 1 && terrainMap[x - 1, y - 1] == 0)
-                            {
-                                //Tile beachTile = beach_top_right_corner;
-                                //beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 3), beachTile);
-                            }
-                        }
-
-                        //water background
-                        bool grassHasWaterNeighbour = terrainMap[x, y - 1] == 0 || terrainMap[x - 1, y] == 0 || terrainMap[x, y + 1] == 0 || terrainMap[x + 1, y] == 0;
-                        if (grassHasWaterNeighbour)
-                        {
-                            waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), water);
-                        }
-                    }
-                    //water
-                    else
-                    {
-                        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), water);
-                    }
-                    */
     }
 
-    private string getTileKey(int x, int y, int value)
+    private string getSideTileKey(int x, int y, int value)
     {
-        //return (terrainMap[x - 1, y] == value ? 1 : 0) + "" + (terrainMap[x, y + 1] == value ? 1 : 0) + "" + (terrainMap[x + 1, y] == value ? 1 : 0) + "" + (terrainMap[x, y - 1] == value ? 1 : 0);
-        return (terrainMap[x + 1, y] == value ? 1 : 0) + "" + (terrainMap[x, y - 1] == value ? 1 : 0) + "" + (terrainMap[x - 1, y] == value ? 1 : 0) + "" + (terrainMap[x, y + 1] == value ? 1 : 0);
+        return (terrainMap[x + 1, y] == value ? 1 : 0) + ""
+            + (terrainMap[x, y - 1] == value ? 1 : 0) + "" 
+            + (terrainMap[x - 1, y] == value ? 1 : 0) + ""
+            + (terrainMap[x, y + 1] == value ? 1 : 0);
     }
 
-    /*
-    private Tile getWaterTile(int top, int right, int bottom, int left)
+    private string getCornerTileKey(int x, int y, int value)
     {
-        string key = top + "" + right + "" + bottom + "" + left;
-        return waterTileMap[key];
+        return (terrainMap[x + 1, y + 1] == value ? 1 : 0) + "" 
+            + (terrainMap[x + 1, y - 1] == value ? 1 : 0) + "" 
+            + (terrainMap[x - 1, y - 1] == value ? 1 : 0) + "" 
+            + (terrainMap[x - 1, y + 1] == value ? 1 : 0);
     }
-    */
-
-    /*
-    if (x > borderSize && x < width - borderSize - 1 && y > borderSize && y < height - borderSize - 1)
-    {
-        Tile tile = getWaterTile(terrainMap[x, y - 1], terrainMap[x - 1, y], terrainMap[x, y + 1], terrainMap[x + 1, y]);
-        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), tile);
-    } 
-    else
-    {
-        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), water);
-    }
-    */
 
     private bool checkTerrain(int x, int y, int value)
     {
@@ -258,6 +264,18 @@ public class TileMapManager : MonoBehaviour
     private bool isNextToLand(int x, int y)
     {
         return terrainMap[x - 1, y] > MapGenerator.BEACH || terrainMap[x, y + 1] > MapGenerator.BEACH || terrainMap[x + 1, y] > MapGenerator.BEACH || terrainMap[x, y - 1] > MapGenerator.BEACH;
+    }
+
+    private bool isNextToWater(int x, int y)
+    {
+        return terrainMap[x - 1, y] == MapGenerator.WATER 
+            || terrainMap[x, y + 1] == MapGenerator.WATER 
+            || terrainMap[x + 1, y] == MapGenerator.WATER 
+            || terrainMap[x, y - 1] == MapGenerator.WATER
+            || terrainMap[x - 1, y - 1] == MapGenerator.WATER
+            || terrainMap[x + 1, y - 1] == MapGenerator.WATER
+            || terrainMap[x + 1, y + 1] == MapGenerator.WATER
+            || terrainMap[x - 1, y + 1] == MapGenerator.WATER;
     }
 
     private bool isNextTo(int x, int y, int value)
