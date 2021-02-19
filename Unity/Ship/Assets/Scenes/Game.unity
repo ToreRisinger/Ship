@@ -121,6 +121,123 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &229809375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 229809376}
+  - component: {fileID: 229809378}
+  - component: {fileID: 229809377}
+  m_Layer: 0
+  m_Name: DesertMap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &229809376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229809375}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1015364774}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!483693784 &229809377
+TilemapRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229809375}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
+  m_ChunkSize: {x: 32, y: 32, z: 32}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_MaxChunkCount: 16
+  m_MaxFrameAge: 16
+  m_SortOrder: 0
+  m_Mode: 0
+  m_DetectChunkCullingBounds: 0
+  m_MaskInteraction: 0
+--- !u!1839735485 &229809378
+Tilemap:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229809375}
+  m_Enabled: 1
+  m_Tiles: {}
+  m_AnimatedTiles: {}
+  m_TileAssetArray: []
+  m_TileSpriteArray: []
+  m_TileMatrixArray: []
+  m_TileColorArray: []
+  m_TileObjectToInstantiateArray: []
+  m_AnimationFrameRate: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Origin: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0, y: 0, z: 1}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
+  m_TileOrientation: 0
+  m_TileOrientationMatrix:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
 --- !u!1 &234815033
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,11 +281,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0093efd0de60e3f41b8fb1c018d17c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterMap: {fileID: 2121587855}
   beachMap: {fileID: 1042992458}
   grassMap: {fileID: 1994672239}
-  waterMap: {fileID: 2121587855}
+  desertMap: {fileID: 229809378}
   beach: {fileID: 11400000, guid: e43480dfe4b51aa439aa68d0df006739, type: 2}
   grass: {fileID: 11400000, guid: 9bf6e74d7aa6c264ea1963f1917135e3, type: 2}
+  grass_2: {fileID: 11400000, guid: e5c5f8ee8b900804ea5ad92452ed0dcd, type: 2}
   grass_0001_s: {fileID: 11400000, guid: f7d6467449eb511499e7a360c2e0243b, type: 2}
   grass_0010_s: {fileID: 11400000, guid: e6325182823355049a32fd722dd7cf99, type: 2}
   grass_0011_s: {fileID: 11400000, guid: fcdc5baf18fe6c54290ed17120f36014, type: 2}
@@ -230,6 +349,37 @@ MonoBehaviour:
   water_1101_c: {fileID: 11400000, guid: 22a56c648e7c9574b96f5ae012fa5acc, type: 2}
   water_1110_c: {fileID: 11400000, guid: 9011a90d2ed13f84f87f3eaf4772d663, type: 2}
   water_1111_c: {fileID: 11400000, guid: 5eed8e661214d954c8621ee767b896a6, type: 2}
+  desert: {fileID: 11400000, guid: c0bbf297a677f154e92481576202d457, type: 2}
+  desert_0001_s: {fileID: 11400000, guid: 6ef7b991d1f7d3e4ba9ba5982439efde, type: 2}
+  desert_0010_s: {fileID: 11400000, guid: 4cec05bf5bfa5544bab884dc8599f63f, type: 2}
+  desert_0011_s: {fileID: 11400000, guid: bd63456cb167ef046b1d15e9aab1341e, type: 2}
+  desert_0100_s: {fileID: 11400000, guid: a9dc9b040bcc99a4a9a1675e5e5742d4, type: 2}
+  desert_0101_s: {fileID: 11400000, guid: 8b15e42b291c09842bdafe42aa3b74d1, type: 2}
+  desert_0110_s: {fileID: 11400000, guid: 4658e3a5dfec43b45bcbd080ec66a272, type: 2}
+  desert_0111_s: {fileID: 11400000, guid: 98af7911fe1d9a143a63de5e045b56b8, type: 2}
+  desert_1000_s: {fileID: 11400000, guid: 6c6da16765dd7f6498ef7fcbb33d876b, type: 2}
+  desert_1001_s: {fileID: 11400000, guid: 9058c856d1d298f429583297dc6e0729, type: 2}
+  desert_1010_s: {fileID: 11400000, guid: 60f4d40a1d87c6d4faa4b72aaa1985d1, type: 2}
+  desert_1011_s: {fileID: 11400000, guid: d878ec815db723e4a93e73f9e055f617, type: 2}
+  desert_1100_s: {fileID: 11400000, guid: 63ac88d26894f4f4ba7ade431db7592b, type: 2}
+  desert_1101_s: {fileID: 11400000, guid: b5c0efd5cfa65134591337f62f0a2e4e, type: 2}
+  desert_1110_s: {fileID: 11400000, guid: 60f7aaf19faa6174d8c76bc01fc0e545, type: 2}
+  desert_1111_s: {fileID: 11400000, guid: 33efdbc93a046f6429792f4708615439, type: 2}
+  desert_0001_c: {fileID: 11400000, guid: cf23330af7426d54fba6f510ad339032, type: 2}
+  desert_0010_c: {fileID: 11400000, guid: 3023492dd4c5b8b45859b9fa9b455198, type: 2}
+  desert_0011_c: {fileID: 11400000, guid: 82a08184985be9240956e7985bc7ffba, type: 2}
+  desert_0100_c: {fileID: 11400000, guid: cde2547e88394f04796a532b91604c83, type: 2}
+  desert_0101_c: {fileID: 11400000, guid: c3165045037c1c4478456d07bde0b15f, type: 2}
+  desert_0110_c: {fileID: 11400000, guid: b56e055c92708a341b385f10bf78d17d, type: 2}
+  desert_0111_c: {fileID: 11400000, guid: ed56c17d7499c0c45a86d3a57612210a, type: 2}
+  desert_1000_c: {fileID: 11400000, guid: 74b28c1bd39780a4a970fd8f83ce3d9c, type: 2}
+  desert_1001_c: {fileID: 11400000, guid: b7cd7e76f8063db4185a1e3c9e71d7f5, type: 2}
+  desert_1010_c: {fileID: 11400000, guid: 640754e6b94d2ea479f8e57b6a10f8f5, type: 2}
+  desert_1011_c: {fileID: 11400000, guid: 2a64f993fc719c34a94f1722fb10c3f7, type: 2}
+  desert_1100_c: {fileID: 11400000, guid: 792c592d2c4cc554b80149000db3df03, type: 2}
+  desert_1101_c: {fileID: 11400000, guid: 646f0ed98d9da3d4e9b76abbf6e26435, type: 2}
+  desert_1110_c: {fileID: 11400000, guid: a6bb2990bb0cb9f429e1b5dccc9cfbed, type: 2}
+  desert_1111_c: {fileID: 11400000, guid: 9681a298892c5ab42a50efed66c26df2, type: 2}
 --- !u!1 &490713845
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +448,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015364772}
   m_Enabled: 1
-  m_CellSize: {x: 40, y: 40, z: 0}
+  m_CellSize: {x: 1, y: 1, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -316,6 +466,7 @@ Transform:
   - {fileID: 1994672237}
   - {fileID: 2121587853}
   - {fileID: 1042992456}
+  - {fileID: 229809376}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -657,12 +808,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678872125}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetsPPU: 2
+  m_AssetsPPU: 32
   m_RefResolutionX: 320
   m_RefResolutionY: 180
   m_UpscaleRT: 0
@@ -796,7 +947,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

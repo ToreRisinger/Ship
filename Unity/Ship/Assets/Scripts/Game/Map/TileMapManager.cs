@@ -1,20 +1,25 @@
 ﻿using Game.Map;
+using Ship.Utilities;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Utils;
 
 public class TileMapManager : MonoBehaviour
 {
 
+    public Tilemap waterMap;
     public Tilemap beachMap;
     public Tilemap grassMap;
-    public Tilemap waterMap;
+    public Tilemap desertMap;
 
     //BEACH
     public Tile beach;
 
     //GRASS
     public Tile grass;
+    public Tile grass_2;
     public Tile grass_0001_s;
     public Tile grass_0010_s;
     public Tile grass_0011_s;
@@ -81,11 +86,48 @@ public class TileMapManager : MonoBehaviour
     public Tile water_1110_c;
     public Tile water_1111_c;
 
+    //DESERT
+    public Tile desert;
+    public Tile desert_0001_s;
+    public Tile desert_0010_s;
+    public Tile desert_0011_s;
+    public Tile desert_0100_s;
+    public Tile desert_0101_s;
+    public Tile desert_0110_s;
+    public Tile desert_0111_s;
+    public Tile desert_1000_s;
+    public Tile desert_1001_s;
+    public Tile desert_1010_s;
+    public Tile desert_1011_s;
+    public Tile desert_1100_s;
+    public Tile desert_1101_s;
+    public Tile desert_1110_s;
+    public Tile desert_1111_s;
+
+    public Tile desert_0001_c;
+    public Tile desert_0010_c;
+    public Tile desert_0011_c;
+    public Tile desert_0100_c;
+    public Tile desert_0101_c;
+    public Tile desert_0110_c;
+    public Tile desert_0111_c;
+    public Tile desert_1000_c;
+    public Tile desert_1001_c;
+    public Tile desert_1010_c;
+    public Tile desert_1011_c;
+    public Tile desert_1100_c;
+    public Tile desert_1101_c;
+    public Tile desert_1110_c;
+    public Tile desert_1111_c;
+
     private Dictionary<string, Tile> grassSideTileMap;
     private Dictionary<string, Tile> grassCornerTileMap;
 
     private Dictionary<string, Tile> waterSideTileMap;
     private Dictionary<string, Tile> waterCornerTileMap;
+
+    private Dictionary<string, Tile> desertSideTileMap;
+    private Dictionary<string, Tile> desertCornerTileMap;
 
     int[,] terrainMap;
 
@@ -160,31 +202,53 @@ public class TileMapManager : MonoBehaviour
         waterCornerTileMap.Add("1110", water_1110_c);
         waterCornerTileMap.Add("1111", water_1111_c);
 
+
+        desertSideTileMap = new Dictionary<string, Tile>();
+        desertSideTileMap.Add("0001", desert_0001_s);
+        desertSideTileMap.Add("0010", desert_0010_s);
+        desertSideTileMap.Add("0011", desert_0011_s);
+        desertSideTileMap.Add("0100", desert_0100_s);
+        desertSideTileMap.Add("0101", desert_0101_s);
+        desertSideTileMap.Add("0110", desert_0110_s);
+        desertSideTileMap.Add("0111", desert_0111_s);
+        desertSideTileMap.Add("1000", desert_1000_s);
+        desertSideTileMap.Add("1001", desert_1001_s);
+        desertSideTileMap.Add("1010", desert_1010_s);
+        desertSideTileMap.Add("1011", desert_1011_s);
+        desertSideTileMap.Add("1100", desert_1100_s);
+        desertSideTileMap.Add("1101", desert_1101_s);
+        desertSideTileMap.Add("1110", desert_1110_s);
+        desertSideTileMap.Add("1111", desert_1111_s);
+
+        desertCornerTileMap = new Dictionary<string, Tile>();
+        desertCornerTileMap.Add("0001", desert_0001_c);
+        desertCornerTileMap.Add("0010", desert_0010_c);
+        desertCornerTileMap.Add("0011", desert_0011_c);
+        desertCornerTileMap.Add("0100", desert_0100_c);
+        desertCornerTileMap.Add("0101", desert_0101_c);
+        desertCornerTileMap.Add("0110", desert_0110_c);
+        desertCornerTileMap.Add("0111", desert_0111_c);
+        desertCornerTileMap.Add("1000", desert_1000_c);
+        desertCornerTileMap.Add("1001", desert_1001_c);
+        desertCornerTileMap.Add("1010", desert_1010_c);
+        desertCornerTileMap.Add("1011", desert_1011_c);
+        desertCornerTileMap.Add("1100", desert_1100_c);
+        desertCornerTileMap.Add("1101", desert_1101_c);
+        desertCornerTileMap.Add("1110", desert_1110_c);
+        desertCornerTileMap.Add("1111", desert_1111_c);
+
         int width = 100;
         int height = 100;
         int initChance = 10;
         int birthLimit = 2;
         int deathLimit = 1;
-        int repitions = 3;
+        int repitions = 18;
         int borderSize = 3;
 
-        terrainMap = MapGenerator.generateMap(initChance, birthLimit, deathLimit, width, height, repitions, borderSize);
+        List<Biome> biomes = new List<Biome>();
+        biomes.Add(new Biome(new System.Numerics.Vector2(width / 2, height / 4), 20, ETerrainType.DESERT));
 
-        //Change water close to land into beach
-        for (int x = 1; x < width - 1; x++)
-        {
-            for (int y = 1; y < height - 1; y++)
-            {
-                if(terrainMap[x, y] == MapGenerator.GRASS)
-                {
-                    if(isNextToWater(x, y))
-                    {
-                        terrainMap[x, y] = MapGenerator.BEACH;
-                    }
-                }
-            }
-
-        }
+        terrainMap = MapGenerator.generateMap(initChance, birthLimit, deathLimit, width, height, repitions, borderSize, biomes);
 
         for (int x = 0; x < width; x++)
         {
@@ -196,43 +260,74 @@ public class TileMapManager : MonoBehaviour
                     continue;
                 }
 
-                if (checkTerrain(x, y, MapGenerator.WATER))
+                if (checkTerrain(x, y, ETerrainType.WATER))
                 {
                     waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), water);
 
                 }
-                else if (checkTerrain(x, y, MapGenerator.GRASS))
+                else if (checkTerrain(x, y, ETerrainType.GRASS))
                 {
-                    grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grass);
-
+                    Tile t = Utilities.rand(0, 100) < 10 ? grass_2 : grass;
+                    grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), t);
                 }
-                else if (checkTerrain(x, y, MapGenerator.BEACH))
+                else if(checkTerrain(x, y, ETerrainType.DESERT))
+                {
+                    desertMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), desert);
+                    
+                    string sideKey = getSideTileKey(x, y, ETerrainType.GRASS);
+                    if (grassSideTileMap.ContainsKey(sideKey))
+                    {
+                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), grassSideTileMap[sideKey]);
+                    }
+
+                    string cornerKey = mergeCornerKey(getCornerTileKey(x, y, ETerrainType.GRASS), sideKey);
+                    if (grassCornerTileMap.ContainsKey(cornerKey))
+                    {
+                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grassCornerTileMap[cornerKey]);
+                    }
+                    
+                }
+                else if (checkTerrain(x, y, ETerrainType.BEACH))
                 {
                     beachMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), beach);
 
-                    string key = getSideTileKey(x, y, MapGenerator.WATER);
-                    if(waterSideTileMap.ContainsKey(key))
+                    
+                    string sideKey = getSideTileKey(x, y, ETerrainType.WATER);
+                    if(waterSideTileMap.ContainsKey(sideKey))
                     {
-                        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), waterSideTileMap[key]);
+                        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), waterSideTileMap[sideKey]);
                     }
 
-                    key = getCornerTileKey(x, y, MapGenerator.WATER);
-                    if (waterCornerTileMap.ContainsKey(key))
+                    string cornerKey = getCornerTileKey(x, y, ETerrainType.WATER);
+                    if (waterCornerTileMap.ContainsKey(cornerKey))
                     {
-                        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), waterCornerTileMap[key]);
+                        waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), waterCornerTileMap[cornerKey]);
                     }
 
-                    key = getSideTileKey(x, y, MapGenerator.GRASS);
-                    if (waterSideTileMap.ContainsKey(key))
+                    sideKey = getSideTileKey(x, y, ETerrainType.DESERT);
+                    if (desertSideTileMap.ContainsKey(sideKey))
                     {
-                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), grassSideTileMap[key]);
+                        desertMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), desertSideTileMap[sideKey]);
                     }
 
-                    key = getCornerTileKey(x, y, MapGenerator.GRASS);
-                    if (waterCornerTileMap.ContainsKey(key))
+                    cornerKey = getCornerTileKey(x, y, ETerrainType.DESERT);
+                    if (desertCornerTileMap.ContainsKey(cornerKey))
                     {
-                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grassCornerTileMap[key]);
+                        desertMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), desertCornerTileMap[cornerKey]);
                     }
+
+                    sideKey = getSideTileKey(x, y, ETerrainType.GRASS);
+                    if (grassSideTileMap.ContainsKey(sideKey))
+                    {
+                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), grassSideTileMap[sideKey]);
+                    }
+
+                    cornerKey = mergeCornerKey(getCornerTileKey(x, y, ETerrainType.GRASS), sideKey);
+                    if (grassCornerTileMap.ContainsKey(cornerKey))
+                    {
+                        grassMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), grassCornerTileMap[cornerKey]);
+                    }
+                    
 
                 }
                 
@@ -240,42 +335,52 @@ public class TileMapManager : MonoBehaviour
         }
     }
 
-    private string getSideTileKey(int x, int y, int value)
+    private string mergeCornerKey(string cornerKey, string sideKey)
     {
-        return (terrainMap[x + 1, y] == value ? 1 : 0) + ""
-            + (terrainMap[x, y - 1] == value ? 1 : 0) + "" 
-            + (terrainMap[x - 1, y] == value ? 1 : 0) + ""
-            + (terrainMap[x, y + 1] == value ? 1 : 0);
+        char[] corner = cornerKey.ToCharArray();
+        char[] sides = sideKey.ToCharArray();
+        if(sides[0] == '1')
+        {
+            corner[0] = '0';
+            corner[1] = '0';
+        }
+        if (sideKey[1] == '1')
+        {
+            corner[1] = '0';
+            corner[2] = '0';
+        }
+        if (sideKey[2] == '1')
+        {
+            corner[2] = '0';
+            corner[3] = '0';
+        }
+        if (sideKey[3] == '1')
+        {
+            corner[3] = '0';
+            corner[0] = '0';
+        }
+        return new string(corner);
     }
 
-    private string getCornerTileKey(int x, int y, int value)
+    private string getSideTileKey(int x, int y, ETerrainType type)
     {
-        return (terrainMap[x + 1, y + 1] == value ? 1 : 0) + "" 
-            + (terrainMap[x + 1, y - 1] == value ? 1 : 0) + "" 
-            + (terrainMap[x - 1, y - 1] == value ? 1 : 0) + "" 
-            + (terrainMap[x - 1, y + 1] == value ? 1 : 0);
+        return (terrainMap[x + 1, y] == (int)type ? 1 : 0) + ""
+            + (terrainMap[x, y - 1] == (int)type ? 1 : 0) + "" 
+            + (terrainMap[x - 1, y] == (int)type ? 1 : 0) + ""
+            + (terrainMap[x, y + 1] == (int)type ? 1 : 0);
     }
 
-    private bool checkTerrain(int x, int y, int value)
+    private string getCornerTileKey(int x, int y, ETerrainType type)
     {
-        return terrainMap[x, y] == value;
+        return (terrainMap[x + 1, y + 1] == (int)type ? 1 : 0) + "" 
+            + (terrainMap[x + 1, y - 1] == (int)type ? 1 : 0) + "" 
+            + (terrainMap[x - 1, y - 1] == (int)type ? 1 : 0) + "" 
+            + (terrainMap[x - 1, y + 1] == (int)type ? 1 : 0);
     }
 
-    private bool isNextToLand(int x, int y)
+    private bool checkTerrain(int x, int y, ETerrainType type)
     {
-        return terrainMap[x - 1, y] > MapGenerator.BEACH || terrainMap[x, y + 1] > MapGenerator.BEACH || terrainMap[x + 1, y] > MapGenerator.BEACH || terrainMap[x, y - 1] > MapGenerator.BEACH;
-    }
-
-    private bool isNextToWater(int x, int y)
-    {
-        return terrainMap[x - 1, y] == MapGenerator.WATER 
-            || terrainMap[x, y + 1] == MapGenerator.WATER 
-            || terrainMap[x + 1, y] == MapGenerator.WATER 
-            || terrainMap[x, y - 1] == MapGenerator.WATER
-            || terrainMap[x - 1, y - 1] == MapGenerator.WATER
-            || terrainMap[x + 1, y - 1] == MapGenerator.WATER
-            || terrainMap[x + 1, y + 1] == MapGenerator.WATER
-            || terrainMap[x - 1, y + 1] == MapGenerator.WATER;
+        return terrainMap[x, y] == (int)type;
     }
 
     private bool isNextTo(int x, int y, int value)
