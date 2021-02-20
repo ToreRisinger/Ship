@@ -41,15 +41,12 @@ namespace Ship.Game.GameObject
 
         private void calcInterpolatedPosition(float delta)
         {
-
-            Debug.Log(positions.Count);
             if (positions.Count > 0 && nextPosition == null)
             {
                 nextPosition = positions.Dequeue();
                 isRunning = nextPosition.isRunning;
                 direction = nextPosition.direction;
             }
-
 
             if (nextPosition != null)
             {
