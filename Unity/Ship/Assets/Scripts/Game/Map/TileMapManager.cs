@@ -354,7 +354,7 @@ public class TileMapManager : MonoBehaviour
                         string key = new string(k);
                         if (grassCornerTileMap.ContainsKey(key))
                         {
-                            isometricGrassTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2), grassCornerTileMap[key]);
+                            isometricGrassTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2 + i), grassCornerTileMap[key]);
                         }
                     }
                 }
@@ -380,7 +380,7 @@ public class TileMapManager : MonoBehaviour
                         string key = new string(k);
                         if (grassCornerTileMap.ContainsKey(key))
                         {
-                            isometricGrassTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2), grassCornerTileMap[key]);
+                            isometricGrassTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2 + 1), grassCornerTileMap[key]);
                         }
                     }
 
@@ -402,7 +402,7 @@ public class TileMapManager : MonoBehaviour
                         string key = new string(k);
                         if (desertCornerTileMap.ContainsKey(key))
                         {
-                            isometricDesertTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2), desertCornerTileMap[key]);
+                            isometricDesertTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2 + i), desertCornerTileMap[key]);
                         }
                     }
                 }
