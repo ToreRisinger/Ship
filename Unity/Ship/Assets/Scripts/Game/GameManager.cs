@@ -32,6 +32,7 @@ namespace Ship.Game
 
         public UnityEngine.GameObject localCharacterPrefab;
         public UnityEngine.GameObject characterPrefab;
+        public UnityEngine.GameObject treePrefab;
 
         #endregion
 
@@ -66,7 +67,8 @@ namespace Ship.Game
 
         void Start()
         {
-
+            Instantiate(treePrefab, new Vector2(0, 0), Quaternion.Euler(Vector3.forward));
+            Instantiate(treePrefab, new Vector2(2, 0), Quaternion.Euler(Vector3.forward));
         }
 
         void Update()

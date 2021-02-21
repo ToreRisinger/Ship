@@ -1,5 +1,4 @@
 ﻿using Game.Map;
-using Ship.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +7,6 @@ using Utils;
 
 public class TileMapManager : MonoBehaviour
 {
-
     public Tilemap waterMap;
     public Tilemap beachMap;
     public Tilemap grassMap;
