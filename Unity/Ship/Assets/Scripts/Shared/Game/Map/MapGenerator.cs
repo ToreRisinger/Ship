@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using Utils;
 
 namespace Game.Map
 {
@@ -96,7 +95,7 @@ namespace Game.Map
                         float maxDistance = width / 2;
                         float ratio = (distanceFromMiddle / maxDistance);
                         int chance = (int)(initChance * (1 - ratio * ratio));
-                        int rand = Utilities.rand(0, 100);
+                        int rand = Utils.Utilities.rand(0, 100);
                         terrainMap[x, y] = rand < chance ? (int)getTerrainType(x, y, biomes) : (int)ETerrainType.WATER;
                     }
                 }

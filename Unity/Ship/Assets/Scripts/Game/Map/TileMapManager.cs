@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Utils;
 
 public class TileMapManager : MonoBehaviour
 {
@@ -307,7 +306,7 @@ public class TileMapManager : MonoBehaviour
                 }
                 else if (checkTerrain(x, y, ETerrainType.GRASS))
                 {
-                    int random = Utilities.rand(1, 1000);
+                    int random = Utils.Utilities.rand(1, 1000);
                     bool foundTile = false;
                     
                     for(int i = 0; i < grassTiles.Count; i++)
@@ -337,7 +336,7 @@ public class TileMapManager : MonoBehaviour
                     String sideKey = getSideTileKey(x, y, ETerrainType.GRASS);
                     if (grassSideTileMap.ContainsKey(sideKey))
                     {
-                        isometricGrassTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), grassSideTileMap[sideKey]);
+                        isometricDesertTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 1), grassSideTileMap[sideKey]);
                     }
 
                     String cornerKey = mergeCornerKey(getCornerTileKey(x, y, ETerrainType.GRASS), sideKey);
@@ -352,7 +351,7 @@ public class TileMapManager : MonoBehaviour
                         string key = new string(k);
                         if (grassCornerTileMap.ContainsKey(key))
                         {
-                            isometricGrassTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2 + i), grassCornerTileMap[key]);
+                            isometricDesertTileMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 2 + i), grassCornerTileMap[key]);
                         }
                     }
                 }
